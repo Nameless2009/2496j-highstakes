@@ -2,6 +2,7 @@
 #include "global.h"
 
 using namespace glb;
+using namespace pros;
 
 /**
  * A callback function for LLEMU's center button.
@@ -86,7 +87,7 @@ void opcontrol()
 
 	while (true)
 	{
-		if (glb::con.get_digital(E_CONTROLLER_DIGITAL_L1)) // digital is for the buttons, analog is for the sticks
+		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) // digital is for the buttons, analog is for the sticks
 		{
 			cataL.move(70); // 127 is full speed
 			cataR.move(70);
@@ -98,6 +99,6 @@ void opcontrol()
 			cataR.move(0);
 		}
 
-		pros::delay(2); // 2 milliseconds
+		delay(2); // 2 milliseconds
 	}
 }
