@@ -99,6 +99,36 @@ void opcontrol()
 			cataR.move(0);
 		}
 
+<<<<<<< Updated upstream
 		delay(2); // 2 milliseconds
+=======
+		pros::delay(2); // 2 milliseconds
+	
+	
+		if (con.get_digital(E_CONTROLLER_DIGITAL_R1))
+		{
+			intake.move(100)
+		}
+
+		else
+		{
+			intake.move(0)
+		}
+
+		pros::delay(2);
+		
+		if (con.get_digital(E_CONTROLLER_DIGITAL_R2))
+		{
+			intake.move(-100)
+		}
+
+		else
+		{
+			intake.move(0)
+
+		}
+
+		pros::delay(2); 
+>>>>>>> Stashed changes
 	}
 }

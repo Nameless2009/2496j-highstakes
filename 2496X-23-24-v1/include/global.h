@@ -7,14 +7,30 @@
 using namespace pros;
 
 namespace glb
+
 {
 // defining ports
-#define P_L_CATA 10
-#define P_R_CATA 15
+#define P_L_cata 10
+#define P_R_cata 15
+#define P_FR_chassis 1
+#define P_FL_chassis 2
+#define P_BR_chassis 3
+#define P_BL_chassis 5
+#define P_intake 4
 
     // objects
+<<<<<<< Updated upstream
     Motor cataL(P_L_CATA, E_MOTOR_GEARSET_18, true); // 18 is for speed, 36 is for turbo
     Motor cataR(P_R_CATA, E_MOTOR_GEARSET_18, false);
+=======
+    Motor cataL(P_L_cata, E_MOTOR_GEARSET_18, true); // 18 is for speed (normal/green), 36 is for torque (red), 06 is for turbo (blue)
+    Motor cataR(P_R_cata, E_MOTOR_GEARSET_18, false);
+    Motor chassis_FR(P_FR_chassis,  E_MOTOR_GEARSET_18, true);
+    Motor chassis_FL(P_FL_chassis, E_MOTOR_GEARSET_18, true);
+    Motor chassis_BR(P_BR_chassis, E_MOTOR_GEARSET_18, true);
+    Motor chassis_BL(P_BL_chassis, E_MOTOR_GEARSET_18, true);
+    Motor intake(P_intake, E_MOTOR_GEARSET_18, true);
+>>>>>>> Stashed changes
 
     Controller con(E_CONTROLLER_MASTER); // controller
 
