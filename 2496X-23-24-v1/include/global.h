@@ -30,7 +30,6 @@ namespace glb
     Motor chassis_BR(P_BR_chassis, E_MOTOR_GEARSET_18, true);
     Motor chassis_BL(P_BL_chassis, E_MOTOR_GEARSET_18, true);
     Motor intake(P_intake, E_MOTOR_GEARSET_18, true);
->>>>>>> Stashed changes
 
     Controller con(E_CONTROLLER_MASTER); // controller
 

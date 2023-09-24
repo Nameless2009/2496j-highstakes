@@ -99,10 +99,6 @@ void opcontrol()
 			cataR.move(0);
 		}
 
-<<<<<<< Updated upstream
-		delay(2); // 2 milliseconds
-=======
-		pros::delay(2); // 2 milliseconds
 	
 	
 		if (con.get_digital(E_CONTROLLER_DIGITAL_R1))
