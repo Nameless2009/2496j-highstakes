@@ -19,10 +19,7 @@ namespace glb
 #define P_intake 4
 
     // objects
-<<<<<<< Updated upstream
-    Motor cataL(P_L_CATA, E_MOTOR_GEARSET_18, true); // 18 is for speed, 36 is for turbo
-    Motor cataR(P_R_CATA, E_MOTOR_GEARSET_18, false);
-=======
+
     Motor cataL(P_L_cata, E_MOTOR_GEARSET_18, true); // 18 is for speed (normal/green), 36 is for torque (red), 06 is for turbo (blue)
     Motor cataR(P_R_cata, E_MOTOR_GEARSET_18, false);
     Motor chassis_FR(P_FR_chassis,  E_MOTOR_GEARSET_18, true);

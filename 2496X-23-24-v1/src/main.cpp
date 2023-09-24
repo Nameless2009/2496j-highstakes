@@ -87,6 +87,15 @@ void opcontrol()
 
 	while (true)
 	{
+		double rightstick = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+		double leftstick = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+
+		chassis_FR.move(rightstick);
+		chassis_BR.move(rightstick);
+		chassis_FL.move(leftstick);
+		chassis_BL.move(leftstick);
+		
+		
 		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) // digital is for the buttons, analog is for the sticks
 		{
 			cataL.move(70); // 127 is full speed
@@ -98,33 +107,17 @@ void opcontrol()
 			cataL.move(0); // 0 is no speed
 			cataR.move(0);
 		}
-
-	
-	
-		if (con.get_digital(E_CONTROLLER_DIGITAL_R1))
-		{
-			intake.move(100)
-		}
-
-		else
-		{
-			intake.move(0)
-		}
-
-		pros::delay(2);
 		
-		if (con.get_digital(E_CONTROLLER_DIGITAL_R2))
-		{
-			intake.move(-100)
+		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){ //intake move forward when R1 pressed
+			intake.move(100);
+		}
+		else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)){ //intake move backward when R2 pressed
+			intake.move(-100);
+		}
+		else{ //intake stop when none pressed
+			intake.move(0);
 		}
 
-		else
-		{
-			intake.move(0)
-
-		}
-
-		pros::delay(2); 
->>>>>>> Stashed changes
+		delay(2);
 	}
 }
