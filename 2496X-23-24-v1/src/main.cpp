@@ -4,6 +4,74 @@
 using namespace glb;
 using namespace pros;
 
+//organize code when you have time
+bool startCata = false;
+bool stopCata = false;
+bool mode = false;
+int x = 0;
+
+void refresh(){
+    if (catalimit.get_value()){
+        stopCata = true;
+    }
+    else{
+        stopCata = false;
+    }
+
+    if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
+        startCata = true;
+    }
+    else{
+        startCata = false;
+    }
+
+    if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
+        mode = true;
+    }
+    else{
+        mode = false;
+    }
+}
+
+void limit(){
+    if (startCata == false && stopCata == true){
+        cata.move(0);
+        stopCata = false;
+    }
+    else{
+        cata.move(100);
+    }
+}
+
+void half(){
+    if (x==0){
+        limit(); //run regular limit switch code
+        cata.tare_position();
+        x = 1;
+    }
+    else if (x==1){
+        //move to half position:
+        if (cataL.get_position()>300 && cataL.get_position()<350){
+            cata.move(0);
+            x=0;
+        }
+        else {
+            cata.move(100);
+        }
+    }
+}
+
+
+void cataCode(){
+    refresh();
+    if (mode == false){
+        limit();
+    }
+    else if (mode == true){
+        half();
+    }
+}
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -87,56 +155,25 @@ void opcontrol()
 
 	while (true)
 	{
-		// double rightstick = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-		// double leftstick = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+		double rightstick = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+		double leftstick = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 
-		// chassis_FR.move(rightstick);
-		// chassis_BR.move(rightstick);
-		// chassis_FL.move(leftstick);
-		// chassis_BL.move(leftstick);
+		chassis_FR.move(rightstick);
+		chassis_BR.move(rightstick);
+		chassis_FL.move(leftstick);
+		chassis_BL.move(leftstick);
 
-		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) // digital is for the buttons, analog is for the sticks
-		{
-			cataL.move(70); // 127 is full speed
-			cataR.move(70);
-		}0
+		cataCode();
 
-		else
-		{
-			cataL.move(0); // 0 is no speed
-			cataR.move(0);
+		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+			intake.move(127);
 		}
-
-		pros::delay(2); // 2 milliseconds
-
-		// if (con.get_digital(E_CONTROLLER_DIGITAL_R1))
-		// {
-		// 	intake.move(100)
-		// }
-
-		// else
-		// {
-		// 	intake.move(0)
-		// }
-
-		// pros::delay(2);
-
-		// if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){ //intake move forward when R1 pressed
-		// 	intake.move(100);
-		// }
-		// else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)){ //intake move backward when R2 pressed
-		// 	intake.move(-100);
-		// }
-		// else{ //intake stop when none pressed
-		// 	intake.move(0);
-		// }
-
-		// else
-		// {
-		// 	intake.move(0)
-
-		// }
-
-		pros::delay(2);
+		else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+			intake.move(-127);
+		}
+		else {
+			intake.move(0);
+		}
+		delay(2);
 	}
 }
