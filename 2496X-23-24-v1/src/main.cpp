@@ -9,37 +9,16 @@ bool startCata = false;
 bool stopCata = false;
 bool mode = false;
 int x = 0;
+bool antiJamOverride = false;
 
-void refresh(){
-    if (catalimit.get_value()){
-        stopCata = true;
-    }
-    else{
-        stopCata = false;
-    }
-
-    if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
-        startCata = true;
-    }
-    else{
-        startCata = false;
-    }
-
-    if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-        mode = true;
-    }
-    else{
-        mode = false;
-    }
-}
 
 void limit(){
-    if (startCata == false && stopCata == true){
-        cata.move(0);
-        stopCata = false;
+    if (startCata == true && stopCata == false){
+        cata.move(100);
     }
     else{
-        cata.move(100);
+        cata.move(0);
+        stopCata = false;
     }
 }
 
@@ -63,7 +42,13 @@ void half(){
 
 
 void cataCode(){
-    refresh();
+    stopCata = catalimit.get_value();
+    if (con.get_digital(E_CONTROLLER_DIGITAL_L1) == true){
+        startCata = true;
+    }
+    else{
+        startCata = false;
+    }
     if (mode == false){
         limit();
     }
@@ -101,7 +86,7 @@ void on_center_button()
 void initialize()
 {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello!");
+	pros::lcd::set_text(1, "bye.");
 
 	pros::lcd::register_btn1_cb(on_center_button);
 }
@@ -163,7 +148,8 @@ void opcontrol()
 		chassis_FL.move(leftstick);
 		chassis_BL.move(leftstick);
 
-		cataCode();
+		
+        
 
 		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			intake.move(127);
