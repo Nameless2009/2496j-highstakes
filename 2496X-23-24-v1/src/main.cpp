@@ -3,59 +3,77 @@
 
 using namespace glb;
 using namespace pros;
+using namespace std;
 
 //organize code when you have time
 bool startCata = false;
 bool stopCata = false;
-bool mode = false;
 int x = 0;
 bool antiJamOverride = false;
+int click = 0;
 
-
-void limit(){
-    if (startCata == true && stopCata == false){
+void cataCode(){
+    if (startCata == true){
         cata.move(100);
     }
     else{
+        cata.move(0);
+    }
+
+    if (stopCata == true){
         cata.move(0);
         stopCata = false;
     }
 }
 
-void half(){
-    if (x==0){
-        limit(); //run regular limit switch code
-        cata.tare_position();
-        x = 1;
+void refresh(){
+    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
+        startCata = !startCata;
     }
-    else if (x==1){
-        //move to half position:
-        if (cataL.get_position()>300 && cataL.get_position()<350){
-            cata.move(0);
-            x=0;
-        }
-        else {
-            cata.move(100);
-        }
-    }
-}
-
-
-void cataCode(){
-    stopCata = catalimit.get_value();
-    if (con.get_digital(E_CONTROLLER_DIGITAL_L1) == true){
-        startCata = true;
-    }
-    else{
+    if (catalimit.get_new_press()){
+        stopCata = true;
         startCata = false;
     }
-    if (mode == false){
-        limit();
-    }
-    else if (mode == true){
-        half();
-    }
 }
+
+
+// void limit(){
+//     if (startCata == false || stopCata == true){
+//         cata.move(0);
+//         stopCata = false;
+//     }
+//     else{
+//         cata.move(100);
+//     }
+// }
+
+// void half(){
+//     if (x==0){
+//         limit(); //run regular limit switch code
+//         cata.tare_position();
+//         x = 1;
+//     }
+//     else if (x==1){
+//         //move to half position:
+//         if (cataL.get_position()>300 && cataL.get_position()<350){
+//             cata.move(0);
+//             x=0;
+//         }
+//         else {
+//             cata.move(100);
+//         }
+//     }
+// }
+
+
+// void cataCode(){
+//     if (mode == false){
+//         limit();
+//     }
+//     else if (mode == true){
+//         half();
+//     }
+// }
 
 /**
  * A callback function for LLEMU's center button.
@@ -148,7 +166,17 @@ void opcontrol()
 		chassis_FL.move(leftstick);
 		chassis_BL.move(leftstick);
 
-		
+        refresh();
+
+        //cata code:
+        cataCode();
+
+
+        //anti jam - add button to override
+        if (catalimit.get_value()==false){
+            intake.move(0);
+        }
+
         
 
 		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
