@@ -6,6 +6,8 @@ using namespace pros;
 using namespace std;
 
 //organize code when you have time
+
+//ok
 bool startCata = false;
 bool stopCata = false;
 int x = 0;
