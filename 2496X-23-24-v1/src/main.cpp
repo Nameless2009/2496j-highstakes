@@ -14,17 +14,22 @@ bool antiJamOverride = false;
 bool matchLoadingMode = false;
 
 void cataCycle(){
-    if (startCata == true){
-        cata.move(127);
-    }
-    else{
-        cata.move(0);
-    }
+	if (matchLoadingMode == false){
+		if (startCata == true){
+			cata.move(127);
+		}
+		else{
+			cata.move(0);
+		}
 
-    if (stopCata == true){
-        cata.move(0);
-        stopCata = false;
-    }
+		if (stopCata == true){
+			cata.move(0);
+			stopCata = false;
+		}
+	}
+	else if (matchLoadingMode == true){
+		cata.move(127);
+	}
 }
 
 void refresh(){
@@ -54,18 +59,6 @@ void cataCode(){
     refresh();
     // antiJam();
     cataCycle();
-}
-
-void matchLoadingCode(){
-	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
-		matchLoadingMode = !matchLoadingMode;
-	}
-	if (matchLoadingMode==true){
-		cata.move(127);
-	}
-	else{
-		cata.move(0);
-	}
 }
 
 
@@ -201,8 +194,6 @@ void opcontrol()
 
         //cata code:
         cataCode();
-
-		matchLoadingCode();
 
         
 
