@@ -7,16 +7,15 @@ using namespace std;
 
 //organize code when you have time
 
-//ok
+//this is the current version, create new branch and push.
 bool startCata = false;
 bool stopCata = false;
-int x = 0;
 bool antiJamOverride = false;
-int click = 0;
+bool matchLoadingMode = false;
 
-void cataCode(){
+void cataCycle(){
     if (startCata == true){
-        cata.move(100);
+        cata.move(127);
     }
     else{
         cata.move(0);
@@ -36,6 +35,37 @@ void refresh(){
         stopCata = true;
         startCata = false;
     }
+    // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
+    //     antiJamOverride = !antiJamOverride;
+    //     con.rumble(".");
+    // }
+}
+
+void antiJam(){
+    if (antiJamOverride == false){
+        if (catalimit.get_value()==false){
+            intake.move(0);
+            //stop intake if limit not pressed (preventing jamming)
+        }
+    }
+}
+
+void cataCode(){
+    refresh();
+    // antiJam();
+    cataCycle();
+}
+
+void matchLoadingCode(){
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
+		matchLoadingMode = !matchLoadingMode;
+	}
+	if (matchLoadingMode==true){
+		cata.move(127);
+	}
+	else{
+		cata.move(0);
+	}
 }
 
 
@@ -106,7 +136,7 @@ void on_center_button()
 void initialize()
 {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "bye.");
+	pros::lcd::set_text(1, "2496");
 
 	pros::lcd::register_btn1_cb(on_center_button);
 }
@@ -168,16 +198,11 @@ void opcontrol()
 		chassis_FL.move(leftstick);
 		chassis_BL.move(leftstick);
 
-        refresh();
 
         //cata code:
         cataCode();
 
-
-        //anti jam - add button to override
-        if (catalimit.get_value()==false){
-            intake.move(0);
-        }
+		matchLoadingCode();
 
         
 
