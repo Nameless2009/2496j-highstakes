@@ -195,6 +195,10 @@ void opcontrol()
         //cata code:
         cataCode();
 
+		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
+			matchLoadingMode = !matchLoadingMode;
+		}
+
         
 
 		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){

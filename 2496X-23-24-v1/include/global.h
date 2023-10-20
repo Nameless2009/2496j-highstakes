@@ -21,7 +21,7 @@ namespace glb
 #define P_FR_chassis 5
 #define P_intake 9
 #define P_catalimit 8
-#define P_imu 21;
+#define P_imu 21
 
 
     // objects
