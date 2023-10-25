@@ -235,17 +235,21 @@ void cataCode(){
     cataCycle();
 }
 
-void functionChangeButton(){
+void functionChangeButtonCode(){
 	if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
 			blocker.move(80);
 		}
 		else{
 			blocker.move(0);
 		}
-		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
+		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)){
 			wingValue = !wingValue;
 			wings.set_value(wingValue);
+		}
+		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R2)){
+			intakeLifterValue = !intakeLifterValue;
+			intakeLifter.set_value(intakeLifterValue);
 		}
 	}
 }
@@ -352,13 +356,10 @@ void opcontrol()
 			matchLoadingMode = !matchLoadingMode;
 		}
 
-		//make this with a hotswap key
-		// wings.set_value(wingValue);
-		// intakeLifter.set_value(intakeLifterValue);
+		functionChangeButtonCode();
 
-        
-		if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){ //pressing
-
+		if (con.get_digital(E_CONTROLLER_DIGITAL_X)){ //pressing
+			blocker.move(-80); //retract
 		}
 
 

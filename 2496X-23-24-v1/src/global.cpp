@@ -25,7 +25,7 @@ namespace glb {
     Motor chassis_BR(P_BR_chassis, E_MOTOR_GEARSET_18, true);
     Motor chassis_BL(P_BL_chassis, E_MOTOR_GEARSET_18, false);
     Motor intake(P_intake, E_MOTOR_GEARSET_18, false);
-    Motor blocker(P_blocker, E_MOTOR_GEARSET_18, false);
+    Motor blocker(P_blocker, E_MOTOR_GEARSET_36, true);
 
 
     Motor_Group rightChassis({P_FR_chassis, P_BR_chassis});
