@@ -22,6 +22,9 @@ namespace glb
 #define P_intake 9
 #define P_catalimit 8
 #define P_imu 21
+#define P_intakeLifter 1
+#define P_wings 7
+#define P_blocker 4
 
 
     // objects
@@ -37,6 +40,11 @@ namespace glb
     extern Motor_Group rightChassis;
     extern Motor_Group leftChassis;
     extern Motor_Group chassis;
+
+    extern Motor blocker;
+
+    extern ADIDigitalOut intakeLifter;
+    extern ADIDigitalOut wings;
 
 
     extern Motor_Group cata;

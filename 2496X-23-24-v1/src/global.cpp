@@ -11,6 +11,8 @@ namespace glb {
     #define P_intake 9
     #define P_catalimit 8
     #define P_imu 21;
+    #define P_intakeLifter 1
+    #define P_wings 2
 
 
     // objects
@@ -23,12 +25,15 @@ namespace glb {
     Motor chassis_BR(P_BR_chassis, E_MOTOR_GEARSET_18, true);
     Motor chassis_BL(P_BL_chassis, E_MOTOR_GEARSET_18, false);
     Motor intake(P_intake, E_MOTOR_GEARSET_18, false);
+    Motor blocker(P_blocker, E_MOTOR_GEARSET_18, false);
 
 
     Motor_Group rightChassis({P_FR_chassis, P_BR_chassis});
     Motor_Group leftChassis({P_FL_chassis, P_BL_chassis});
-    Motor_Group chassis({P_FR_chassis, P_BR_chassis, P_FL_chassis, P_BL_chassis}); // negative port tells program to reverse motors, check pros api
+    Motor_Group chassis({P_FR_chassis, P_BR_chassis, P_FL_chassis, P_BL_chassis}); 
 
+    ADIDigitalOut intakeLifter(P_intakeLifter);
+    ADIDigitalOut wings(P_wings);
 
     Motor_Group cata({P_L_cata, P_R_cata});
 

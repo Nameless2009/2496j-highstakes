@@ -1,5 +1,6 @@
 #include "main.h"
 #include "global.h"
+#include "autons.h"
 
 using namespace glb;
 using namespace pros;
@@ -12,6 +13,177 @@ bool startCata = false;
 bool stopCata = false;
 bool antiJamOverride = false;
 bool matchLoadingMode = false;
+bool wingValue = false;
+bool intakeLifterValue = true;
+
+
+//delete later (after testing)
+// void drivePID(int desiredValue){
+// 	bool enableDrivePID = true;
+// 	int prevError = 0;
+// 	int totalError = 0;
+// 	int count = 0;
+
+// 	double kP = 0.687;
+// 	double kI = 0.0023;
+// 	double kD = 4.514;
+
+// 	chassis.tare_position();
+
+// 	while (enableDrivePID){
+// 		//get position of all motors:
+// 		int FRpos = chassis_FR.get_position();
+// 		int FLpos = chassis_FL.get_position();
+// 		int BRpos = chassis_BR.get_position();
+// 		int BLpos = chassis_BL.get_position();
+
+// 		//get avg of motors:
+// 		int currentValue = (FRpos+BRpos+FLpos+BLpos)/4;
+
+// 		//proportional
+// 		int error = desiredValue - currentValue;
+
+// 		//derivative
+// 		int derivative = error - prevError;
+
+// 		//integral
+// 		if (abs(error) < 20){
+// 			totalError += error;
+// 		}
+
+
+// 		double speed = (error*kP + derivative*kD + totalError*kI);
+// 		chassis.move(speed);
+
+// 		prevError = error;
+
+// 		if (error < 5){
+// 			count++;
+// 		}
+
+// 		if (count > 20){
+// 			enableDrivePID = false;
+// 		} 
+
+// 		delay(20);
+// 	}
+
+// 	chassis.move(0);
+
+// }
+
+
+// void turnRightPID(int desiredValue){
+// 	bool enableTurnPID = true;
+// 	int prevError = 0;
+// 	int totalError = 0;
+// 	int count = 0;
+
+// 	double kP = 0.687;
+// 	double kI = 0.0023;
+// 	double kD = 4.514;
+
+// 	chassis.tare_position();
+
+// 	while (enableTurnPID){
+// 		//get position of all motors:
+// 		int FRpos = chassis_FR.get_position();
+// 		int FLpos = chassis_FL.get_position();
+// 		int BRpos = chassis_BR.get_position();
+// 		int BLpos = chassis_BL.get_position();
+
+// 		//get avg of motors:
+// 		int currentValue = (abs(FRpos)+abs(BRpos)+abs(FLpos)+abs(BLpos))/4;
+
+// 		//proportional
+// 		int error = desiredValue - currentValue;
+
+// 		//derivative
+// 		int derivative = error - prevError;
+
+// 		//integral
+// 		if (abs(error) < 20){
+// 			totalError += error;
+// 		}
+
+
+// 		double speed = (error*kP + derivative*kD + totalError*kI);
+// 		rightChassis.move(speed);
+// 		leftChassis.move(-speed);
+
+// 		prevError = error;
+
+// 		if (error < 5){
+// 			count++;
+// 		}
+
+// 		if (count > 20){
+// 			enableTurnPID = false;
+// 		} 
+
+// 		delay(20);
+// 	}
+
+// 	chassis.move(0);
+
+// }
+
+
+// void turnLeftPID(int desiredValue){
+// 	bool enableTurnPID = true;
+// 	int prevError = 0;
+// 	int totalError = 0;
+// 	int count = 0;
+
+// 	double kP = 0.687;
+// 	double kI = 0.0023;
+// 	double kD = 4.514;
+
+// 	chassis.tare_position();
+
+// 	while (enableTurnPID){
+// 		//get position of all motors:
+// 		int FRpos = chassis_FR.get_position();
+// 		int FLpos = chassis_FL.get_position();
+// 		int BRpos = chassis_BR.get_position();
+// 		int BLpos = chassis_BL.get_position();
+
+// 		//get avg of motors:
+// 		int currentValue = (abs(FRpos)+abs(BRpos)+abs(FLpos)+abs(BLpos))/4;
+
+// 		//proportional
+// 		int error = desiredValue - currentValue;
+
+// 		//derivative
+// 		int derivative = error - prevError;
+
+// 		//integral
+// 		if (abs(error) < 20){
+// 			totalError += error;
+// 		}
+
+
+// 		double speed = (error*kP + derivative*kD + totalError*kI);
+// 		rightChassis.move(-speed);
+// 		leftChassis.move(speed);
+
+// 		prevError = error;
+
+// 		if (error < 5){
+// 			count++;
+// 		}
+
+// 		if (count > 20){
+// 			enableTurnPID = false;
+// 		} 
+
+// 		delay(20);
+// 	}
+
+// 	chassis.move(0);
+
+// }
+
 
 void cataCycle(){
 	if (matchLoadingMode == false){
@@ -61,44 +233,21 @@ void cataCode(){
     cataCycle();
 }
 
+void functionChangeButton(){
+	if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
+		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			blocker.move(80);
+		}
+		else {
+			blocker.move(0);
+		}
+		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)){
+			wingValue = !wingValue;
+			wings.set_value(wingValue);
+		}
+	}
+}
 
-// void limit(){
-//     if (startCata == false || stopCata == true){
-//         cata.move(0);
-//         stopCata = false;
-//     }
-//     else{
-//         cata.move(100);
-//     }
-// }
-
-// void half(){
-//     if (x==0){
-//         limit(); //run regular limit switch code
-//         cata.tare_position();
-//         x = 1;
-//     }
-//     else if (x==1){
-//         //move to half position:
-//         if (cataL.get_position()>300 && cataL.get_position()<350){
-//             cata.move(0);
-//             x=0;
-//         }
-//         else {
-//             cata.move(100);
-//         }
-//     }
-// }
-
-
-// void cataCode(){
-//     if (mode == false){
-//         limit();
-//     }
-//     else if (mode == true){
-//         half();
-//     }
-// }
 
 /**
  * A callback function for LLEMU's center button.
@@ -163,7 +312,9 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -199,7 +350,15 @@ void opcontrol()
 			matchLoadingMode = !matchLoadingMode;
 		}
 
+		//make this with a hotswap key
+		// wings.set_value(wingValue);
+		// intakeLifter.set_value(intakeLifterValue);
+
         
+		if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){ //pressing
+
+		}
+
 
 		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			intake.move(127);
