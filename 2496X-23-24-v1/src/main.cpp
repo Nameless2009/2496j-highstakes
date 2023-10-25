@@ -1,3 +1,5 @@
+//newest code!!
+
 #include "main.h"
 #include "global.h"
 #include "autons.h"
@@ -235,13 +237,13 @@ void cataCode(){
 
 void functionChangeButton(){
 	if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
+		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			blocker.move(80);
 		}
-		else {
+		else{
 			blocker.move(0);
 		}
-		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)){
+		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
 			wingValue = !wingValue;
 			wings.set_value(wingValue);
 		}
