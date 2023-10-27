@@ -219,23 +219,11 @@ void cataCode(){
     cataCycle();
 }
 
-void functionChangeButtonCode(){
+void wingsCode(){
 	if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			blocker.move(80);
-		}
-		else{
-			blocker.move(0);
-		}
-		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)){
-			wingValue = !wingValue;
-			wings.set_value(wingValue);
-		}
-		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R2)){
-			intakeLifterValue = !intakeLifterValue;
-			intakeLifter.set_value(intakeLifterValue);
-		}
+		wingValue = !wingValue;
 	}
+	wings.set_value(wingValue);
 }
 
 
@@ -340,7 +328,7 @@ void opcontrol()
 			matchLoadingMode = !matchLoadingMode;
 		}
 
-		functionChangeButtonCode();
+		wingsCode();
 
 		if (con.get_digital(E_CONTROLLER_DIGITAL_X)){ //pressing
 			blocker.move(-80); //retract
