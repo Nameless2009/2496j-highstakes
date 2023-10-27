@@ -1,5 +1,3 @@
-//newest code!!
-
 #include "main.h"
 #include "global.h"
 #include "autons.h"
@@ -8,7 +6,7 @@ using namespace glb;
 using namespace pros;
 using namespace std;
 
-//organize code when you have time
+//fix?
 
 //this is the current version, create new branch and push.
 bool startCata = false;
