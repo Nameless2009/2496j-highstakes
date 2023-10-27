@@ -202,7 +202,7 @@ void cataCycle(){
 		}
 	}
 	else if (matchLoadingMode == true){
-		cata.move(127);
+		cata.move(90);
 	}
 }
 
@@ -214,24 +214,10 @@ void refresh(){
         stopCata = true;
         startCata = false;
     }
-    // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-    //     antiJamOverride = !antiJamOverride;
-    //     con.rumble(".");
-    // }
-}
-
-void antiJam(){
-    if (antiJamOverride == false){
-        if (catalimit.get_value()==false){
-            intake.move(0);
-            //stop intake if limit not pressed (preventing jamming)
-        }
-    }
 }
 
 void cataCode(){
     refresh();
-    // antiJam();
     cataCycle();
 }
 
