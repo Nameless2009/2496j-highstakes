@@ -10,9 +10,9 @@ void drivePID(int desiredValue){
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 0.687;
-	double kI = 0.0023;
-	double kD = 4.514;
+	double kP = 1.46;
+	double kI = 0.0782;
+	double kD = 6.41;
 
 	chassis.tare_position();
 
@@ -47,7 +47,7 @@ void drivePID(int desiredValue){
 			count++;
 		}
 
-		if (count > 20){
+		if (count > 0){
 			enableDrivePID = false;
 		} 
 
@@ -65,9 +65,9 @@ void turnRightPID(int desiredValue){
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 0.687;
-	double kI = 0.0023;
-	double kD = 4.514;
+	double kP = 1.46;
+	double kI = 0.0782;
+	double kD = 6.41;
 
 	chassis.tare_position();
 
@@ -99,15 +99,20 @@ void turnRightPID(int desiredValue){
 
 		prevError = error;
 
+
 		if (error < 5){
 			count++;
 		}
 
-		if (count > 20){
+		if (count > 0){
 			enableTurnPID = false;
 		} 
 
 		delay(20);
+
+
+		lcd::clear_line(1);
+		lcd::print(1, "error: %d", error);
 	}
 
 	chassis.move(0);
@@ -121,9 +126,9 @@ void turnLeftPID(int desiredValue){
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 0.687;
-	double kI = 0.0023;
-	double kD = 4.514;
+	double kP = 1.46;
+	double kI = 0.0782;
+	double kD = 6.41;
 
 	chassis.tare_position();
 
@@ -159,7 +164,7 @@ void turnLeftPID(int desiredValue){
 			count++;
 		}
 
-		if (count > 20){
+		if (count > 0){
 			enableTurnPID = false;
 		} 
 
@@ -188,32 +193,32 @@ void offSide(){
 
 void onSide(){
 	// MAKE SURE TO START AUTON WITH HALF CATA
-	drivePID(1500); //drive forward toward goal
-	turnRightPID(250); //turn a little to allign with goal
-	intake.move_relative(-300, 127); //reverse intake to spit out triball
-	drivePID(250); //push alliance triball into goal
-	drivePID(-250); //reverse
-	turnLeftPID(425); // turn to align with first triball
-	intake.move(127); //spin intake forward
-	drivePID(2000); //drive toward first triball to intake it
-	turnRightPID(900); //face goal
-	intake.move(-127); //outake towards goal
-	turnLeftPID(500); //face next triball
-	intake.move(127); //intake spin forward
-	drivePID(500); //drive to intake it
-	turnRightPID(500); //face goal
-	intake.move(-127); //outake towards goal
-	wings.set_value(true); //extend wings
-	drivePID(1500); //push everything in the goal
-	wings.set_value(false); //retract wings 
-	drivePID(-150); //reverse
-	turnRightPID(500);
-	drivePID(1500);
-	turnRightPID(500);
-	wings.set_value(true);
-	drivePID(1000); //touch bar for AWP
+	drivePID(850); //drive forward toward goal
+	turnLeftPID(250); //turn a little to allign with goal
+	intake.move_relative(-1000, 127); //reverse intake to spit out triball
+	// drivePID(250); //push alliance triball into goal
+	// drivePID(-250); //reverse
+	// turnLeftPID(425); // turn to align with first triball
+	// intake.move(127); //spin intake forward
+	// drivePID(2000); //drive toward first triball to intake it
+	// turnRightPID(900); //face goal
+	// intake.move(-127); //outake towards goal
+	// turnLeftPID(500); //face next triball
+	// intake.move(127); //intake spin forward
+	// drivePID(500); //drive to intake it
+	// turnRightPID(500); //face goal
+	// intake.move(-127); //outake towards goal
+	// wings.set_value(true); //extend wings
+	// drivePID(1500); //push everything in the goal
+	// wings.set_value(false); //retract wings 
+	// drivePID(-150); //reverse
+	// turnRightPID(500);
+	// drivePID(1500);
+	// turnRightPID(500);
+	// wings.set_value(true);
+	// drivePID(1000); //touch bar for AWP
 }
 
-void skipAuton(){
-
+void skipAuton(){ //testing for now
+	
 }

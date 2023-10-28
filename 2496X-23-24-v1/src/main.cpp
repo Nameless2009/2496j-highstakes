@@ -13,7 +13,7 @@ bool startCata = false;
 bool stopCata = false;
 bool antiJamOverride = false;
 bool matchLoadingMode = false;
-bool wingValue = false;
+bool wingsToggle = true;
 bool intakeLifterValue = true;
 
 
@@ -220,10 +220,9 @@ void cataCode(){
 }
 
 void wingsCode(){
-	if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-		wingValue = !wingValue;
-	}
-	wings.set_value(wingValue);
+	// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
+	// 	wingValue = !wingValue;
+	// }
 }
 
 
@@ -291,7 +290,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	
+	onSide();	
 }
 
 /**
@@ -309,6 +308,7 @@ void autonomous() {
  */
 void opcontrol()
 {
+	wings.set_value(true);
 
 	while (true)
 	{
@@ -320,15 +320,20 @@ void opcontrol()
 		chassis_FL.move(leftstick);
 		chassis_BL.move(leftstick);
 
-
-        //cata code:
         cataCode();
 
 		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
 			matchLoadingMode = !matchLoadingMode;
 		}
 
-		wingsCode();
+		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)){
+			wingsToggle = !wingsToggle;
+		}
+		if (wingsToggle==false){
+			wings.set_value(false);
+		}else {
+			wings.set_value(true);
+		}
 
 		if (con.get_digital(E_CONTROLLER_DIGITAL_X)){ //pressing
 			blocker.move(-80); //retract
