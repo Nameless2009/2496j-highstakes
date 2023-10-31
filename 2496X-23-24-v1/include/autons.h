@@ -8,7 +8,9 @@
 
 using namespace pros;
 
-void drivePID(int desiredValue);
+void driveForwardPID(int desiredValue);
+
+void driveBackwardPID(int desiredValue);
 
 void turnRightPID(int desiredValue);
 
