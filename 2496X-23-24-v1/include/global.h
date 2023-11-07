@@ -22,8 +22,6 @@ namespace glb
 #define P_intake 9
 #define P_catalimit 8 //switch to 8 later
 #define P_imu 21
-#define P_intakeLifter 1
-#define P_wings 7
 #define P_blocker 4
 
 
@@ -43,7 +41,7 @@ namespace glb
 
     extern Motor blocker;
 
-    extern ADIDigitalOut intakeLifter;
+    extern ADIDigitalOut zoneMech;
     extern ADIDigitalOut wings;
 
 

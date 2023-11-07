@@ -20,7 +20,9 @@ void offSide();
 
 void onSide();
 
-void skipAuton();
+void autonSkills();
+
+void skipAutonomous();
 
 
 

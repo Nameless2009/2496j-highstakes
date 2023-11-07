@@ -16,6 +16,11 @@ bool antiJamOverride = false;
 bool matchLoadingMode = false;
 bool wingsToggle = true;
 bool intakeLifterValue = true;
+bool half = false;
+
+bool onside = false;
+bool offside = false;
+bool skillsAuton = false;
 
 
 
@@ -53,12 +58,6 @@ void cataCode(){
     cataCycle();
 }
 
-void wingsCode(){
-	// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
-	// 	wingValue = !wingValue;
-	// }
-}
-
 
 /**
  * A callback function for LLEMU's center button.
@@ -68,15 +67,41 @@ void wingsCode(){
  */
 void on_center_button()
 {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed)
+	offside = !offside;
+	if (offside)
 	{
-		lcd::set_text(2, "I was pressed!");
+		lcd::clear();
+		lcd::set_text(3, "OFFSIDE selected.");
 	}
 	else
 	{
-		lcd::clear_line(2);
+		lcd::clear_line(3);
+	}
+}
+void on_left_button()
+{
+	onside = !onside;
+	if (onside)
+	{
+		lcd::clear();
+		lcd::set_text(3, "ONSIDE selected.");
+	}
+	else
+	{
+		lcd::clear_line(3);
+	}
+}
+void on_right_button()
+{
+	skillsAuton = !skillsAuton;
+	if (skillsAuton)
+	{
+		lcd::clear();
+		lcd::set_text(3, "AUTON SKILLS selected.");
+	}
+	else
+	{
+		lcd::clear_line(3);
 	}
 }
 
@@ -89,9 +114,14 @@ void on_center_button()
 void initialize()
 {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "2496");
+	pros::lcd::set_text(1, "Left Button: ONSIDE");
+	pros::lcd::set_text(2, "Center Button: OFFSIDE");
+	pros::lcd::set_text(3, "Right Button: SKILLS AUTON");
+	pros::lcd::set_text(4, "Click Nothing: SKIP AUTON");
 
+	pros::lcd::register_btn0_cb(on_left_button);
 	pros::lcd::register_btn1_cb(on_center_button);
+	pros::lcd::register_btn2_cb(on_right_button);
 }
 
 /**
@@ -124,7 +154,18 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	//code auton selector
+	if (skillsAuton){
+		autonSkills();
+	}
+	else if (onside){
+		onSide();
+	}
+	else if (offside){
+		offSide();
+	}
+	else { //if nothing was clicked
+		skipAutonomous();
+	}
 }
 
 /**
