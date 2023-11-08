@@ -2,17 +2,19 @@
 
 
 namespace glb {
-    #define P_L_cata 8
-    #define P_R_cata 15
-    #define P_FL_chassis 1
-    #define P_BR_chassis 2
-    #define P_BL_chassis 3
-    #define P_FR_chassis 5
-    #define P_intake 9
-    #define P_catalimit 8
-    #define P_imu 21;
-    #define P_intakeLifter 1
-    #define P_wings 2
+    // #define P_L_cata 8
+    // #define P_R_cata 15
+    // #define P_FL_chassis 1
+    // #define P_BR_chassis 2
+    // #define P_BL_chassis 3
+    // #define P_FR_chassis 5
+    // #define P_intake 9
+    // #define P_catalimit 8
+    // #define P_imu 21;
+    // #define P_intakeLifter 1
+    // #define P_wings 2
+    // #define P_blocker_left 9
+    // #define P_blocker_right 10
 
 
     // objects
@@ -25,7 +27,6 @@ namespace glb {
     Motor chassis_BR(P_BR_chassis, E_MOTOR_GEARSET_18, true);
     Motor chassis_BL(P_BL_chassis, E_MOTOR_GEARSET_18, false);
     Motor intake(P_intake, E_MOTOR_GEARSET_18, false);
-    Motor blocker(P_blocker, E_MOTOR_GEARSET_36, true);
 
 
     Motor_Group rightChassis({P_FR_chassis, P_BR_chassis});
@@ -36,6 +37,11 @@ namespace glb {
     ADIDigitalOut wings('G', true);
 
     Motor_Group cata({P_L_cata, P_R_cata});
+
+    Motor blockerLeft(P_blocker_left, E_MOTOR_GEARSET_36, true);
+    Motor blockerRight(P_blocker_right, E_MOTOR_GEARSET_36, false);
+
+    Motor_Group blocker({P_blocker_left, P_blocker_right});
 
 
     // Imu inertial(P_imu);

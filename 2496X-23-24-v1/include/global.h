@@ -12,17 +12,18 @@ namespace glb
 
 
 {
-// defining ports
-#define P_L_cata 8
-#define P_R_cata 15
-#define P_FL_chassis 1
-#define P_BR_chassis 2
-#define P_BL_chassis 3
-#define P_FR_chassis 5
-#define P_intake 9
-#define P_catalimit 8 //switch to 8 later
-#define P_imu 21
-#define P_blocker 4
+    // defining ports
+    #define P_L_cata 8
+    #define P_R_cata 15
+    #define P_FL_chassis 1
+    #define P_BR_chassis 2
+    #define P_BL_chassis 3
+    #define P_FR_chassis 5
+    #define P_intake 9
+    #define P_catalimit 8 //switch to 8 later
+    #define P_imu 21
+    #define P_blocker_left 11
+    #define P_blocker_right 10
 
 
     // objects
@@ -39,13 +40,16 @@ namespace glb
     extern Motor_Group leftChassis;
     extern Motor_Group chassis;
 
-    extern Motor blocker;
-
     extern ADIDigitalOut zoneMech;
     extern ADIDigitalOut wings;
 
 
     extern Motor_Group cata;
+
+    extern Motor blockerLeft;
+    extern Motor blockerRight;
+
+    extern Motor_Group blocker;
 
 
     // Imu inertial(P_imu);

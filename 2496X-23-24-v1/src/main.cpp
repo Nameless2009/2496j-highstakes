@@ -114,6 +114,9 @@ void on_right_button()
 void initialize()
 {
 	pros::lcd::initialize();
+
+	blocker.set_brake_modes(E_MOTOR_BRAKE_BRAKE);
+	
 	pros::lcd::set_text(1, "Left Button: ONSIDE");
 	pros::lcd::set_text(2, "Center Button: OFFSIDE");
 	pros::lcd::set_text(3, "Right Button: SKILLS AUTON");
@@ -201,7 +204,7 @@ void opcontrol()
 			matchLoadingMode = !matchLoadingMode;
 		}
 
-		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)){
+		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
 			wingsToggle = !wingsToggle;
 		}
 		if (wingsToggle==false){
@@ -210,8 +213,17 @@ void opcontrol()
 			wings.set_value(true);
 		}
 
-		if (con.get_digital(E_CONTROLLER_DIGITAL_X)){ //pressing
-			blocker.move(-80); //retract
+		if (con.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
+			blockerLeft.move(127);
+			blockerRight.move(127);
+		}
+		else if(con.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
+			blockerLeft.move(-127);
+			blockerRight.move(-127);
+		}
+		else{
+			blockerLeft.move(0);
+			blockerRight.move(0);
 		}
 
 
