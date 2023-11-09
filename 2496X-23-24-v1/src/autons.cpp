@@ -11,10 +11,9 @@ void driveForwardPID(int desiredValue)
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 1.46;
-	double kI = 0.0782;
-	double kD = 6.41;
-	// need to retune ^
+	double kP = 0; //1.46
+	double kI = 0; //0.0782
+	double kD = 0; //6.41
 
 	chassis.tare_position();
 
@@ -32,6 +31,9 @@ void driveForwardPID(int desiredValue)
 		// proportional
 		int error = desiredValue - currentValue;
 
+		con.clear();
+		con.print(0,0, "error: %d", error);
+
 		// derivative
 		int derivative = error - prevError;
 
@@ -46,12 +48,12 @@ void driveForwardPID(int desiredValue)
 
 		prevError = error;
 
-		if (error < 5)
+		if (error < 10)
 		{
 			count++;
 		}
 
-		if (count > 0)
+		if (count > 5)
 		{
 			enableDrivePID = false;
 		}
@@ -69,10 +71,9 @@ void driveBackwardPID(int desiredValue)
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 1.46;
-	double kI = 0.0782;
-	double kD = 6.41;
-	// need to retune ^
+	double kP = 0; //1.46
+	double kI = 0; //0.0782
+	double kD = 0; //6.41
 
 	chassis.tare_position();
 
@@ -90,6 +91,9 @@ void driveBackwardPID(int desiredValue)
 		// proportional
 		int error = desiredValue - currentValue;
 
+		con.clear();
+		con.print(0,0, "error: %d", error);
+
 		// derivative
 		int derivative = error - prevError;
 
@@ -104,12 +108,12 @@ void driveBackwardPID(int desiredValue)
 
 		prevError = error;
 
-		if (error < 5)
+		if (error < 10)
 		{
 			count++;
 		}
 
-		if (count > 0)
+		if (count > 5)
 		{
 			enableDrivePID = false;
 		}
@@ -127,9 +131,9 @@ void turnRightPID(int desiredValue)
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 1.46;
-	double kI = 0.0782;
-	double kD = 6.41;
+	double kP = 0; //1.46
+	double kI = 0; //0.0782
+	double kD = 0; //6.41
 
 	chassis.tare_position();
 
@@ -146,6 +150,9 @@ void turnRightPID(int desiredValue)
 
 		// proportional
 		int error = desiredValue - currentValue;
+
+		con.clear();
+		con.print(0,0, "error: %d", error);
 
 		// derivative
 		int derivative = error - prevError;
@@ -162,20 +169,17 @@ void turnRightPID(int desiredValue)
 
 		prevError = error;
 
-		if (error < 5)
+		if (error < 10)
 		{
 			count++;
 		}
 
-		if (count > 0)
+		if (count > 5)
 		{
 			enableTurnPID = false;
 		}
 
 		delay(20);
-
-		lcd::clear_line(1);
-		lcd::print(1, "error: %d", error);
 	}
 
 	chassis.move(0);
@@ -188,9 +192,9 @@ void turnLeftPID(int desiredValue)
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 1.46;
-	double kI = 0.0782;
-	double kD = 6.41;
+	double kP = 0; //1.46
+	double kI = 0; //0.0782
+	double kD = 0; //6.41
 
 	chassis.tare_position();
 
@@ -208,6 +212,9 @@ void turnLeftPID(int desiredValue)
 		// proportional
 		int error = desiredValue - currentValue;
 
+		con.clear();
+		con.print(0,0, "error: %d", error);
+
 		// derivative
 		int derivative = error - prevError;
 
@@ -223,12 +230,12 @@ void turnLeftPID(int desiredValue)
 
 		prevError = error;
 
-		if (error < 5)
+		if (error < 10)
 		{
 			count++;
 		}
 
-		if (count > 0)
+		if (count > 5)
 		{
 			enableTurnPID = false;
 		}

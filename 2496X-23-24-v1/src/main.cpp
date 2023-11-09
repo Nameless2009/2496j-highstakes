@@ -6,9 +6,6 @@ using namespace glb;
 using namespace pros;
 using namespace std;
 
-//version two
-//code halfcata (use degrees travelled to stop half)
-
 
 bool startCata = false;
 bool stopCata = false;
