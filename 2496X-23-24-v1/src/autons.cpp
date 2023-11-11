@@ -304,5 +304,5 @@ void autonSkills(){
 }
 
 void skipAutonomous(){
-	driveForwardPID(1000);
+	
 }
