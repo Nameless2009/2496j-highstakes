@@ -11,9 +11,11 @@ void driveForwardPID(int desiredValue)
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 0; //1.46
-	double kI = 0; //0.0782
-	double kD = 0; //6.41
+	double kP = 0.67;
+	double kI = 0.00273; 
+	double kD = 2.7;
+
+	con.clear();
 
 	chassis.tare_position();
 
@@ -31,7 +33,6 @@ void driveForwardPID(int desiredValue)
 		// proportional
 		int error = desiredValue - currentValue;
 
-		con.clear();
 		con.print(0,0, "error: %d", error);
 
 		// derivative
@@ -71,9 +72,9 @@ void driveBackwardPID(int desiredValue)
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 0; //1.46
-	double kI = 0; //0.0782
-	double kD = 0; //6.41
+	double kP = 0.67;
+	double kI = 0.00273; 
+	double kD = 2.7;
 
 	chassis.tare_position();
 
@@ -131,11 +132,12 @@ void turnRightPID(int desiredValue)
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 0; //1.46
-	double kI = 0; //0.0782
-	double kD = 0; //6.41
+	double kP = 2.5;
+	double kI = 0.0009645;
+	double kD = 7.49535;
 
 	chassis.tare_position();
+	con.clear();
 
 	while (enableTurnPID)
 	{
@@ -151,7 +153,6 @@ void turnRightPID(int desiredValue)
 		// proportional
 		int error = desiredValue - currentValue;
 
-		con.clear();
 		con.print(0,0, "error: %d", error);
 
 		// derivative
@@ -192,9 +193,9 @@ void turnLeftPID(int desiredValue)
 	int totalError = 0;
 	int count = 0;
 
-	double kP = 0; //1.46
-	double kI = 0; //0.0782
-	double kD = 0; //6.41
+	double kP = 2.5;
+	double kI = 0.0009645;
+	double kD = 7.49535;
 
 	chassis.tare_position();
 
@@ -303,5 +304,5 @@ void autonSkills(){
 }
 
 void skipAutonomous(){
-
+	driveForwardPID(1000);
 }

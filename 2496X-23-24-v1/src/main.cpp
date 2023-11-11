@@ -112,7 +112,7 @@ void initialize()
 {
 	pros::lcd::initialize();
 
-	blocker.set_brake_modes(E_MOTOR_BRAKE_BRAKE);
+	blocker.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 	
 	pros::lcd::set_text(1, "Left Button: ONSIDE");
 	pros::lcd::set_text(2, "Center Button: OFFSIDE");
