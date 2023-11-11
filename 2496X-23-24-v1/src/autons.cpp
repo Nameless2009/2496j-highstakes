@@ -15,8 +15,6 @@ void driveForwardPID(int desiredValue)
 	double kI = 0.00273; 
 	double kD = 2.7;
 
-	con.clear();
-
 	chassis.tare_position();
 
 	while (enableDrivePID)
@@ -32,8 +30,6 @@ void driveForwardPID(int desiredValue)
 
 		// proportional
 		int error = desiredValue - currentValue;
-
-		con.print(0,0, "error: %d", error);
 
 		// derivative
 		int derivative = error - prevError;
@@ -92,8 +88,6 @@ void driveBackwardPID(int desiredValue)
 		// proportional
 		int error = desiredValue - currentValue;
 
-		con.clear();
-		con.print(0,0, "error: %d", error);
 
 		// derivative
 		int derivative = error - prevError;
@@ -137,7 +131,6 @@ void turnRightPID(int desiredValue)
 	double kD = 7.49535;
 
 	chassis.tare_position();
-	con.clear();
 
 	while (enableTurnPID)
 	{
@@ -152,8 +145,6 @@ void turnRightPID(int desiredValue)
 
 		// proportional
 		int error = desiredValue - currentValue;
-
-		con.print(0,0, "error: %d", error);
 
 		// derivative
 		int derivative = error - prevError;
@@ -213,8 +204,6 @@ void turnLeftPID(int desiredValue)
 		// proportional
 		int error = desiredValue - currentValue;
 
-		con.clear();
-		con.print(0,0, "error: %d", error);
 
 		// derivative
 		int derivative = error - prevError;
