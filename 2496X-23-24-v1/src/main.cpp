@@ -11,7 +11,7 @@ bool startCata = false;
 bool stopCata = false;
 bool antiJamOverride = false;
 bool matchLoadingMode = false;
-bool wingsToggle = true;
+bool wingsToggle = false;
 bool intakeLifterValue = true;
 bool half = false;
 
@@ -113,6 +113,8 @@ void initialize()
 	pros::lcd::initialize();
 
 	blocker.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+	wings.set_value(false);
+
 	
 	pros::lcd::set_text(1, "Left Button: ONSIDE");
 	pros::lcd::set_text(2, "Center Button: OFFSIDE");
@@ -234,5 +236,6 @@ void opcontrol()
 			intake.move(0);
 		}
 		delay(2);
+
 	}
 }

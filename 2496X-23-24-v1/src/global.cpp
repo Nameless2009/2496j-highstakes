@@ -33,7 +33,7 @@ namespace glb {
     Motor_Group leftChassis({P_FL_chassis, P_BL_chassis});
     Motor_Group chassis({P_FR_chassis, P_BR_chassis, P_FL_chassis, P_BL_chassis}); 
 
-    ADIDigitalOut zoneMech('A', false);
+    ADIDigitalOut zoneMech('F', false);
     ADIDigitalOut wings('G', true);
 
     Motor_Group cata({P_L_cata, P_R_cata});

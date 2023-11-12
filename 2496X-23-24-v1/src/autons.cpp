@@ -237,59 +237,66 @@ void turnLeftPID(int desiredValue)
 }
 
 
-void offSide(){
-	driveBackwardPID(1000);
-	turnRightPID(250);
-	driveBackwardPID(500);
-	driveForwardPID(500);
-	turnLeftPID(250);
-	zoneMech.set_value(true);
-	driveForwardPID(1000);
-	turnLeftPID(250);
+void offSide(){ //make so all pneumatics start closed in init
+	zoneMech.set_value(true); //switch to zone mech later
+	delay(300);
+	turnLeftPID(180);
+	delay(50);
+	turnRightPID(300);
 	zoneMech.set_value(false);
-	driveForwardPID(3000);
-	blocker.move_relative(500, 127);
+	delay(20);
+	intake.move_relative(-500, 127);
+	// driveForwardPID(1000);
+	chassis.move(127);
+	delay(850);
+	// chassis.move_relative(-1000, 127); //this goes forward for some reason
+	chassis.move(0);
+	driveBackwardPID(650);
+	delay(10);
+	turnRightPID(500);
+	chassis.move(-100);
+	delay(500);
+	chassis.move(0);
+	driveForwardPID(500);
+	turnRightPID(250);
+	driveForwardPID(1150);
+	turnRightPID(600);
+	driveBackwardPID(1800);
 }
 
 void onSide(){
+
 	intake.move(127);
-	driveForwardPID(500);
-	turnRightPID(1000);
-	intake.move(0);
-	driveForwardPID(2000);
-	turnLeftPID(250);
-	driveForwardPID(1000);
-	turnLeftPID(250);
-	driveForwardPID(800);
-	driveBackwardPID(800);
-	turnLeftPID(450);
-	intake.move(127);
-	driveForwardPID(2500);
-	turnRightPID(450);
-	intake.move(-127);
-	turnLeftPID(450);
-	intake.move(127);
-	driveForwardPID(500);
+	delay(500);
+	driveForwardPID(2100);
 	turnRightPID(500);
 	intake.move(-127);
+	delay(800);
+	turnLeftPID(500);
+	intake.move(127);
+	driveForwardPID(1000);
+	turnRightPID(600);
+	intake.move(-127);
 	wings.set_value(true);
-	driveForwardPID(2500);
+	chassis.move(127);
+	delay(1000);
+	driveBackwardPID(1000);
 }
 
 void autonSkills(){
-	cata.move(100);
-	delay(50000); //wait 50 seconds
-	cata.move(0);
-	driveBackwardPID(500);
-	turnLeftPID(300);
-	driveForwardPID(1500);
-	turnLeftPID(150);
-	while(catalimit.get_value()==false){ //until limitswitch pressed spin cata. when limit pressed tare pos
-		cata.move(127);
-	}
-	cata.tare_position();
-	cata.move_relative(100, 127); //move cata to top
-	chassis.move(70); //move chassis slowly toward bar to hang
+	// cata.move(100);
+	// delay(50000); //wait 50 seconds
+	// cata.move(0);
+	// driveBackwardPID(500);
+	// turnLeftPID(300);
+	// driveForwardPID(1500);
+	// turnLeftPID(150);
+	// while(catalimit.get_value()==false){ //until limitswitch pressed spin cata. when limit pressed tare pos
+	// 	cata.move(127);
+	// }
+	// cata.tare_position();
+	// cata.move_relative(100, 127); //move cata to top
+	// chassis.move(70); //move chassis slowly toward bar to hang
 }
 
 void skipAutonomous(){
