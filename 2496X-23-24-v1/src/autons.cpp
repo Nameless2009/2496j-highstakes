@@ -264,22 +264,29 @@ void offSide(){ //make so all pneumatics start closed in init
 	driveBackwardPID(1800);
 }
 
-void onSide(){
+void onSide()
+{
 
 	intake.move(127);
-	delay(500);
+	delay(200);
 	driveForwardPID(2100);
+	delay(500);
 	turnRightPID(500);
+	delay(500);
+	driveForwardPID(620);
 	intake.move(-127);
 	delay(800);
+	driveBackwardPID(620);
+	delay(300);
 	turnLeftPID(500);
+	delay(100);
 	intake.move(127);
-	driveForwardPID(1000);
-	turnRightPID(600);
+	driveForwardPID(890);
+	turnRightPID(650);
 	intake.move(-127);
 	wings.set_value(true);
-	chassis.move(127);
-	delay(1000);
+	driveForwardPID(1600);
+	// delay(200);
 	driveBackwardPID(1000);
 }
 
