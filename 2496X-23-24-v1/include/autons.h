@@ -12,9 +12,7 @@ void driveForwardPID(int desiredValue);
 
 void driveBackwardPID(int desiredValue);
 
-void turnRightPID(int desiredValue);
-
-void turnLeftPID(int desiredValue);
+void turnPID(int desiredValue);
 
 void offSide();
 

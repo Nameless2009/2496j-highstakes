@@ -52,7 +52,7 @@ namespace glb
     extern Motor_Group blocker;
 
 
-    // Imu inertial(P_imu);
+    extern Imu inertial;
 
 
     extern ADIDigitalIn catalimit;

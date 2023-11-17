@@ -36,7 +36,7 @@ void cataCycle(){
 		}
 	}
 	else if (matchLoadingMode == true){
-		cata.move(90);
+		cata.move(110);
 	}
 }
 
@@ -166,7 +166,7 @@ void autonomous() {
 		offSide();
 	}
 	else { //if nothing was clicked
-		skipAutonomous();
+		skipAutonomous();      
 	}
 }
 

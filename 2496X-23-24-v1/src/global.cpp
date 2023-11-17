@@ -44,7 +44,7 @@ namespace glb {
     Motor_Group blocker({P_blocker_left, P_blocker_right});
 
 
-    // Imu inertial(P_imu);
+    Imu inertial(P_imu);
 
 
     ADIDigitalIn catalimit(P_catalimit);
