@@ -36,7 +36,7 @@ void cataCycle(){
 		}
 	}
 	else if (matchLoadingMode == true){
-		cata.move(110);
+		cata.move(120);
 	}
 }
 

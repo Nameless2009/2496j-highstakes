@@ -27,7 +27,7 @@ void drivePID(int desiredValue, int timeout=1500)
 	chassis_BR.tare_position();
 	chassis_BL.tare_position();
 
-	inertial.tare_heading();
+	// inertial.tare_heading();
 
 	con.clear();
 
@@ -126,14 +126,18 @@ void turnPID(int desiredValue, int timeout=1500)
 	double position;
 	double turnV;
 
-	double kP = 10;
-	double kI = 0.000001; 
+	double kP = 8;
+	double kI = 0.0001; 
 	double kD = 30;
 	double maxI = 500;
 
 	int time = 0;
 	
 	int integralThreshold = 30;
+
+	con.clear();
+
+	chassis.set_brake_modes(E_MOTOR_BRAKE_BRAKE);
 
 	//inertial.tare_heading();
 
@@ -161,6 +165,38 @@ void turnPID(int desiredValue, int timeout=1500)
 			turnV = (position + desiredValue);
 		}
 	}
+
+	// if (abs(turnV)<10){
+	// 	//constants
+	// }
+	// else if (abs(turnV < 20)){
+	// 	//constants
+	// }
+	// else if (abs(turnV < 30)){
+	// 	//constants
+	// }
+	// else if (abs(turnV < 40)){
+	// 	//constants
+	// }
+	// else if (abs(turnV < 50)){
+	// 	//constants
+	// }
+	// else if (abs(turnV < 70)){
+	// 	//constants
+	// }
+	// else if (abs(turnV <= 50)){
+	// 	kP = 8;
+	// 	kI = 0; 
+	// 	kD = 0;
+	// }
+	// else if (abs(turnV <= 90)){
+	// 	kP = 8;
+	// 	kI = 0.0001; 
+	// 	kD = 30;
+	// }
+
+	//tune distances
+	//test intervals
 
 
 	while (enableTurnPID)
@@ -213,18 +249,20 @@ void turnPID(int desiredValue, int timeout=1500)
 			totalError = max(totalError, -maxI);
 		}
 
+		con.print(0,0, "error: %f", float(error));
+
 		double speed = (error * kP + derivative * kD + totalError * kI);
 		rightChassis.move(speed);
 		leftChassis.move(-speed);
 
 		prevError = error;
 
-		if (error < 10)
+		if (error < 5)
 		{
 			count++;
 		}
 
-		if (count > 20)
+		if (count > 30)
 		{
 			enableTurnPID = false;
 		}
@@ -240,28 +278,40 @@ void turnPID(int desiredValue, int timeout=1500)
 
 void offSide()
 {
-
-}
-
-void onSide()
-{
-
+	inertial.set_heading(315);
+	zoneMech.set_value(true);
+	delay(1000);
+	drivePID(-300);
+	turnPID(-90);
+	delay(500);
+	turnPID(90);
+	zoneMech.set_value(false);
+	blocker.move_relative(500, 127);
+	drivePID(2100);
+	intake.move(127);
+	drivePID(500);
+	delay(500);
+	turnPID(80);
+	intake.move(-127);
+	delay(500);
+	drivePID(500);
+	turnPID(-40);
+	intake.move(127);
+	drivePID(700);
+	delay(500);
+	turnPID(90);
+	intake.move(-127);
+	delay(50);
+	wings.set_value(true);
+	drivePID(2500);
 }
 
 void autonSkills()
 {
-
+	drivePID(100, 100);
 }
 
 void skipAutonomous()
 {
-	//move to onside after done
-	drivePID(500);
-	delay(1000);
-	turnPID(90);
-	delay(1000);
-	turnPID(270);
-	// intake.move(127);
-	// delay(10);
-	// driveBackwardPID(100); //this doesnt work?????
+	con.rumble("..........");
 }
