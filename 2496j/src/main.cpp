@@ -8,53 +8,53 @@ using namespace std;
 
 //2496j
 
-bool startCata = false;
-bool stopCata = false;
-bool antiJamOverride = false;
-bool matchLoadingMode = false;
-bool wingsToggle = false;
-bool intakeLifterValue = true;
-bool half = false;
+// bool startCata = false;
+// bool stopCata = false;
+// bool antiJamOverride = false;
+// bool matchLoadingMode = false;
+// bool wingsToggle = false;
+// bool intakeLifterValue = true;
+// bool half = false;
 
-bool onside = false;
-bool offside = false;
-bool skillsAuton = false;
+bool auto1 = false;
+bool auto2 = false;
+bool auto3 = false;
 
 
 
-void cataCycle(){
-	if (matchLoadingMode == false){
-		if (startCata == true){
-			cata.move(127);
-		}
-		else{
-			cata.move(0);
-		}
+// void cataCycle(){
+// 	if (matchLoadingMode == false){
+// 		if (startCata == true){
+// 			cata.move(127);
+// 		}
+// 		else{
+// 			cata.move(0);
+// 		}
 
-		if (stopCata == true){
-			cata.move(0);
-			stopCata = false;
-		}
-	}
-	else if (matchLoadingMode == true){
-		cata.move(120);
-	}
-}
+// 		if (stopCata == true){
+// 			cata.move(0);
+// 			stopCata = false;
+// 		}
+// 	}
+// 	else if (matchLoadingMode == true){
+// 		cata.move(120);
+// 	}
+// }
 
-void refresh(){
-    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
-        startCata = !startCata;
-    }
-    if (catalimit.get_new_press()){
-        stopCata = true;
-        startCata = false;
-    }
-}
+// void refresh(){
+//     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
+//         startCata = !startCata;
+//     }
+//     if (catalimit.get_new_press()){
+//         stopCata = true;
+//         startCata = false;
+//     }
+// }
 
-void cataCode(){
-    refresh();
-    cataCycle();
-}
+// void cataCode(){
+//     refresh();
+//     cataCycle();
+// }
 
 
 /**
@@ -65,11 +65,11 @@ void cataCode(){
  */
 void on_center_button()
 {
-	offside = !offside;
-	if (offside)
+	auto1 = true;
+	if (auto1)
 	{
 		lcd::clear();
-		lcd::set_text(3, "OFFSIDE selected.");
+		lcd::set_text(3, "(AUTO1) selected.");
 	}
 	else
 	{
@@ -78,11 +78,11 @@ void on_center_button()
 }
 void on_left_button()
 {
-	onside = !onside;
-	if (onside)
+	auto2 = true;
+	if (auto2)
 	{
 		lcd::clear();
-		lcd::set_text(3, "ONSIDE selected.");
+		lcd::set_text(3, "(AUTO2) selected.");
 	}
 	else
 	{
@@ -91,11 +91,11 @@ void on_left_button()
 }
 void on_right_button()
 {
-	skillsAuton = !skillsAuton;
-	if (skillsAuton)
+	auto3 = true;
+	if (auto3)
 	{
 		lcd::clear();
-		lcd::set_text(3, "AUTON SKILLS selected.");
+		lcd::set_text(3, "(AUTO3) selected.");
 	}
 	else
 	{
@@ -113,13 +113,13 @@ void initialize()
 {
 	pros::lcd::initialize();
 
-	blocker.set_brake_modes(E_MOTOR_BRAKE_HOLD);
-	wings.set_value(false);
+	// blocker.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+	// wings.set_value(false);
 
 	
-	pros::lcd::set_text(1, "Left Button: ONSIDE");
-	pros::lcd::set_text(2, "Center Button: OFFSIDE");
-	pros::lcd::set_text(3, "Right Button: SKILLS AUTON");
+	pros::lcd::set_text(1, "Left Button: (AUTO1)");
+	pros::lcd::set_text(2, "Center Button: (AUTO2)");
+	pros::lcd::set_text(3, "Right Button: (AUTO3)");
 	pros::lcd::set_text(4, "Click Nothing: SKIP AUTON");
 
 	pros::lcd::register_btn0_cb(on_left_button);
@@ -157,14 +157,14 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	if (skillsAuton){
-		autonSkills();
+	if (auto1){
+		program1();
 	}
-	else if (onside){
-		onSide();
+	else if (auto2){
+		program2();
 	}
-	else if (offside){
-		offSide();
+	else if (auto3){
+		program3();
 	}
 	else { //if nothing was clicked
 		skipAutonomous();      
@@ -186,57 +186,56 @@ void autonomous() {
  */
 void opcontrol()
 {
-	wings.set_value(true);
+	// wings.set_value(true);
 
 	while (true)
 	{
 		double rightstick = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 		double leftstick = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 
-		chassis_FR.move(rightstick);
-		chassis_BR.move(rightstick);
-		chassis_FL.move(leftstick);
-		chassis_BL.move(leftstick);
+		rightChassis.move(rightstick);
+		leftChassis.move(leftstick);
+		
 
-        cataCode();
+        // cataCode();
 
-		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
-			matchLoadingMode = !matchLoadingMode;
-		}
+		// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
+		// 	matchLoadingMode = !matchLoadingMode;
+		// }
 
-		if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
-			wingsToggle = !wingsToggle;
-		}
-		if (wingsToggle==false){
-			wings.set_value(false);
-		}else {
-			wings.set_value(true);
-		}
+		// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
+		// 	wingsToggle = !wingsToggle;
+		// }
+		// if (wingsToggle==false){
+		// 	wings.set_value(false);
+		// }else {
+		// 	wings.set_value(true);
+		// }
 
-		if (con.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
-			blockerLeft.move(127);
-			blockerRight.move(127);
-		}
-		else if(con.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
-			blockerLeft.move(-127);
-			blockerRight.move(-127);
-		}
-		else{
-			blockerLeft.move(0);
-			blockerRight.move(0);
-		}
+		// if (con.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
+		// 	blockerLeft.move(127);
+		// 	blockerRight.move(127);
+		// }
+		// else if(con.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
+		// 	blockerLeft.move(-127);
+		// 	blockerRight.move(-127);
+		// }
+		// else{
+		// 	blockerLeft.move(0);
+		// 	blockerRight.move(0);
+		// }
 
 
-		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
-			intake.move(127);
-		}
-		else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)){
-			intake.move(-127);
-		}
-		else {
-			intake.move(0);
-		}
-		delay(2);
+		// if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+		// 	intake.move(127);
+		// }
+		// else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+		// 	intake.move(-127);
+		// }
+		// else {
+		// 	intake.move(0);
+		// }
+		// delay(2);
 
 	}
 }

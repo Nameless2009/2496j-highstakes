@@ -12,11 +12,11 @@ void drivePID(int desiredValue, int timeout=1500);
 
 void turnPID(int desiredValue, int timeout=1500);
 
-void offSide();
+void program1();
 
-void onSide();
+void program2();
 
-void autonSkills();
+void program3();
 
 void skipAutonomous();
 

@@ -276,39 +276,18 @@ void turnPID(int desiredValue, int timeout=1500)
 
 
 
-void offSide()
+void program1()
 {
-	inertial.set_heading(315);
-	zoneMech.set_value(true);
-	delay(1000);
-	drivePID(-300);
-	turnPID(-90);
-	delay(500);
-	turnPID(90);
-	zoneMech.set_value(false);
-	blocker.move_relative(500, 127);
-	drivePID(2100);
-	intake.move(127);
-	drivePID(500);
-	delay(500);
-	turnPID(80);
-	intake.move(-127);
-	delay(500);
-	drivePID(500);
-	turnPID(-40);
-	intake.move(127);
-	drivePID(700);
-	delay(500);
-	turnPID(90);
-	intake.move(-127);
-	delay(50);
-	wings.set_value(true);
-	drivePID(2500);
+	
 }
 
-void autonSkills()
+void program2(){
+
+}
+
+void program3()
 {
-	drivePID(100, 100);
+	
 }
 
 void skipAutonomous()
