@@ -15,12 +15,15 @@ namespace glb
     // defining ports
     // #define P_L_cata 8
     // #define P_R_cata 15
-    #define P_FL_chassis 1
-    #define P_BR_chassis 2
-    #define P_BL_chassis 3
-    #define P_FR_chassis 5
-    #define P_RM_chassis 4
-    #define P_LM_chassis 6
+    #define P_FR_chassis 7
+    #define P_BL_chassis 1
+    #define P_BR_chassis 3
+    #define P_FL_chassis 11
+    #define P_LM_chassis 4
+    #define P_RM_chassis 6
+
+    #define P_top_intake 9
+    #define P_lower_intake 10
     // #define P_intake 9
     // #define P_catalimit 8 //switch to 8 later
     // #define P_imu 21
@@ -38,7 +41,11 @@ namespace glb
     extern Motor chassis_BR;
     extern Motor chassis_BL;
     extern Motor chassis_RM;
-    extern Motor chassis_RL;
+    extern Motor chassis_LM;
+
+    extern Motor top_intake;
+    extern Motor lower_intake;
+
     // extern Motor intake;
     extern Motor_Group rightChassis;
     extern Motor_Group leftChassis;
@@ -56,7 +63,7 @@ namespace glb
     //extern Motor_Group blocker;
 
 
-    extern Imu inertial;
+    // extern Imu inertial;
 
 
     //extern ADIDigitalIn catalimit;

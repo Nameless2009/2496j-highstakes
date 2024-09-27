@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "2496X-V2",
+    "project_name": "2496j",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -310,7 +310,7 @@
     },
     "upload_options": {
       "slot": 1,
-      "icon": "X",
+      "icon": "ufo",
       "after": "screen",
       "description": "Match Code File"
     }

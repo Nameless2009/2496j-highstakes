@@ -22,11 +22,11 @@ namespace glb {
 
     // Motor cataL(P_L_cata, E_MOTOR_GEARSET_18, false); // 18 is for speed (normal/green), 36 is for torque (red), 06 is for turbo (blue)
     // Motor cataR(P_R_cata, E_MOTOR_GEARSET_18, true);
-    Motor chassis_FR(P_FR_chassis, E_MOTOR_GEARSET_18, true);
+    Motor chassis_FR(P_FR_chassis, E_MOTOR_GEARSET_18, false);
     Motor chassis_FL(P_FL_chassis, E_MOTOR_GEARSET_18, true);
-    Motor chassis_BR(P_BR_chassis, E_MOTOR_GEARSET_18, true);
+    Motor chassis_BR(P_BR_chassis, E_MOTOR_GEARSET_18, false);
     Motor chassis_BL(P_BL_chassis, E_MOTOR_GEARSET_18, true);
-    Motor chassis_RM(P_RM_chassis, E_MOTOR_GEAR_600, true);
+    Motor chassis_RM(P_RM_chassis, E_MOTOR_GEAR_600, false);
     Motor chassis_LM(P_LM_chassis, E_MOTOR_GEAR_600, true);
     // Motor intake(P_intake, E_MOTOR_GEARSET_18, false);
 
@@ -34,6 +34,9 @@ namespace glb {
     Motor_Group rightChassis({P_FR_chassis, P_BR_chassis, P_RM_chassis});
     Motor_Group leftChassis({P_FL_chassis, P_BL_chassis, P_LM_chassis});
     Motor_Group chassis({P_FR_chassis, P_BR_chassis, P_FL_chassis, P_BL_chassis, P_RM_chassis, P_LM_chassis}); 
+
+    Motor top_intake(P_top_intake, E_MOTOR_GEAR_200, false);
+    Motor lower_intake(P_lower_intake, E_MOTOR_GEAR_200, true);
 
     // ADIDigitalOut zoneMech('F', false);
     // ADIDigitalOut wings('G', true);
@@ -46,7 +49,7 @@ namespace glb {
     // Motor_Group blocker({P_blocker_left, P_blocker_right});
 
 
-    Imu inertial(P_imu);
+    // Imu inertial(P_imu);
 
 
     // ADIDigitalIn catalimit(P_catalimit);

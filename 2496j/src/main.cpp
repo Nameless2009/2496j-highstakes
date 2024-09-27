@@ -187,6 +187,7 @@ void autonomous() {
 void opcontrol()
 {
 	// wings.set_value(true);
+	lcd::clear();
 
 	while (true)
 	{
@@ -195,7 +196,22 @@ void opcontrol()
 
 		rightChassis.move(rightstick);
 		leftChassis.move(leftstick);
-		
+
+		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+			lower_intake.move(127);
+			top_intake.move(127);
+		}
+
+		else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+			lower_intake.move(-127);
+			top_intake.move(-127);
+		}
+
+		else{
+			lower_intake.move(0);
+			top_intake.move(0);
+		}
+
 
         // cataCode();
 
@@ -235,7 +251,8 @@ void opcontrol()
 		// else {
 		// 	intake.move(0);
 		// }
-		// delay(2);
+
+		delay(2);
 
 	}
 }
