@@ -2,33 +2,14 @@
 
 
 namespace glb {
-    // #define P_L_cata 8
-    // #define P_R_cata 15
-    // #define P_FL_chassis 1
-    // #define P_BR_chassis 2
-    // #define P_BL_chassis 3
-    // #define P_FR_chassis 5
-    // #define P_intake 9
-    // #define P_catalimit 8
-    // #define P_imu 21;
-    // #define P_intakeLifter 1
-    // #define P_wings 2
-    // #define P_blocker_left 9
-    // #define P_blocker_right 10
-
-
     // objects
 
-
-    // Motor cataL(P_L_cata, E_MOTOR_GEARSET_18, false); // 18 is for speed (normal/green), 36 is for torque (red), 06 is for turbo (blue)
-    // Motor cataR(P_R_cata, E_MOTOR_GEARSET_18, true);
-    Motor chassis_FR(P_FR_chassis, E_MOTOR_GEARSET_18, false);
-    Motor chassis_FL(P_FL_chassis, E_MOTOR_GEARSET_18, true);
-    Motor chassis_BR(P_BR_chassis, E_MOTOR_GEARSET_18, false);
-    Motor chassis_BL(P_BL_chassis, E_MOTOR_GEARSET_18, true);
-    Motor chassis_RM(P_RM_chassis, E_MOTOR_GEAR_600, false);
-    Motor chassis_LM(P_LM_chassis, E_MOTOR_GEAR_600, true);
-    // Motor intake(P_intake, E_MOTOR_GEARSET_18, false);
+    Motor FR(P_FR_chassis, E_MOTOR_GEARSET_18, false);
+    Motor FL(P_FL_chassis, E_MOTOR_GEARSET_18, true);
+    Motor BR(P_BR_chassis, E_MOTOR_GEARSET_18, false);
+    Motor BL(P_BL_chassis, E_MOTOR_GEARSET_18, true);
+    Motor RM(P_RM_chassis, E_MOTOR_GEAR_600, false);
+    Motor LM(P_LM_chassis, E_MOTOR_GEAR_600, true);
 
 
     Motor_Group rightChassis({P_FR_chassis, P_BR_chassis, P_RM_chassis});
@@ -38,24 +19,8 @@ namespace glb {
     Motor top_intake(P_top_intake, E_MOTOR_GEAR_200, false);
     Motor lower_intake(P_lower_intake, E_MOTOR_GEAR_200, true);
 
-    // ADIDigitalOut zoneMech('F', false);
-    // ADIDigitalOut wings('G', true);
-
-    // Motor_Group cata({P_L_cata, P_R_cata});
-
-    // Motor blockerLeft(P_blocker_left, E_MOTOR_GEARSET_36, true);
-    // Motor blockerRight(P_blocker_right, E_MOTOR_GEARSET_36, false);
-
-    // Motor_Group blocker({P_blocker_left, P_blocker_right});
-
-
-    // Imu inertial(P_imu);
-
-
-    // ADIDigitalIn catalimit(P_catalimit);
-
+    Imu inertial(P_inertial);
 
     Controller con(E_CONTROLLER_MASTER); // controller
-
 
 }
