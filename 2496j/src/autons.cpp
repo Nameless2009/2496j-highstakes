@@ -276,6 +276,372 @@ using namespace std;
 
 
 
+
+
+
+
+
+//arc turn below - motors and inertial was blowing up so i had to comment (sorryyy):
+
+
+// float totalError;
+// float prevError;
+// float kP;
+// float kI;
+// float kD;
+// int integralThreshold = 30;
+// double maxI = 500;
+
+// float calculatePID(float error){
+
+// 	if (abs(error) <= 1000){
+// 		kP = 0.75;
+// 		kI = 0.000575; 
+// 		kD = 3.3;
+// 	}
+// 	else if (abs(error) <= 4000){
+// 		kP = 0.275;
+// 		kI = 0.0007; //0.0007
+// 		kD = 1.2489;
+// 	}
+// 	else {
+// 		kP = 0.27;
+// 		kI = 0.0007; //0.007
+// 		kD = 1.248;
+// 	}
+	
+// 	// calculate integral
+// 	if (abs(error) < integralThreshold)
+// 	{
+// 		totalError += error;
+// 	}
+
+//     // calculate derivative
+//     float derivative = error - prevError;
+//     prevError = error;
+
+//     // calculate output
+//     double speed = (error * kP) + (totalError * kI) + (derivative * kD);
+
+// 	if (speed > 127){
+// 		speed = 127;
+// 	}
+// 	else if (speed < -127){
+// 		speed = -127;
+// 	}
+
+// 	return speed;
+
+// }
+
+// float totalError2;
+// float prevError2;
+// float kP2;
+// float kI2;
+// float kD2;
+// int integralThreshold2 = 30;
+// double maxI2 = 500;
+
+// float calculatePID2(float error){
+
+// 	if (abs(error) <= 1000){
+// 		kP2 = 0.75;
+// 		kI2 = 0.000575; 
+// 		kD2 = 3.3;
+// 	}
+// 	else if (abs(error) <= 4000){
+// 		kP2 = 0.275;
+// 		kI2 = 0.0007; //0.0007
+// 		kD2 = 1.2489;
+// 	}
+// 	else {
+// 		kP2 = 0.27;
+// 		kI2 = 0.0007; //0.007
+// 		kD2 = 1.248;
+// 	}
+	
+// 	// calculate integral
+// 	if (abs(error) < integralThreshold2)
+// 	{
+// 		totalError2 += error;
+// 	}
+
+//     // calculate derivative
+//     float derivative = error - prevError2;
+//     prevError2 = error;
+
+//     // calculate output
+//     double speed = (error * kP2) + (totalError2 * kI2) + (derivative * kD2);
+
+// 	if (speed > 127){
+// 		speed = 127;
+// 	}
+// 	else if (speed < -127){
+// 		speed = -127;
+// 	}
+
+// 	return speed;
+
+// }
+
+
+// void rightArc(double radius, double centralDegreeTheta, int timeout=1500, string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
+
+// 	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 530);
+// 	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
+
+// 	bool chain = true;
+
+// 	//double speedProp = rightArc/leftArc;
+
+// 	chassis.tare_position();
+// 	chassis.set_brake_modes(E_MOTOR_BRAKE_BRAKE);
+
+// 	int count =0;
+// 	int time =0;
+
+// 	bool taskStarted = false;
+// 	bool taskEnded = false;
+
+// 	double init_heading = inertial.get_heading(); 
+// 	if (init_heading > 180){
+// 		init_heading = init_heading - 360;
+// 	}
+
+// 	if (chainSpeed == 0){
+// 		chain = false;
+// 	}
+// 	else {
+// 		chain = true;
+// 	}
+
+// 	while(1){
+		
+// 		if (time > timeout){
+// 			break;
+// 		}
+
+// 		int FRpos = FR.get_position();
+// 		int FLpos = FL.get_position();
+// 		int BRpos = BR.get_position();
+// 		int BLpos = BL.get_position();
+// 		int MRpos = MR.get_position();
+// 		int MLpos = ML.get_position();
+
+// 		int currentRightPosition = (FRpos + BRpos + MRpos)/3;
+// 		int currentLeftPosition = (FLpos + BLpos + MLpos)/3;
+
+// 		int right_error = rightArc - currentRightPosition;
+// 		int left_error = leftArc - currentLeftPosition;
+
+// 		double leftcorrect = (currentLeftPosition * 360) / (2*M_PI*(radius)); 
+
+// 		int heading = inertial.get_heading() - init_heading; 
+// 		if(centralDegreeTheta > 0){ 
+// 			if(heading > 300){
+// 				heading = heading - 360; 
+// 			}
+// 		} else {
+// 			if( heading > 30){ 
+//    				heading = heading - 360; 
+// 			}
+// 		}
+
+// 		int fix = int(heading - leftcorrect);
+// 		fix = fix*5;
+// 		leftChassis.move(calculatePID(left_error) + fix);
+// 		rightChassis.move(calculatePID2(right_error) - fix);
+
+// 		if ((abs(leftArc - currentLeftPosition) <= 20) && (abs(rightArc - currentRightPosition) <= 20)){ 
+// 			count++;
+// 		}
+// 		if (count >= 2 || time > timeout){
+// 			break;
+// 		}
+
+// 		if (chain == true && abs(calculatePID(left_error)) <= chainSpeed && abs(calculatePID2(right_error)) <= chainSpeed){
+// 			break;
+// 		}
+
+// 		if (time >= taskStart && taskStarted == false){
+// 			if (createTask == "frontWings"){
+// 				frontLeftWing.set_value(true);
+// 				frontRightWing.set_value(true);
+// 				taskStarted == true;
+// 			}
+// 			else if (createTask == "backWings"){
+// 				backLeftWing.set_value(true);
+// 				backRightWing.set_value(true);
+// 				taskStarted == true;
+// 			}
+// 			else if (createTask == "reverseIntake"){
+// 				intake.move(127);
+// 				taskStarted == true;
+// 			}
+// 			else if (createTask == "forwardIntake"){
+// 				intake.move(-127);
+// 				taskStarted == true;
+// 			}
+// 		}
+// 		if (time >= taskEnd && taskEnded == false){
+// 			if (createTask == "frontWings"){
+// 				frontLeftWing.set_value(false);
+// 				frontRightWing.set_value(false);
+// 				taskEnded == true;
+// 			}
+// 			else if (createTask == "backWings"){
+// 				backLeftWing.set_value(false);
+// 				backRightWing.set_value(false);
+// 				taskEnded == true;
+// 			}
+// 			else if (createTask == "reverseIntake"){
+// 				intake.move(0);
+// 				taskEnded == true;
+// 			}
+// 			else if (createTask == "forwardIntake"){
+// 				intake.move(0);
+// 				taskEnded == true;
+// 			}
+// 		}		
+
+// 		delay(20);
+// 		time = time+20;
+
+// 	}
+// 	chassis.move(0);
+// }
+
+// void leftArc(double radius, double centralDegreeTheta, int timeout=1500, string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
+
+
+// 	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
+// 	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 530);
+
+// 	bool chain;
+
+// 	//double speedProp = leftArc/rightArc;
+
+// 	chassis.tare_position();
+// 	chassis.set_brake_modes(E_MOTOR_BRAKE_BRAKE);
+
+// 	int count =0;
+// 	int time =0;
+
+	
+// 	double init_heading = inertial.get_heading(); 
+// 	if (init_heading > 180){
+// 		init_heading = init_heading - 360;
+// 	}
+// 	bool taskStarted = false;
+// 	bool taskEnded = false;
+	
+// 	// con.clear();
+
+// 	if (chainSpeed == 0){
+// 		chain = false;
+// 	}
+// 	else{
+// 		chain = true;
+// 	}
+
+// 	while(1){
+
+// 		int FRpos = FR.get_position();
+// 		int FLpos = FL.get_position();
+// 		int BRpos = BR.get_position();
+// 		int BLpos = BL.get_position();
+// 		int MRpos = MR.get_position();
+// 		int MLpos = ML.get_position();
+
+// 		int currentRightPosition = (FRpos + BRpos + MRpos)/3;
+// 		int currentLeftPosition = (FLpos + BLpos + MLpos)/3;
+// 		int right_error = rightArc - currentRightPosition;
+// 		int left_error = leftArc - currentLeftPosition;
+
+// 		double rightcorrect = (currentRightPosition * 360) / (2*M_PI*(radius)); 
+
+// 		//con.print(0,0, "imu: %f", float(inertial.get_heading()));
+
+// 		int heading = inertial.get_heading() - init_heading; 
+// 		if(centralDegreeTheta > 0){ 
+// 			if(heading > 30){
+// 				heading = heading - 360; 
+// 			}
+// 		} else {
+// 			if( heading > 300){ 
+//    				heading = heading - 360; 
+// 			}
+// 		}
+
+// 		int fix = int(heading + rightcorrect);
+// 		fix = fix*5;
+// 		leftChassis.move(calculatePID(left_error) + fix);
+// 		rightChassis.move(calculatePID2(right_error) - fix);
+		
+
+// 		//con.print(0,0, "rc: %f", float(rightArc));
+
+// 		if ((abs(leftArc - currentLeftPosition) <= 20) && (abs(rightArc - currentRightPosition) <= 20)){ 
+// 			count++;
+// 		}
+// 		if (count >= 2 || time > timeout){
+// 			break;
+// 		}
+
+// 		if (chain == true && abs(calculatePID(left_error)) <= chainSpeed && abs(calculatePID2(right_error)) <= chainSpeed){
+// 			break;
+// 		}
+
+// 		if (time >= taskStart && taskStarted == false){
+// 			if (createTask == "frontWings"){
+// 				frontLeftWing.set_value(true);
+// 				frontRightWing.set_value(true);
+// 				taskStarted == true;
+// 			}
+// 			else if (createTask == "backWings"){
+// 				backLeftWing.set_value(true);
+// 				backRightWing.set_value(true);
+// 				taskStarted == true;
+// 			}
+// 			else if (createTask == "reverseIntake"){
+// 				intake.move(127);
+// 				taskStarted == true;
+// 			}
+// 			else if (createTask == "forwardIntake"){
+// 				intake.move(-127);
+// 				taskStarted == true;
+// 			}
+// 		}
+// 		if (time >= taskEnd && taskEnded == false){
+// 			if (createTask == "frontWings"){
+// 				frontLeftWing.set_value(false);
+// 				frontRightWing.set_value(false);
+// 				taskEnded == true;
+// 			}
+// 			else if (createTask == "backWings"){
+// 				backLeftWing.set_value(false);
+// 				backRightWing.set_value(false);
+// 				taskEnded == true;
+// 			}
+// 			else if (createTask == "reverseIntake"){
+// 				intake.move(0);
+// 				taskEnded == true;
+// 			}
+// 			else if (createTask == "forwardIntake"){
+// 				intake.move(0);
+// 				taskEnded == true;
+// 			}
+// 		}
+
+// 		delay(20);
+// 		time = time+20;
+
+// 	}
+// 	chassis.move(0);
+// }
+
+
+
 void program1()
 {
 	
