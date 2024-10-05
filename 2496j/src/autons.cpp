@@ -92,8 +92,8 @@ void drivePID(int desiredValue, int timeout=1500)
 			speed = -127;
 		}
 
-		leftChassis.move(speed - headingCorrection);
-		rightChassis.move(speed + headingCorrection);
+		leftChassis.move(speed + headingCorrection);
+		rightChassis.move(speed - headingCorrection);
 
 		con.print(0,0, "error: %f", float(error));
 
@@ -254,8 +254,8 @@ void turnPID(int desiredValue, int timeout=1500)
 		con.print(0,0, "error: %f", float(error));
 
 		double speed = (error * kP + derivative * kD + totalError * kI);
-		rightChassis.move(speed);
-		leftChassis.move(-speed);
+		rightChassis.move(-speed);
+		leftChassis.move(speed); //might need to flip these in case i got the wrong lines
 
 		prevError = error;
 

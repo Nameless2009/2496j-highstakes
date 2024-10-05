@@ -19,6 +19,8 @@ namespace glb {
     Motor top_intake(P_top_intake, E_MOTOR_GEAR_200, false);
     Motor lower_intake(P_lower_intake, E_MOTOR_GEAR_200, true);
 
+    Motor lift(P_lift, E_MOTOR_GEAR_200, false);
+
     Imu inertial(P_inertial);
 
     Controller con(E_CONTROLLER_MASTER); // controller

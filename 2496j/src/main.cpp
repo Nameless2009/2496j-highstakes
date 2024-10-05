@@ -212,6 +212,16 @@ void opcontrol()
 			top_intake.move(0);
 		}
 
+		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			lift.move(127);
+		}
+		else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){
+			lift.move(-127);
+		}
+		else{
+			lift.move(0);
+		}
+
 
         // cataCode();
 
