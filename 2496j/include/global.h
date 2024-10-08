@@ -13,15 +13,15 @@ namespace glb
 
 {
     // defining ports
-    #define P_FR_chassis 11
+    #define P_FR_chassis 9 
     #define P_BL_chassis 1
-    #define P_BR_chassis 3
+    #define P_BR_chassis 11
     #define P_FL_chassis 7
     #define P_LM_chassis 4
-    #define P_RM_chassis 6
+    #define P_RM_chassis 12
 
-    #define P_top_intake 9
-    #define P_lower_intake 10
+    #define P_top_intake 10
+    #define P_lower_intake 9
 
     #define P_lift 21
 
@@ -46,6 +46,8 @@ namespace glb
     extern Motor lift;
 
     extern Imu inertial;
+
+    extern ADIDigitalOut mogo;
 
     extern Controller con;
 

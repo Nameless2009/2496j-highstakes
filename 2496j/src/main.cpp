@@ -20,6 +20,8 @@ bool auto1 = false;
 bool auto2 = false;
 bool auto3 = false;
 
+bool mogoState = false;
+
 
 
 // void cataCycle(){
@@ -189,80 +191,93 @@ void opcontrol()
 	// wings.set_value(true);
 	lcd::clear();
 
-	while (true)
-	{
-		double rightstick = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-		double leftstick = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	
 
-		rightChassis.move(rightstick);
-		leftChassis.move(leftstick);
+	// while (true)
+	// {
+	// 	//chassis start
+		
+	// 	double rightstick = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+	// 	double leftstick = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 
-		if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
-			lower_intake.move(127);
-			top_intake.move(127);
-		}
+	// 	rightChassis.move(rightstick);
+	// 	leftChassis.move(leftstick);
 
-		else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
-			lower_intake.move(-127);
-			top_intake.move(-127);
-		}
-
-		else{
-			lower_intake.move(0);
-			top_intake.move(0);
-		}
-
-		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			lift.move(127);
-		}
-		else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-			lift.move(-127);
-		}
-		else{
-			lift.move(0);
-		}
+	// 	//chassis end
 
 
-        // cataCode();
+	// 	if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+	// 		lower_intake.move(127);
+	// 		top_intake.move(127);
+	// 	}
 
-		// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
-		// 	matchLoadingMode = !matchLoadingMode;
-		// }
+	// 	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+	// 		lower_intake.move(-127);
+	// 		top_intake.move(-127);
+	// 	}
 
-		// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
-		// 	wingsToggle = !wingsToggle;
-		// }
-		// if (wingsToggle==false){
-		// 	wings.set_value(false);
-		// }else {
-		// 	wings.set_value(true);
-		// }
+	// 	else{
+	// 		lower_intake.move(0);
+	// 		top_intake.move(-127);
+	// 	}
 
-		// if (con.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
-		// 	blockerLeft.move(127);
-		// 	blockerRight.move(127);
-		// }
-		// else if(con.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
-		// 	blockerLeft.move(-127);
-		// 	blockerRight.move(-127);
-		// }
-		// else{
-		// 	blockerLeft.move(0);
-		// 	blockerRight.move(0);
-		// }
+	// 	if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
+	// 		lift.move(127);
+	// 	}
+	// 	else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){
+	// 		lift.move(-127);
+	// 	}
+	// 	else{
+	// 		lift.move(0);
+	// 	}
+
+	// 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_A)){
+	// 		mogoState = !mogoState;
+	// 	}
+
+	// 	mogo.set_value(mogoState);
 
 
-		// if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
-		// 	intake.move(127);
-		// }
-		// else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)){
-		// 	intake.move(-127);
-		// }
-		// else {
-		// 	intake.move(0);
-		// }
+    //     // cataCode();
 
-		delay(2);
+	// 	// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
+	// 	// 	matchLoadingMode = !matchLoadingMode;
+	// 	// }
 
-	}
+	// 	// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
+	// 	// 	wingsToggle = !wingsToggle;
+	// 	// }
+	// 	// if (wingsToggle==false){
+	// 	// 	wings.set_value(false);
+	// 	// }else {
+	// 	// 	wings.set_value(true);
+	// 	// }
+
+	// 	// if (con.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
+	// 	// 	blockerLeft.move(127);
+	// 	// 	blockerRight.move(127);
+	// 	// }
+	// 	// else if(con.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
+	// 	// 	blockerLeft.move(-127);
+	// 	// 	blockerRight.move(-127);
+	// 	// }
+	// 	// else{
+	// 	// 	blockerLeft.move(0);
+	// 	// 	blockerRight.move(0);
+	// 	// }
+
+
+	// 	// if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+	// 	// 	intake.move(127);
+	// 	// }
+	// 	// else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+	// 	// 	intake.move(-127);
+	// 	// }
+	// 	// else {
+	// 	// 	intake.move(0);
+	// 	// }
+
+	// 	delay(2);
+
+	// }
 }

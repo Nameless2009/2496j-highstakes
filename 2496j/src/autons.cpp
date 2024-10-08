@@ -385,7 +385,7 @@ float calculatePID2(float error){
 }
 
 
-void rightArc(double radius, double centralDegreeTheta, int timeout=1500, string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
+void leftArc(double radius, double centralDegreeTheta, int timeout=1500, string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
 
 	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 530);
 	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
@@ -436,21 +436,21 @@ void rightArc(double radius, double centralDegreeTheta, int timeout=1500, string
 
 		double leftcorrect = (currentLeftPosition * 360) / (2*M_PI*(radius)); 
 
-		int heading = inertial.get_heading() - init_heading; 
+		double heading = inertial.get_heading() - init_heading; 
 		if(centralDegreeTheta > 0){ 
-			if(heading > 300){
+			if(heading > 30){
 				heading = heading - 360; 
 			}
 		} else {
-			if( heading > 30){ 
+			if( heading > 300){ 
    				heading = heading - 360; 
 			}
 		}
 
-		int fix = int(heading - leftcorrect);
+		int fix = int(heading + leftcorrect);
 		fix = fix*5;
 		leftChassis.move(calculatePID(left_error) + fix);
-		rightChassis.move(calculatePID2(right_error) - fix);
+		rightChassis.move(calculatePID(right_error) - fix); //might need to add calcpid2
 
 		if ((abs(leftArc - currentLeftPosition) <= 20) && (abs(rightArc - currentRightPosition) <= 20)){ 
 			count++;
@@ -511,7 +511,7 @@ void rightArc(double radius, double centralDegreeTheta, int timeout=1500, string
 	chassis.move(0);
 }
 
-void leftArc(double radius, double centralDegreeTheta, int timeout=1500, string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
+void rightArc(double radius, double centralDegreeTheta, int timeout=1500, string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
 
 
 	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
@@ -562,21 +562,21 @@ void leftArc(double radius, double centralDegreeTheta, int timeout=1500, string 
 
 		//con.print(0,0, "imu: %f", float(inertial.get_heading()));
 
-		int heading = inertial.get_heading() - init_heading; 
+		double heading = inertial.get_heading() - init_heading; 
 		if(centralDegreeTheta > 0){ 
-			if(heading > 30){
+			if(heading > 300){
 				heading = heading - 360; 
 			}
 		} else {
-			if( heading > 300){ 
+			if( heading > 30){ 
    				heading = heading - 360; 
 			}
 		}
 
-		int fix = int(heading + rightcorrect);
+		int fix = int(heading - rightcorrect);
 		fix = fix*5;
 		leftChassis.move(calculatePID(left_error) + fix);
-		rightChassis.move(calculatePID2(right_error) - fix);
+		rightChassis.move(calculatePID(right_error) - fix); //might need to add calcpid2
 		
 
 		//con.print(0,0, "rc: %f", float(rightArc));
