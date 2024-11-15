@@ -10,7 +10,13 @@ using namespace pros;
 
 void drivePID(int desiredValue, int timeout=1500);
 
+void drivePIDMogo(int desiredValue, int timeout=1500);
+
 void turnPID(int desiredValue, int timeout=1500);
+
+void turnPIDMogo(int desiredValue, int timeout=1500);
+
+double ladyBrownPID(double error, double kP=-2, double kI=-0.1, double kD=-0.8, double totalError=0, double prevError=0, double integralThreshold=30, double maxI=500);
 
 float calculatePID(float error);
 
