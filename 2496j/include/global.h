@@ -9,23 +9,29 @@ using namespace pros;
 
 
 namespace glb
-
-
 {
     // defining ports
-    #define P_FR_chassis 9 
-    #define P_BL_chassis 1
-    #define P_BR_chassis 11
-    #define P_FL_chassis 7
-    #define P_LM_chassis 4
-    #define P_RM_chassis 12
+    #define P_FL_chassis 11
+    #define P_FR_chassis 17
+    #define P_ML_chassis 9
+    #define P_MR_chassis 16
+    #define P_BL_chassis 20
+    #define P_BR_chassis 8
 
-    #define P_top_intake 10
-    #define P_lower_intake 9
+    #define P_intake 18
 
-    #define P_lift 21
+    #define P_ladyBrownLeft 2
+    #define P_ladyBrownRight 3
 
-    #define P_inertial 20
+    #define P_mogo 'A'
+
+    #define P_inertial 5
+
+    #define P_rotation 1
+
+    #define P_distance 10
+
+    #define P_doinker 'B'
 
 
     // objects
@@ -36,21 +42,28 @@ namespace glb
     extern Motor RM;
     extern Motor LM;
 
-    extern Motor top_intake;
-    extern Motor lower_intake;
+    extern Motor intake;
 
     extern Motor_Group rightChassis;
     extern Motor_Group leftChassis;
     extern Motor_Group chassis;
 
-    extern Motor lift;
+    extern Motor ladyBrownLeft;
+    extern Motor ladyBrownRight;
+
+    extern Motor_Group ladyBrown;
 
     extern Imu inertial;
 
     extern ADIDigitalOut mogo;
 
+    extern ADIDigitalOut doinker;
+
     extern Controller con;
 
+    extern Rotation lbrotation;
+    
+    extern Distance clampDistance;
 
 }
 #endif
