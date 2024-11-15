@@ -6,57 +6,234 @@ using namespace glb;
 using namespace pros;
 using namespace std;
 
-//hi henry
-
-// bool startCata = false;
-// bool stopCata = false;
-// bool antiJamOverride = false;
-// bool matchLoadingMode = false;
-// bool wingsToggle = false;
-// bool intakeLifterValue = true;
-// bool half = false;
-
 bool auto1 = false;
 bool auto2 = false;
 bool auto3 = false;
 
+bool lbPID = false;
+
+double DCSeconds = 0.00;
+bool DPCleared = false;
+
+int driverProfileSequence = 0;
+
+int ladyBrownSequence = 0;
+double ladyBrownCorrectPosition = 222.00;
+double ladyBrownCurrentPosition;
+
 bool mogoState = false;
 
+double releaseTime;
+
+bool releaseRecorded;
+
+int triggerTime;
+
+void driverProfileAyush(){
+	//tank control below
+	double rightstick = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	double leftstick = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+
+	rightChassis.move(rightstick);
+	leftChassis.move(leftstick);
+
+	//intake below
+	if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+		intake.move(127);
+	}
+
+	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+		intake.move(-127);
+	}
+
+	else{
+		intake.move(0);
+	}
+
+	//lady brown code below
+	ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
+	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
+		lbPID = true;
+	}
+	else{
+		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			ladyBrown.move(127);
+			lbPID = false;
+		}
+		else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
+			ladyBrown.move(-127);
+			lbPID = false;
+		}
+		else{
+			ladyBrown.move(0);
+		}
+	}
+	if (lbPID == true){
+		ladyBrown.move(ladyBrownPID(lberror, -3.2, -0.1, -0));
+	}
+
+	//clamp and auto clamp code
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
+		mogoState = !mogoState;
+		if (mogoState == true){
+			mogo.set_value(true);
+		}
+		else{
+			mogo.set_value(false);
+			releaseRecorded = false;
+		}
+	}
+	if (mogoState == false && releaseRecorded == false){
+		releaseTime = DCSeconds;
+		releaseRecorded = true;
+	}
+	if (clampDistance.get() <= 200){
+		triggerTime = DCSeconds;
+	}
+	if (clampDistance.get() <= 200 && (DCSeconds - triggerTime) >= 0.2 && (DCSeconds - releaseTime) > 2.00){
+		mogoState = true;
+		mogo.set_value(true);
+	}
+
+	if (con.get_digital(E_CONTROLLER_DIGITAL_X)){
+		intake.move(-40);
+	}
+
+}
+
+void driverProfileManu(){
+	//reg arcade control below
+	double power = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+	double turn = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+
+	rightChassis.move(power - turn);
+	leftChassis.move(power + turn);
 
 
-// void cataCycle(){
-// 	if (matchLoadingMode == false){
-// 		if (startCata == true){
-// 			cata.move(127);
-// 		}
-// 		else{
-// 			cata.move(0);
-// 		}
+	//intake below
+	if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+		intake.move(127);
+	}
 
-// 		if (stopCata == true){
-// 			cata.move(0);
-// 			stopCata = false;
-// 		}
-// 	}
-// 	else if (matchLoadingMode == true){
-// 		cata.move(120);
-// 	}
-// }
+	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+		intake.move(-127);
+	}
 
-// void refresh(){
-//     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
-//         startCata = !startCata;
-//     }
-//     if (catalimit.get_new_press()){
-//         stopCata = true;
-//         startCata = false;
-//     }
-// }
+	else{
+		intake.move(0);
+	}
 
-// void cataCode(){
-//     refresh();
-//     cataCycle();
-// }
+	//mogo below
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
+		mogoState = !mogoState;
+	}
+
+	mogo.set_value(mogoState);
+
+	ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
+	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
+		lbPID = true;
+	}
+	else{
+		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			ladyBrown.move(-127);
+			lbPID = false;
+		}
+		else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
+			ladyBrown.move(127);
+			lbPID = false;
+		}
+		else{
+			ladyBrown.move(0);
+		}
+	}
+	if (lbPID == true){
+		ladyBrown.move(ladyBrownPID(lberror, -3.2, -0.1, -0));
+	}
+}
+
+void driverProfileAnabel(){
+	//reg arcade control below
+	double power = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+	double turn = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+
+	rightChassis.move(power + turn);
+	leftChassis.move(power - turn);
+
+
+	//intake below
+	if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+		intake.move(127);
+	}
+
+	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+		intake.move(-127);
+	}
+
+	else{
+		intake.move(0);
+	}
+
+	//mogo below
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_A)){
+		mogoState = !mogoState;
+	}
+
+	mogo.set_value(mogoState);
+}
+
+void driverProfileLarry(){
+	//inverted reverse arcade control below
+	double power = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+	double turn = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+
+	if(power > 0){
+		rightChassis.move(power + turn);
+		leftChassis.move(power - turn);
+	}
+	else{
+		rightChassis.move(power - turn);
+		leftChassis.move(power + turn);
+	}
+
+
+	//intake below
+	if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+		intake.move(127);
+	}
+
+	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+		intake.move(-127);
+	}
+
+	else{
+		intake.move(0);
+	}
+
+	//mogo below
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
+		mogoState = !mogoState;
+	}
+
+	mogo.set_value(mogoState);
+}
+
+void driverProfileMessage(string messageSubject){
+	if (messageSubject=="Ayush"){
+		con.set_text(2,0, "DP:Ayush.");
+	}
+	else if (messageSubject=="Manu"){
+		con.set_text(2,0, "DP:Manu..");
+	}
+	else if (messageSubject=="Larry"){
+		con.set_text(2,0, "DP:Larry.");
+	}
+	else if (messageSubject=="Anabel"){
+		con.set_text(2,0, "DP:Anabel");
+	}
+}
 
 
 /**
@@ -71,7 +248,7 @@ void on_center_button()
 	if (auto1)
 	{
 		lcd::clear();
-		lcd::set_text(3, "(AUTO1) selected.");
+		lcd::set_text(3, "red rush selected.");
 	}
 	else
 	{
@@ -84,7 +261,7 @@ void on_left_button()
 	if (auto2)
 	{
 		lcd::clear();
-		lcd::set_text(3, "(AUTO2) selected.");
+		lcd::set_text(3, "blue rush selected.");
 	}
 	else
 	{
@@ -97,7 +274,7 @@ void on_right_button()
 	if (auto3)
 	{
 		lcd::clear();
-		lcd::set_text(3, "(AUTO3) selected.");
+		lcd::set_text(3, "red ring selected.");
 	}
 	else
 	{
@@ -114,19 +291,19 @@ void on_right_button()
 void initialize()
 {
 	pros::lcd::initialize();
+	pros::lcd::set_background_color(128, 0, 20); //pale dark green, might wanna move before init
 
-	// blocker.set_brake_modes(E_MOTOR_BRAKE_HOLD);
-	// wings.set_value(false);
-
-	
-	pros::lcd::set_text(1, "Left Button: (AUTO1)");
-	pros::lcd::set_text(2, "Center Button: (AUTO2)");
-	pros::lcd::set_text(3, "Right Button: (AUTO3)");
-	pros::lcd::set_text(4, "Click Nothing: SKIP AUTON");
+	pros::lcd::set_text_color(194, 187, 169);
+	pros::lcd::set_text(1, "Left Button: blue rush");
+	pros::lcd::set_text(2, "Center Button: red rush");
+	pros::lcd::set_text(3, "Right Button: blue ring");
+	pros::lcd::set_text(4, "Click Nothing: red ring");
 
 	pros::lcd::register_btn0_cb(on_left_button);
 	pros::lcd::register_btn1_cb(on_center_button);
 	pros::lcd::register_btn2_cb(on_right_button);
+
+	ladyBrown.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 }
 
 /**
@@ -188,96 +365,52 @@ void autonomous() {
  */
 void opcontrol()
 {
-	// wings.set_value(true);
 	lcd::clear();
+	con.clear_line(2);
 
-	
+	while (true)
+	{
+		if (DCSeconds <= 10.00){ //locks the change and print of driver profiles after 10 seconds
+			if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
+				driverProfileSequence++;
+			}
+			if (driverProfileSequence == 1){
+				driverProfileMessage("Ayush");
+			}
+			else if(driverProfileSequence == 0){
+				driverProfileMessage("Manu");
+			}
+			else if(driverProfileSequence == 2){
+				driverProfileMessage("Larry");
+			}
+			else if(driverProfileSequence == 3){
+				driverProfileMessage("Anabel");
+			}
+		}
 
-	// while (true)
-	// {
-	// 	//chassis start
-		
-	// 	double rightstick = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-	// 	double leftstick = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+		//which profile to run based on the sequencer value
+		if (driverProfileSequence == 1){
+			driverProfileAyush();
+		}
+		else if(driverProfileSequence == 0){
+			driverProfileManu();
+		}
+		else if(driverProfileSequence == 2){
+			driverProfileLarry();
+		}
+		else if(driverProfileSequence == 3){
+			driverProfileAnabel();
+		}
+		else{
+			driverProfileSequence = 0;
+		}
 
-	// 	rightChassis.move(rightstick);
-	// 	leftChassis.move(leftstick);
+		if (DCSeconds >= 10.00 && DPCleared == false){
+			con.clear_line(2);
+			DPCleared = true;
+		}
 
-	// 	//chassis end
-
-
-	// 	if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
-	// 		lower_intake.move(127);
-	// 		top_intake.move(127);
-	// 	}
-
-	// 	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
-	// 		lower_intake.move(-127);
-	// 		top_intake.move(-127);
-	// 	}
-
-	// 	else{
-	// 		lower_intake.move(0);
-	// 		top_intake.move(-127);
-	// 	}
-
-	// 	if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
-	// 		lift.move(127);
-	// 	}
-	// 	else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-	// 		lift.move(-127);
-	// 	}
-	// 	else{
-	// 		lift.move(0);
-	// 	}
-
-	// 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_A)){
-	// 		mogoState = !mogoState;
-	// 	}
-
-	// 	mogo.set_value(mogoState);
-
-
-    //     // cataCode();
-
-	// 	// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
-	// 	// 	matchLoadingMode = !matchLoadingMode;
-	// 	// }
-
-	// 	// if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
-	// 	// 	wingsToggle = !wingsToggle;
-	// 	// }
-	// 	// if (wingsToggle==false){
-	// 	// 	wings.set_value(false);
-	// 	// }else {
-	// 	// 	wings.set_value(true);
-	// 	// }
-
-	// 	// if (con.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
-	// 	// 	blockerLeft.move(127);
-	// 	// 	blockerRight.move(127);
-	// 	// }
-	// 	// else if(con.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
-	// 	// 	blockerLeft.move(-127);
-	// 	// 	blockerRight.move(-127);
-	// 	// }
-	// 	// else{
-	// 	// 	blockerLeft.move(0);
-	// 	// 	blockerRight.move(0);
-	// 	// }
-
-
-	// 	// if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
-	// 	// 	intake.move(127);
-	// 	// }
-	// 	// else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)){
-	// 	// 	intake.move(-127);
-	// 	// }
-	// 	// else {
-	// 	// 	intake.move(0);
-	// 	// }
-
-	// 	delay(2);
-
-	// }
+		delay(10);
+		DCSeconds += 0.01;
+	}
 }
