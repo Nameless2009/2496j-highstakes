@@ -1177,7 +1177,7 @@ class Point {
 // }
 
 
-void program1()
+void redRushSide()
 {
 	//red rush
 	drivePID(-1500, 1500);
@@ -1203,7 +1203,11 @@ void program1()
 	// delay(1500);
 }
 
-void program2(){
+void blueRushSide(){
+	
+}
+
+void redRingSide(){
 	//blue rush
 	drivePID(-1300, 1500, 5);
 	turnPID(31);
@@ -1227,7 +1231,11 @@ void program2(){
 	intake.move(127);
 }
 
-void program3()
+void blueRingSide(){
+
+}
+
+void skillsAuto()
 {
 	//blue ring side
 	drivePID(-600);
@@ -1254,21 +1262,28 @@ void skipAutonomous()
 {
 	
 	//red rush
-	drivePID(-1500, 1500);
-	turnPID(-27);
+	drivePID(-1500, 35);
+	turnPID(-27, 5);
 	drivePID(-600, 1500, 0, true);
+	mogo.set_value(true);
 	delay(50);
-	drivePIDMogo(800,1500,10);
-	turnPIDMogo(0);
-	drivePIDMogo(500);
+	drivePIDMogo(600,1500,10);
+	turnPIDMogo(0, 1500, false);
+	drivePIDMogo(750);
 	intake.move(127);
-	// delay(750);
-	// mogo.set_value(false);
-	// turnPIDMogo(120);
-	// intake.move(127);
-	// drivePID(700);
-	// intake.move(0);
-	// turnPID(-90);
+	delay(750);
+	turnPIDMogo(-179);
+	mogo.set_value(false);
+	turnPID(140);
+	intake.move(90);
+	drivePID(875);
+	intake.move(0);
+	turnPID(-90, 1500, false);
+	drivePID(-500);
+	driveSPID(-300);
+	mogo.set_value(true);
+	delay(50);
+	intake.move(127);
 	// drivePID(-700);
 	// mogo.set_value(true);
 	// delay(50);

@@ -8,9 +8,13 @@ using namespace std;
 
 //larry was here
 
-bool auto1 = false;
-bool auto2 = false;
-bool auto3 = false;
+bool rush = false;
+bool skills = false;
+bool ring = false;
+bool skip = false;
+
+bool alliance = false;
+int autoCycle = 0;
 
 bool lbPID = false;
 
@@ -246,41 +250,70 @@ void driverProfileMessage(string messageSubject){
  */
 void on_center_button()
 {
-	auto1 = true;
-	if (auto1)
-	{
-		lcd::clear();
-		lcd::set_text(3, "red rush selected.");
-	}
-	else
-	{
+	autoCycle--;
+	if (autoCycle <= 0){
+		autoCycle = 0;
 		lcd::clear_line(3);
+		lcd::set_text(3, "skipping auto");
+		skip = true;
+	}
+	else if (autoCycle == 1){
+		lcd::clear_line(3);
+		lcd::set_text(3, "ring side selected");
+		ring = true;
+	}
+	else if (autoCycle == 2){
+		lcd::clear_line(3);
+		lcd::set_text(3, "rush side selected");
+		rush = true;
+	}
+	else if (autoCycle == 3){
+		lcd::clear_line(3);
+		lcd::set_text(3, "auto skills selected");
+		skills = true;
+	}
+	else {
+		autoCycle = 3;
 	}
 }
 void on_left_button()
 {
-	auto2 = true;
-	if (auto2)
-	{
-		lcd::clear();
-		lcd::set_text(3, "blue rush selected.");
+	alliance = !alliance;
+	if (alliance == true){
+		lcd::clear_line(2);
+		lcd::set_text(2, "red alliance selected");
 	}
-	else
-	{
-		lcd::clear_line(3);
+	else{
+		lcd::clear_line(2);
+		lcd::set_text(2, "blue alliance selected");
 	}
 }
 void on_right_button()
 {
-	auto3 = true;
-	if (auto3)
-	{
-		lcd::clear();
-		lcd::set_text(3, "red ring selected.");
-	}
-	else
-	{
+	autoCycle++;
+	if (autoCycle <= 0){
+		autoCycle = 0;
 		lcd::clear_line(3);
+		lcd::set_text(3, "skipping auto");
+		skip = true;
+	}
+	else if (autoCycle == 1){
+		lcd::clear_line(3);
+		lcd::set_text(3, "ring side selected");
+		ring = true;
+	}
+	else if (autoCycle == 2){
+		lcd::clear_line(3);
+		lcd::set_text(3, "rush side selected");
+		rush = true;
+	}
+	else if (autoCycle == 3){
+		lcd::clear_line(3);
+		lcd::set_text(3, "auto skills selected");
+		skills = true;
+	}
+	else {
+		autoCycle = 3;
 	}
 }
 
@@ -293,13 +326,10 @@ void on_right_button()
 void initialize()
 {
 	pros::lcd::initialize();
-	pros::lcd::set_background_color(128, 0, 20); //pale dark green, might wanna move before init
+	pros::lcd::set_background_color(128, 0, 20);
 
 	pros::lcd::set_text_color(194, 187, 169);
-	pros::lcd::set_text(1, "Left Button: blue rush");
-	pros::lcd::set_text(2, "Center Button: red rush");
-	pros::lcd::set_text(3, "Right Button: blue ring");
-	pros::lcd::set_text(4, "Click Nothing: red ring");
+	pros::lcd::set_text(7, ".........r/b.........<----.........---->.........");
 
 	pros::lcd::register_btn0_cb(on_left_button);
 	pros::lcd::register_btn1_cb(on_center_button);
@@ -338,17 +368,23 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	if (auto1){
-		program1();
+	if (rush == true && alliance == true){
+		redRushSide();
 	}
-	else if (auto2){
-		program2();
+	else if (rush == true && alliance == false){
+		blueRushSide();
 	}
-	else if (auto3){
-		program3();
+	else if (ring == true && alliance == true){
+		redRingSide();
 	}
-	else { //if nothing was clicked
-		skipAutonomous();      
+	else if (ring == true && alliance == false){
+		blueRingSide();
+	}
+	else if (skills){
+		skillsAuto();
+	}
+	else { //if nothing was selected
+		skipAutonomous();
 	}
 }
 

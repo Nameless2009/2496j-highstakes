@@ -8,13 +8,15 @@
 using namespace std;
 using namespace pros;
 
-void drivePID(int desiredValue, int timeout=1500);
+void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0);
 
-void drivePIDMogo(int desiredValue, int timeout=1500);
+void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autoclamp=false);
 
-void turnPID(int desiredValue, int timeout=1500);
+void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0);
 
-void turnPIDMogo(int desiredValue, int timeout=1500);
+void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true);
+
+void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc=true);
 
 double ladyBrownPID(double error, double kP=-2, double kI=-0.1, double kD=-0.8, double totalError=0, double prevError=0, double integralThreshold=30, double maxI=500);
 
@@ -26,11 +28,15 @@ void leftArc(double radius, double centralDegreeTheta, int timeout=1500, string 
 
 void rightArc(double radius, double centralDegreeTheta, int timeout=1500, string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0);
 
-void program1();
+void redRingSide();
 
-void program2();
+void blueRingSide();
 
-void program3();
+void redRushSide();
+
+void blueRushSide();
+
+void skillsAuto();
 
 void skipAutonomous();
 
