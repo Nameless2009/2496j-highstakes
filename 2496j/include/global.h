@@ -31,7 +31,7 @@ namespace glb
 
     #define P_distance 10
 
-    #define P_doinker 'B'
+    #define P_doinker 'C'
 
 
     // objects

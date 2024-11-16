@@ -25,7 +25,7 @@ namespace glb {
 
     ADIDigitalOut mogo('A', false);
 
-    ADIDigitalOut doinker('B', false);
+    ADIDigitalOut doinker('C', false);
 
     Imu inertial(P_inertial);
 

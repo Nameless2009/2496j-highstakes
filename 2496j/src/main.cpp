@@ -13,6 +13,8 @@ bool skills = false;
 bool ring = false;
 bool skip = false;
 
+bool doinkerState = false;
+
 bool alliance = false;
 int autoCycle = 0;
 
@@ -34,6 +36,17 @@ double releaseTime;
 bool releaseRecorded;
 
 int triggerTime;
+
+
+double MreleaseTime;
+
+bool MreleaseRecorded;
+
+int MtriggerTime;
+
+bool MmogoState = false;
+
+
 
 void driverProfileAyush(){
 	//tank control below
@@ -76,7 +89,7 @@ void driverProfileAyush(){
 		}
 	}
 	if (lbPID == true){
-		ladyBrown.move(ladyBrownPID(lberror, -3.2, -0.1, -0));
+		ladyBrown.move(ladyBrownPID(lberror, -1.2, -0, -0));
 	}
 
 	//clamp and auto clamp code
@@ -106,6 +119,11 @@ void driverProfileAyush(){
 		intake.move(-40);
 	}
 
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)){
+		doinkerState = !doinkerState;
+	}
+	doinker.set_value(doinkerState);
+
 }
 
 void driverProfileManu(){
@@ -130,13 +148,7 @@ void driverProfileManu(){
 		intake.move(0);
 	}
 
-	//mogo below
-	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
-		mogoState = !mogoState;
-	}
-
-	mogo.set_value(mogoState);
-
+	//lady brown code below
 	ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
 	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
@@ -144,11 +156,11 @@ void driverProfileManu(){
 	}
 	else{
 		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			ladyBrown.move(-127);
+			ladyBrown.move(127);
 			lbPID = false;
 		}
 		else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-			ladyBrown.move(127);
+			ladyBrown.move(-127);
 			lbPID = false;
 		}
 		else{
@@ -156,7 +168,34 @@ void driverProfileManu(){
 		}
 	}
 	if (lbPID == true){
-		ladyBrown.move(ladyBrownPID(lberror, -3.2, -0.1, -0));
+		ladyBrown.move(ladyBrownPID(lberror, -1.2, -0, -0));
+	}
+
+	//clamp and auto clamp code
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
+		mogoState = !mogoState;
+		if (mogoState == true){
+			mogo.set_value(true);
+		}
+		else{
+			mogo.set_value(false);
+			releaseRecorded = false;
+		}
+	}
+	// if (mogoState == false && releaseRecorded == false){
+	// 	releaseTime = DCSeconds;
+	// 	releaseRecorded = true;
+	// }
+	// if (clampDistance.get() <= 200){
+	// 	triggerTime = DCSeconds;
+	// }
+	// if (clampDistance.get() <= 200 && (DCSeconds - triggerTime) >= 0.2 && (DCSeconds - releaseTime) > 2.00){
+	// 	mogoState = true;
+	// 	mogo.set_value(true);
+	// }
+
+	if (con.get_digital(E_CONTROLLER_DIGITAL_X)){
+		intake.move(-40);
 	}
 }
 

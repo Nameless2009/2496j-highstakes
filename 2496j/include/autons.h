@@ -8,7 +8,7 @@
 using namespace std;
 using namespace pros;
 
-void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0);
+void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autoclamp=false);
 
 void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autoclamp=false);
 

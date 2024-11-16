@@ -80,7 +80,7 @@ double ladyBrownPID(double error, double kP=5, double kI=0, double kD=0, double 
 	return speed;
 }
 
-void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0)
+void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autoclamp=false)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -212,6 +212,10 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0)
 			enableDrivePID = false;
 		}
 
+		if (autoclamp==true && clampDistance.get() <= 190){
+			mogo.set_value(true);
+		}
+
 		delay(20);
 
 		time++; //add one to time every cycle
@@ -232,7 +236,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 	double kP = 0.7;
 	double kI = 0.001; 
-	double kD = 2.8;
+	double kD = 2.7;
 	double maxI = 500;
 	
 	int integralThreshold = 150;
@@ -264,10 +268,14 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 	while (enableDrivePID)
 	{
+		
+		double ladybrownerror = 300.00 - (lbrotation.get_angle()/100);
 
 		if (time > timeout){
 			enableDrivePID = false;
 		}
+
+		ladyBrown.move(ladyBrownPID(ladybrownerror, -1.2, -0, -0));
 
 		// get position of all motors:
 		int FRpos = FR.get_position();
@@ -340,12 +348,12 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 		prevError = error;
 
-		if (abs(error) < 10)
+		if (abs(error) < 20)
 		{
 			count++;
 		}
 
-		if (count > 20)
+		if (count > 40)
 		{
 			enableDrivePID = false;
 		}
@@ -485,12 +493,12 @@ void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
 
 		prevError = error;
 
-		if (error < 10)
+		if (error < 20)
 		{
 			count++;
 		}
 
-		if (count > 13)
+		if (count > 26)
 		{
 			enableDrivePID = false;
 		}
@@ -1262,33 +1270,28 @@ void skipAutonomous()
 {
 	
 	//red rush
-	drivePID(-1500, 35);
-	turnPID(-27, 5);
-	drivePID(-600, 1500, 0, true);
-	mogo.set_value(true);
-	delay(50);
-	drivePIDMogo(600,1500,10);
-	turnPIDMogo(0, 1500, false);
-	drivePIDMogo(750);
-	intake.move(127);
-	delay(750);
-	turnPIDMogo(-179);
-	mogo.set_value(false);
-	turnPID(140);
-	intake.move(90);
-	drivePID(875);
-	intake.move(0);
-	turnPID(-90, 1500, false);
-	drivePID(-500);
-	driveSPID(-300);
-	mogo.set_value(true);
-	delay(50);
-	intake.move(127);
-	// drivePID(-700);
+	// drivePID(-1500, 35);
+	// turnPID(-33, 1500, false);
+	// drivePID(-550, 30, 0, true);
+	// mogo.set_value(true);
+	// delay(50);
+	// drivePIDMogo(600,1500,10);
+	// turnPIDMogo(0, 1500, false);
+	// drivePIDMogo(750);
+	// intake.move(127);
+	// delay(750);
+	// turnPIDMogo(-179);
+	// mogo.set_value(false);
+	// turnPID(135);
+	// intake.move(90);
+	// drivePID(800);
+	// intake.move(0);
+	// turnPID(-90, 1500, false);
+	// drivePID(-500);
+	// driveSPID(-400, 1500, 0, true);
 	// mogo.set_value(true);
 	// delay(50);
 	// intake.move(127);
-	// delay(1500);
 	
 	
 	
@@ -1328,23 +1331,47 @@ void skipAutonomous()
 	
 	
 	// //skills auto
-	// intake.move(127);
-	// delay(500);
-	// drivePID(600);
-	// turnPID(90);
-	// drivePID(-500);
-	// driveSPID(-300);
-	// mogo.set_value(true);
-	// delay(700);
-	// turnPIDMogo(-27, 1500, false);
-	// drivePIDMogo(900);
-	// turnPIDMogo(-45);
-	// drivePIDMogo(1800);
-	// delay(300);
-	// drivePIDMogo(-300);
-	// turnPIDMogo(180);
-	// delay(100);
-	// drivePIDMogo(500);
+	intake.move(127);
+	delay(500);
+	drivePID(600);
+	turnPID(90);
+	drivePID(-500);
+	driveSPID(-300);
+	mogo.set_value(true);
+	delay(700);
+	turnPIDMogo(-20, 1500, false);
+	drivePIDMogo(900);
+	turnPIDMogo(-47);
+	drivePIDMogo(1800);
+	delay(300);
+	drivePIDMogo(-300);
+	turnPIDMogo(-175);
+	delay(100);
+	drivePIDMogo(500);
+	delay(10);
+	drivePIDMogo(1100);
+	delay(10);
+	drivePIDMogo(800);
+	drivePIDMogo(-600);
+	turnPIDMogo(-90, 1500, false);
+	drivePIDMogo(500);
+	drivePIDMogo(-500);
+	turnPID(45);
+	mogo.set_value(false);
+	drivePIDMogo(-700);
+	drivePID(900);
+	turnPID(90);
+	drivePID(4000);
+	turnPID(135);
+	drivePID(1100);
+	drivePID(-1000);
+	turnPID(-180);
+	drivePID(-2500);
+	turnPID(-45);
+	drivePID(1000);
+	turnPID(45);
+	drivePID(1000);
+
 	
 	
 	
