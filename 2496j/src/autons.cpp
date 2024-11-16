@@ -1371,6 +1371,23 @@ void skipAutonomous()
 	drivePID(1000);
 	turnPID(45);
 	drivePID(1000);
+	//this is where Larry started. none tuned just skeleton code
+	drivePID(-2500);
+	turnPID(0);
+	drivePID(2000);
+	turnPID(-45);
+	drivePID(2500);
+	turnPID(-120);
+	drivePID(-1500);
+	drivePID(1500);
+	turnPID(-90);
+	drivePID(2000);
+	turnPID(-30);
+	drivePID(2000);
+
+
+
+
 
 	
 	
