@@ -197,6 +197,11 @@ void driverProfileManu(){
 	if (con.get_digital(E_CONTROLLER_DIGITAL_X)){
 		intake.move(-40);
 	}
+
+	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)){
+		doinkerState = !doinkerState;
+	}
+	doinker.set_value(doinkerState);
 }
 
 void driverProfileAnabel(){
@@ -368,7 +373,7 @@ void initialize()
 	pros::lcd::set_background_color(128, 0, 20);
 
 	pros::lcd::set_text_color(194, 187, 169);
-	pros::lcd::set_text(7, ".........r/b.........<----.........---->.........");
+	pros::lcd::set_text(7, "...r/b...<----...---->...");
 
 	pros::lcd::register_btn0_cb(on_left_button);
 	pros::lcd::register_btn1_cb(on_center_button);

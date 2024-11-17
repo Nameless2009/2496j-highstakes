@@ -1188,55 +1188,76 @@ class Point {
 void redRushSide()
 {
 	//red rush
-	drivePID(-1500, 1500);
-	turnPID(-31);
-	drivePID(-600);
+	drivePID(-1500, 35);
+	turnPID(-33, 1500, false);
+	drivePID(-550, 30, 0, true);
 	mogo.set_value(true);
-	// delay(50);
-	// drivePIDMogo(800,1500,10);
-	// turnPIDMogo(0);
-	// drivePIDMogo(500);
-	// intake.move(127);
-	// delay(750);
-	// mogo.set_value(false);
-	// turnPIDMogo(120);
-	// intake.move(127);
-	// drivePID(700);
-	// intake.move(0);
-	// turnPID(-90);
-	// drivePID(-700);
-	// mogo.set_value(true);
-	// delay(50);
-	// intake.move(127);
-	// delay(1500);
+	delay(50);
+	drivePIDMogo(600,1500,10);
+	turnPIDMogo(0, 1500, false);
+	drivePIDMogo(750);
+	intake.move(127);
+	delay(750);
+	turnPIDMogo(-179);
+	mogo.set_value(false);
+	turnPID(135);
+	intake.move(60);
+	drivePID(800);
+	intake.move(0);
+	turnPID(-90, 1500, false);
+	drivePID(-500);
+	driveSPID(-400, 1500, 0, true);
+	mogo.set_value(true);
+	delay(50);
+	intake.move(127);
 }
 
 void blueRushSide(){
-	
+	//blue rush
+	drivePID(-1500, 35);
+	turnPID(33, 1500, false);
+	drivePID(-550, 30, 0, true);
+	mogo.set_value(true);
+	delay(50);
+	drivePIDMogo(600,1500,10);
+	turnPIDMogo(0, 1500, false);
+	drivePIDMogo(750);
+	intake.move(127);
+	delay(750);
+	turnPIDMogo(179);
+	mogo.set_value(false);
+	turnPID(-135);
+	intake.move(60);
+	drivePID(800);
+	intake.move(0);
+	turnPID(90, 1500, false);
+	drivePID(-500);
+	driveSPID(-400, 1500, 0, true);
+	mogo.set_value(true);
+	delay(50);
+	intake.move(127);
 }
 
 void redRingSide(){
-	//blue rush
-	drivePID(-1300, 1500, 5);
-	turnPID(31);
+	//red ring
+	drivePID(-850, 30);
+	turnPID(-31);
 	drivePID(-400);
 	mogo.set_value(true);
 	delay(50);
-	drivePIDMogo(900,1500,10);
-	turnPIDMogo(0);
-	drivePIDMogo(500);
+	drivePID(-200);
 	intake.move(127);
-	delay(750);
-	turnPIDMogo(-120);
-	mogo.set_value(false);
-	intake.move(127);
-	drivePID(800);
-	intake.move(0);
-	turnPID(90);
-	drivePID(-700);
-	mogo.set_value(true);
-	delay(50);
-	intake.move(127);
+	delay(500);
+	turnPIDMogo(88);
+	drivePID(900);
+	turnPID(170);
+	drivePIDMogo(700);
+	drivePIDMogo(-700);
+	turnPIDMogo(150);
+	drivePIDMogo(800);
+	drivePIDMogo(-1500, 2000);
+	turnPID(30);
+	drivePID(-2000);
 }
 
 void blueRingSide(){
@@ -1263,110 +1284,7 @@ void blueRingSide(){
 
 void skillsAuto()
 {
-	//blue ring side
-	drivePID(-600);
-	turnPID(31);
-	drivePID(-550);
-	mogo.set_value(true);
-	delay(50);
-	drivePID(-200);
-	intake.move(127);
-	delay(500);
-	turnPIDMogo(-88);
-	drivePID(900);
-	turnPID(-170);
-	drivePIDMogo(400);
-	drivePIDMogo(-400);
-	turnPIDMogo(-150);
-	drivePIDMogo(800);
-	drivePIDMogo(-1500, 2000);
-	turnPID(-45);
-	drivePID(-1300);
-}
-
-void skipAutonomous()
-{
-	
-	//red rush
-	// drivePID(-1500, 35);
-	// turnPID(-33, 1500, false);
-	// drivePID(-550, 30, 0, true);
-	// mogo.set_value(true);
-	// delay(50);
-	// drivePIDMogo(600,1500,10);
-	// turnPIDMogo(0, 1500, false);
-	// drivePIDMogo(750);
-	// intake.move(127);
-	// delay(750);
-	// turnPIDMogo(-179);
-	// mogo.set_value(false);
-	// turnPID(135);
-	// intake.move(90);
-	// drivePID(800);
-	// intake.move(0);
-	// turnPID(-90, 1500, false);
-	// drivePID(-500);
-	// driveSPID(-400, 1500, 0, true);
-	// mogo.set_value(true);
-	// delay(50);
-	// intake.move(127);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//blue ring
-	drivePID(-850, 30);
-	turnPID(-31);
-	drivePID(-400);
-	mogo.set_value(true);
-	delay(50);
-	drivePID(-200);
-	intake.move(127);
-	delay(500);
-	turnPIDMogo(88);
-	drivePID(900);
-	turnPID(170);
-	drivePIDMogo(700);
-	drivePIDMogo(-700);
-	turnPIDMogo(150);
-	drivePIDMogo(800);
-	drivePIDMogo(-1500, 2000);
-	turnPID(30);
-	drivePID(-2000);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// //skills auto
-<<<<<<< Updated upstream
 	intake.move(127);
 	delay(500);
 	drivePID(600);
@@ -1420,11 +1338,132 @@ void skipAutonomous()
 	drivePID(2000);
 	turnPID(-30);
 	drivePID(2000);
+	intake.move(127);
+	delay(500);
+	drivePID(600);
+	turnPID(90);
+	drivePID(-500);
+	driveSPID(-300);
+	mogo.set_value(true);
+	delay(700);
+	turnPIDMogo(-20, 1500, false);
+	drivePIDMogo(900);
+	turnPIDMogo(-47);
+	drivePIDMogo(1800);
+	delay(300);
+	drivePIDMogo(-300);
+	turnPIDMogo(-175);
+	delay(100);
+	drivePIDMogo(500);
+	delay(10);
+	drivePIDMogo(1100);
+	delay(10);
+	drivePIDMogo(800);
+	drivePIDMogo(-600);
+	turnPIDMogo(-90, 1500, false);
+	drivePIDMogo(500);
+	drivePIDMogo(-500);
+	turnPID(45);
+	mogo.set_value(false);
+	drivePIDMogo(-700);
+	drivePID(900);
+	turnPID(90);
+	drivePID(4000);
+	turnPID(135);
+	drivePID(1100);
+	drivePID(-1000);
+	turnPID(-180);
+	drivePID(-2500);
+	turnPID(-45);
+	drivePID(1000);
+	turnPID(45);
+	drivePID(1000);
+}
 
-
-
-
-=======
+void skipAutonomous()
+{
+	
+	//red rush
+	// drivePID(-1500, 35);
+	// turnPID(-33, 1500, false);
+	// drivePID(-550, 30, 0, true);
+	// mogo.set_value(true);
+	// delay(50);
+	// drivePIDMogo(600,1500,10);
+	// turnPIDMogo(0, 1500, false);
+	// drivePIDMogo(750);
+	// intake.move(127);
+	// delay(750);
+	// mogo.set_value(false);
+	// turnPID(135);
+	// intake.move(60);
+	// drivePID(800);
+	// intake.move(0);
+	// turnPID(-90, 1500, false);
+	// drivePID(-500);
+	// driveSPID(-400, 1500, 0, true);
+	// mogo.set_value(true);
+	// delay(50);
+	// intake.move(127);
+	
+	
+	
+	
+	//do nothing :)
+	// // //skills auto
+	// intake.move(127);
+	// delay(500);
+	// drivePID(600);
+	// turnPID(90);
+	// drivePID(-500);
+	// driveSPID(-300);
+	// mogo.set_value(true);
+	// delay(700);
+	// turnPIDMogo(-20, 1500, false);
+	// drivePIDMogo(900);
+	// turnPIDMogo(-47);
+	// drivePIDMogo(1800);
+	// delay(300);
+	// drivePIDMogo(-300);
+	// turnPIDMogo(-175);
+	// delay(100);
+	// drivePIDMogo(500);
+	// delay(10);
+	// drivePIDMogo(1100);
+	// delay(10);
+	// drivePIDMogo(800);
+	// drivePIDMogo(-600);
+	// turnPIDMogo(-90, 1500, false);
+	// drivePIDMogo(500, 20);
+	// drivePIDMogo(-500);
+	// turnPID(45);
+	// mogo.set_value(false);
+	// drivePIDMogo(-700);
+	// drivePID(900);
+	// turnPID(90);
+	// drivePID(4000);
+	// turnPID(135);
+	// drivePID(1100);
+	// drivePID(-1000);
+	// turnPID(-180);
+	// drivePID(-2500);
+	// turnPID(-45);
+	// drivePID(1000);
+	// turnPID(45);
+	// drivePID(1000);
+	//this is where Larry started. none tuned just skeleton code
+	// drivePID(-2500);
+	// turnPID(0);
+	// drivePID(2000);
+	// turnPID(-45);
+	// drivePID(2500);
+	// turnPID(-120);
+	// drivePID(-1500);
+	// drivePID(1500);
+	// turnPID(-90);
+	// drivePID(2000);
+	// turnPID(-30);
+	// drivePID(2000);
 	// intake.move(127);
 	// delay(500);
 	// drivePID(600);
@@ -1465,45 +1504,4 @@ void skipAutonomous()
 	// drivePID(1000);
 	// turnPID(45);
 	// drivePID(1000);
->>>>>>> Stashed changes
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//red ring side
-	// drivePID(-600);
-	// turnPID(-31);
-	// drivePID(-550);
-	// mogo.set_value(true);
-	// delay(50);
-	// drivePID(-200);
-	// intake.move(127);
-	// delay(500);
-	// turnPIDMogo(88);
-	// drivePID(900);
-	// turnPID(170);
-	// drivePIDMogo(600);
-	// drivePIDMogo(-600);
-	// turnPIDMogo(160);
-	// drivePIDMogo(600);
-	// drivePID(-1250);
-	// delay(100);
-	// turnPID(45);
-	// drivePID(-1800);
-
 }

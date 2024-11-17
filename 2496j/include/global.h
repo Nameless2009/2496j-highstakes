@@ -13,7 +13,7 @@ namespace glb
     // defining ports
     #define P_FL_chassis 11
     #define P_FR_chassis 17
-    #define P_ML_chassis 9
+    #define P_ML_chassis 7
     #define P_MR_chassis 16
     #define P_BL_chassis 20
     #define P_BR_chassis 8
