@@ -23,9 +23,9 @@ namespace glb {
 
     Motor_Group ladyBrown({P_ladyBrownLeft, P_ladyBrownRight});
 
-    ADIDigitalOut mogo('A', false);
+    ADIDigitalOut mogo(P_mogo, false);
 
-    ADIDigitalOut doinker('C', false);
+    ADIDigitalOut doinker(P_doinker, false);
 
     Imu inertial(P_inertial);
 
