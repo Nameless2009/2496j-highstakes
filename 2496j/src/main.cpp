@@ -37,7 +37,6 @@ bool releaseRecorded;
 
 int triggerTime;
 
-
 double MreleaseTime;
 
 bool MreleaseRecorded;
@@ -46,7 +45,7 @@ int MtriggerTime;
 
 bool MmogoState = false;
 
-
+bool ringLoadToggle = true;
 
 void driverProfileAyush(){
 	//tank control below
@@ -71,10 +70,11 @@ void driverProfileAyush(){
 
 	//lady brown code below
 	ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
-	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
 		lbPID = true;
+		ringLoadToggle = !ringLoadToggle;
 	}
+	
 	else{
 		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
 			ladyBrown.move(127);
@@ -88,6 +88,16 @@ void driverProfileAyush(){
 			ladyBrown.move(0);
 		}
 	}
+
+	if (ringLoadToggle == false){
+		ladyBrownCorrectPosition = 222.00;
+	}
+	else if (ringLoadToggle == true){
+		ladyBrownCorrectPosition = 300.00;
+	}
+
+	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
+
 	if (lbPID == true){
 		ladyBrown.move(ladyBrownPID(lberror, -1.2, -0, -0));
 	}
@@ -379,7 +389,7 @@ void initialize()
 	pros::lcd::register_btn1_cb(on_center_button);
 	pros::lcd::register_btn2_cb(on_right_button);
 
-	ladyBrown.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+	ladyBrown.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 }
 
 /**

@@ -18,10 +18,7 @@ namespace glb {
 
     Motor intake(P_intake, E_MOTOR_GEAR_600, true);
 
-    Motor ladyBrownRight(P_ladyBrownRight, E_MOTOR_GEAR_200, false);
-    Motor ladyBrownLeft(P_ladyBrownLeft, E_MOTOR_GEAR_200, true);
-
-    Motor_Group ladyBrown({P_ladyBrownLeft, P_ladyBrownRight});
+    Motor ladyBrown(P_ladyBrown, E_MOTOR_GEAR_200, false);
 
     ADIDigitalOut mogo(P_mogo, false);
 
