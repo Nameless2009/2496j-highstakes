@@ -106,7 +106,7 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 
 	// inertial.tare_heading();
 
-	con.clear();
+	//con.clear();
 
 	double initialValue = inertial.get_heading();
 	if (initialValue > 180){
@@ -252,7 +252,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 	// inertial.tare_heading();
 
-	con.clear();
+	//con.clear();
 
 	double initialValue = inertial.get_heading();
 	if (initialValue > 180){
@@ -343,7 +343,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 		leftChassis.move(speed + headingCorrection);
 		rightChassis.move(speed - headingCorrection);
 
-		con.print(0,0, "error: %f", float(error));
+		//con.print(0,0, "error: %f", float(error));
 
 
 		prevError = error;
@@ -527,7 +527,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 
 	double kP = 5;
 	double kI = 0.001; 
-	double kD = 25;
+	double kD = 13;
 	double maxI = 500;
 
 	int time = 0;
@@ -568,7 +568,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 
 	if (powerFunc == true){
 	//   y =    a   +          bx            +           cx^2                  +                dx^3                +                fx^4
-		kD = 0.769503+(0.279153*abs(desiredValue))+(-0.00232581*pow(abs(desiredValue), 2))+(0.0000156359*pow(abs(desiredValue), 3))+(-0.0000000398214*pow(abs(desiredValue), 4));
+		kD = 1.669503+(0.279153*abs(desiredValue))+(-0.00232581*pow(abs(desiredValue), 2))+(0.0000156359*pow(abs(desiredValue), 3))+(-0.0000000398214*pow(abs(desiredValue), 4));
 	}
 
 
@@ -1382,126 +1382,18 @@ void skillsAuto()
 
 void skipAutonomous()
 {
-	
-	//red rush
-	// drivePID(-1500, 35);
-	// turnPID(-33, 1500, false);
-	// drivePID(-550, 30, 0, true);
-	// mogo.set_value(true);
-	// delay(50);
-	// drivePIDMogo(600,1500,10);
-	// turnPIDMogo(0, 1500, false);
-	// drivePIDMogo(750);
 	// intake.move(127);
-	// delay(750);
-	// mogo.set_value(false);
-	// turnPID(135);
-	// intake.move(60);
+	// delay(500);
 	// drivePID(800);
-	// intake.move(0);
-	// turnPID(-90, 1500, false);
-	// drivePID(-500);
-	// driveSPID(-400, 1500, 0, true);
-	// mogo.set_value(true);
-	// delay(50);
-	// intake.move(127);
-	
-	
-	
-	
-	//do nothing :)
-	// // //skills auto
-	// intake.move(127);
-	// delay(500);
-	// drivePID(600);
-	// turnPID(90);
-	// drivePID(-500);
-	// driveSPID(-300);
-	// mogo.set_value(true);
-	// delay(700);
-	// turnPIDMogo(-20, 1500, false);
-	// drivePIDMogo(900);
-	// turnPIDMogo(-47);
-	// drivePIDMogo(1800);
-	// delay(300);
-	// drivePIDMogo(-300);
-	// turnPIDMogo(-175);
-	// delay(100);
-	// drivePIDMogo(500);
-	// delay(10);
-	// drivePIDMogo(1100);
-	// delay(10);
-	// drivePIDMogo(800);
-	// drivePIDMogo(-600);
-	// turnPIDMogo(-90, 1500, false);
-	// drivePIDMogo(500, 20);
-	// drivePIDMogo(-500);
-	// turnPID(45);
-	// mogo.set_value(false);
-	// drivePIDMogo(-700);
-	// drivePID(900);
-	// turnPID(90);
-	// drivePID(4000);
-	// turnPID(135);
-	// drivePID(1100);
-	// drivePID(-1000);
-	// turnPID(-180);
-	// drivePID(-2500);
-	// turnPID(-45);
-	// drivePID(1000);
-	// turnPID(45);
-	// drivePID(1000);
-	//this is where Larry started. none tuned just skeleton code
-	// drivePID(-2500);
-	// turnPID(0);
-	// drivePID(2000);
-	// turnPID(-45);
-	// drivePID(2500);
-	// turnPID(-120);
-	// drivePID(-1500);
-	// drivePID(1500);
 	// turnPID(-90);
-	// drivePID(2000);
-	// turnPID(-30);
-	// drivePID(2000);
-	// intake.move(127);
-	// delay(500);
-	// drivePID(600);
-	// turnPID(90);
-	// drivePID(-500);
-	// driveSPID(-300);
+	// drivePID(-700);
+	// driveSPID(-200);
 	// mogo.set_value(true);
-	// delay(700);
-	// turnPIDMogo(-20, 1500, false);
-	// drivePIDMogo(900);
-	// turnPIDMogo(-47);
-	// drivePIDMogo(1800);
-	// delay(300);
-	// drivePIDMogo(-300);
-	// turnPIDMogo(-175);
-	// delay(100);
-	// drivePIDMogo(500);
-	// delay(10);
-	// drivePIDMogo(1100);
-	// delay(10);
-	// drivePIDMogo(800);
-	// drivePIDMogo(-600);
-	// turnPIDMogo(-90, 1500, false);
-	// drivePIDMogo(500);
-	// drivePIDMogo(-500);
-	// turnPID(45);
-	// mogo.set_value(false);
-	// drivePIDMogo(-700);
-	// drivePID(900);
-	// turnPID(90);
-	// drivePID(4000);
-	// turnPID(135);
-	// drivePID(1100);
-	// drivePID(-1000);
-	// turnPID(-180);
-	// drivePID(-2500);
+	// turnPIDMogo(-5, 1500, false);
+	// drivePID(700);
 	// turnPID(-45);
-	// drivePID(1000);
-	// turnPID(45);
-	// drivePID(1000);
+
+
+
+	turnPID(30, 1500, false);
 }

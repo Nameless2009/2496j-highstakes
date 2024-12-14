@@ -141,6 +141,11 @@ void driverProfileManu(){
 	double power = con.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 	double turn = con.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
+	// if (curveX > 0){
+	// 	//if positive just calculate normally
+	// 	double curvedSpeed = (0.03*pow((curveX+40), 2))/(1+(16.430625/16129)*pow(curveX, 2))
+	// }
+
 	rightChassis.move(power - turn);
 	leftChassis.move(power + turn);
 

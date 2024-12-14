@@ -24,7 +24,7 @@ namespace glb
 
     #define P_mogo 'A'
 
-    #define P_inertial 5
+    #define P_inertial 19
 
     #define P_rotation 21
 
