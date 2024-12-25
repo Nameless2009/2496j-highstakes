@@ -304,7 +304,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 		}
 
 		double headingError = initialValue -currentIMUValue;
-		double headingCorrection = calcPID(headingError);
+		double headingCorrection = calcPID(headingError, 1.2, 0.05, 2.4);
 
 
 
@@ -343,7 +343,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 		leftChassis.move(speed + headingCorrection);
 		rightChassis.move(speed - headingCorrection);
 
-		//con.print(0,0, "error: %f", float(error));
+		con.print(0,0, "error: %f", float(error));
 
 
 		prevError = error;
@@ -527,7 +527,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 
 	double kP = 5;
 	double kI = 0.001; 
-	double kD = 14;
+	double kD = 18.9;
 	double maxI = 500;
 
 	int time = 0;
@@ -568,7 +568,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 
 	if (powerFunc == true){
 	//   y =    a   +          bx            +           cx^2                  +                dx^3                +                fx^4
-		kD = 1.669503+(0.279153*abs(desiredValue))+(-0.00232581*pow(abs(desiredValue), 2))+(0.0000156359*pow(abs(desiredValue), 3))+(-0.0000000398214*pow(abs(desiredValue), 4));
+		kD = 2.5706+(0.583313*abs(desiredValue))+(-0.00847392*pow(abs(desiredValue), 2))+(0.0000559881*pow(abs(desiredValue), 3))+(-0.000000129618*pow(abs(desiredValue), 4));
 	}
 
 
@@ -797,21 +797,9 @@ double maxI = 500;
 
 float calculatePID(float error){
 
-	if (abs(error) <= 1000){
-		kP = 0.75;
-		kI = 0.000575; 
-		kD = 3.3;
-	}
-	else if (abs(error) <= 4000){
-		kP = 0.275;
-		kI = 0.0007; //0.0007
-		kD = 1.2489;
-	}
-	else {
-		kP = 0.27;
-		kI = 0.0007; //0.007
-		kD = 1.248;
-	}
+	kP = 0.7;
+	kI = 0.001; 
+	kD = 2.7;
 	
 	// calculate integral
 	if (abs(error) < integralThreshold)
@@ -847,21 +835,9 @@ double maxI2 = 500;
 
 float calculatePID2(float error){
 
-	if (abs(error) <= 1000){
-		kP2 = 0.75;
-		kI2 = 0.000575; 
-		kD2 = 3.3;
-	}
-	else if (abs(error) <= 4000){
-		kP2 = 0.275;
-		kI2 = 0.0007; //0.0007
-		kD2 = 1.2489;
-	}
-	else {
-		kP2 = 0.27;
-		kI2 = 0.0007; //0.007
-		kD2 = 1.248;
-	}
+	kP2 = 0.7;
+	kI2 = 0.001; 
+	kD2 = 2.7;
 	
 	// calculate integral
 	if (abs(error) < integralThreshold2)
@@ -1395,5 +1371,5 @@ void skipAutonomous()
 
 
 
-	turnPID(30, 1500, false);
+	rightArc(500, 90);
 }
