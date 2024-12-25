@@ -31,4 +31,6 @@ namespace glb {
     Rotation lbrotation(P_rotation);
 
     Distance clampDistance(P_distance);
+
+    Optical colorSensor(P_color_sensor);
 }

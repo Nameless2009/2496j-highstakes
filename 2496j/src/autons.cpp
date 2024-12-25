@@ -527,7 +527,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 
 	double kP = 5;
 	double kI = 0.001; 
-	double kD = 13;
+	double kD = 14;
 	double maxI = 500;
 
 	int time = 0;

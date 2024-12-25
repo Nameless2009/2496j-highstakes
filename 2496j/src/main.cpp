@@ -26,7 +26,7 @@ bool DPCleared = false;
 int driverProfileSequence = 0;
 
 int ladyBrownSequence = 0;
-double ladyBrownCorrectPosition = 222.00;
+double ladyBrownCorrectPosition = 342.00;
 double ladyBrownCurrentPosition;
 
 bool mogoState = false;
@@ -46,6 +46,27 @@ int MtriggerTime;
 bool MmogoState = false;
 
 bool ringLoadToggle = true;
+
+bool redRing = false;
+
+bool blueRing = false;
+
+void senseColor(){
+	colorSensor.set_led_pwm(100);
+	while (1){
+		if (colorSensor.get_proximity() <= 50){
+			if ((colorSensor.get_hue()) >= 210.00 && colorSensor.get_hue() <= 250.00){
+				blueRing = true;
+				redRing = false;
+			}
+			else if ((colorSensor.get_hue()) >= 330.00 && colorSensor.get_hue() <= 350.00){
+				redRing = true;
+				blueRing = false;
+			}
+			delay(10);
+		}
+	}
+}
 
 void driverProfileAyush(){
 	//tank control below
@@ -90,16 +111,16 @@ void driverProfileAyush(){
 	}
 
 	if (ringLoadToggle == false){
-		ladyBrownCorrectPosition = 222.00;
+		ladyBrownCorrectPosition = 342.00;
 	}
 	else if (ringLoadToggle == true){
-		ladyBrownCorrectPosition = 300.00;
+		ladyBrownCorrectPosition = 330.00;
 	}
 
 	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
 
 	if (lbPID == true){
-		ladyBrown.move(ladyBrownPID(lberror, -1.2, -0, -0));
+		ladyBrown.move(ladyBrownPID(lberror, -7, -0, -0));
 	}
 
 	//clamp and auto clamp code
@@ -183,7 +204,7 @@ void driverProfileManu(){
 		}
 	}
 	if (lbPID == true){
-		ladyBrown.move(ladyBrownPID(lberror, -1.2, -0, -0));
+		ladyBrown.move(ladyBrownPID(lberror, -7, -0, -0));
 	}
 
 	//clamp and auto clamp code
@@ -395,6 +416,8 @@ void initialize()
 	pros::lcd::register_btn2_cb(on_right_button);
 
 	ladyBrown.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+
+	pros::Task detectColors(senseColor);
 }
 
 /**
@@ -505,6 +528,10 @@ void opcontrol()
 		if (DCSeconds >= 10.00 && DPCleared == false){
 			con.clear_line(2);
 			DPCleared = true;
+		}
+
+		if (blueRing == true){
+			con.rumble(".");
 		}
 
 		delay(10);

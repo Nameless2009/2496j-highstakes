@@ -11,7 +11,7 @@ using namespace pros;
 namespace glb
 {
     // defining ports
-    #define P_FL_chassis 12
+    #define P_FL_chassis 18
     #define P_FR_chassis 2
     #define P_ML_chassis 11
     #define P_MR_chassis 1
@@ -20,15 +20,17 @@ namespace glb
 
     #define P_intake 20
 
-    #define P_ladyBrown 13
+    #define P_ladyBrown 12
 
     #define P_mogo 'A'
 
     #define P_inertial 19
 
-    #define P_rotation 21
+    #define P_rotation 16
 
     #define P_distance 10
+
+    #define P_color_sensor 13
 
     #define P_doinker 'C'
 
@@ -60,6 +62,8 @@ namespace glb
     extern Rotation lbrotation;
     
     extern Distance clampDistance;
+
+    extern Optical colorSensor;
 
 }
 #endif
