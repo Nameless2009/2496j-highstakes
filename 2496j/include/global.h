@@ -22,7 +22,11 @@ namespace glb
 
     #define P_ladyBrown 12
 
-    #define P_mogo 'A'
+    #define P_mogo 'B'
+
+    #define P_intakeLift 'A'
+
+    #define P_goalTipper 'D'
 
     #define P_inertial 19
 
@@ -32,7 +36,7 @@ namespace glb
 
     #define P_color_sensor 13
 
-    #define P_doinker 'C'
+    #define P_doinker 'H'
 
 
     // objects
@@ -56,6 +60,10 @@ namespace glb
     extern ADIDigitalOut mogo;
 
     extern ADIDigitalOut doinker;
+
+    extern ADIDigitalOut goalTipper;
+
+    extern ADIDigitalOut intakeLift;
 
     extern Controller con;
 

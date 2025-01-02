@@ -268,14 +268,10 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 	while (enableDrivePID)
 	{
-		
-		double ladybrownerror = 300.00 - (lbrotation.get_angle()/100);
 
 		if (time > timeout){
 			enableDrivePID = false;
 		}
-
-		ladyBrown.move(ladyBrownPID(ladybrownerror, -1.2, -0, -0));
 
 		// get position of all motors:
 		int FRpos = FR.get_position();
@@ -353,7 +349,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 			count++;
 		}
 
-		if (count > 40)
+		if (count > 26)
 		{
 			enableDrivePID = false;
 		}
@@ -385,7 +381,7 @@ void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
 
 	double kP = 0.7;
 	double kI = 0.001; 
-	double kD = 3.3;
+	double kD = 2.7;
 	double maxI = 500;
 	
 	int integralThreshold = 150;
@@ -702,7 +698,7 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc=true)
 
 	if (powerFunc == true){
 	//   y =    a   +          bx            +           cx^2                  +                dx^3                +                fx^4
-		kD = 0.769503+(0.279153*abs(desiredValue))+(-0.00232581*pow(abs(desiredValue), 2))+(0.0000156359*pow(abs(desiredValue), 3))+(-0.0000000398214*pow(abs(desiredValue), 4));
+		kD = 2.5706+(0.583313*abs(desiredValue))+(-0.00847392*pow(abs(desiredValue), 2))+(0.0000559881*pow(abs(desiredValue), 3))+(-0.000000129618*pow(abs(desiredValue), 4));
 	}
 
 
@@ -866,12 +862,12 @@ float calculatePID2(float error){
 
 void leftArc(double radius, double centralDegreeTheta, int timeout=1500, std::string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
 
-	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 530);
+	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 550);
 	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
 
 	bool chain = true;
 
-	//double speedProp = rightArc/leftArc;
+	double speedProp = rightArc/leftArc;
 
 	chassis.tare_position();
 	chassis.set_brake_modes(E_MOTOR_BRAKE_BRAKE);
@@ -994,7 +990,7 @@ void rightArc(double radius, double centralDegreeTheta, int timeout=1500, std::s
 
 
 	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
-	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 530);
+	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 550);
 
 	bool chain;
 
@@ -1358,18 +1354,12 @@ void skillsAuto()
 
 void skipAutonomous()
 {
-	// intake.move(127);
-	// delay(500);
-	// drivePID(800);
-	// turnPID(-90);
-	// drivePID(-700);
-	// driveSPID(-200);
-	// mogo.set_value(true);
-	// turnPIDMogo(-5, 1500, false);
-	// drivePID(700);
-	// turnPID(-45);
-
-
-
-	rightArc(500, 90);
+	//skip auton
+	inertial.set_heading(45);
+	drivePID(-1100, 1500, 0, true);
+	mogo.set_value(true);
+	turnPIDMogo(162);
+	intake.move(127);
+	drivePIDMogo(1000);
+	turnPIDMogo(130);
 }

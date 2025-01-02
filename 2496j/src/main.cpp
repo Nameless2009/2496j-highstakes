@@ -13,6 +13,8 @@ bool skills = false;
 bool ring = false;
 bool skip = false;
 
+bool tipper = false;
+
 bool doinkerState = false;
 
 bool alliance = false;
@@ -22,6 +24,11 @@ bool lbPID = false;
 
 double DCSeconds = 0.00;
 bool DPCleared = false;
+
+int detectedTime;
+bool timeLogged = false;
+bool interrupt = false;
+int interruptTime;
 
 int driverProfileSequence = 0;
 
@@ -57,13 +64,16 @@ void senseColor(){
 		if (colorSensor.get_proximity() <= 50){
 			if ((colorSensor.get_hue()) >= 210.00 && colorSensor.get_hue() <= 250.00){
 				blueRing = true;
-				redRing = false;
 			}
-			else if ((colorSensor.get_hue()) >= 330.00 && colorSensor.get_hue() <= 350.00){
-				redRing = true;
+			else {
 				blueRing = false;
 			}
-			delay(10);
+			if ((colorSensor.get_hue()) >= 330.00 && colorSensor.get_hue() <= 350.00){
+				redRing = true;
+			}
+			else {
+				redRing = false;
+			}
 		}
 	}
 }
@@ -77,11 +87,11 @@ void driverProfileAyush(){
 	leftChassis.move(leftstick);
 
 	//intake below
-	if (con.get_digital(E_CONTROLLER_DIGITAL_R1)){
+	if (con.get_digital(E_CONTROLLER_DIGITAL_R1) && interrupt == false){
 		intake.move(127);
 	}
 
-	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2) && interrupt == false){
 		intake.move(-127);
 	}
 
@@ -146,14 +156,37 @@ void driverProfileAyush(){
 		mogo.set_value(true);
 	}
 
+	//goal tipper code below
 	if (con.get_digital(E_CONTROLLER_DIGITAL_X)){
-		intake.move(-40);
+		tipper = !tipper;
 	}
+	goalTipper.set_value(tipper);
 
+	//doinker code below
 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)){
 		doinkerState = !doinkerState;
 	}
 	doinker.set_value(doinkerState);
+
+	//color sort:
+	if (blueRing == true && timeLogged == false){
+		detectedTime = pros::millis();
+		timeLogged = true;
+	}
+
+	if (timeLogged == true && (pros::millis() - detectedTime) >= 700){
+		interrupt = true;
+	}
+
+	if (interrupt == true){
+		intake.move(0);
+		interruptTime = pros::millis();
+		if ((pros::millis() - interruptTime) >= 500){
+			interrupt = false;
+			timeLogged = false;
+			con.rumble(".");
+		}
+	}
 
 }
 
@@ -230,10 +263,13 @@ void driverProfileManu(){
 	// 	mogo.set_value(true);
 	// }
 
+	//goal tipper code below
 	if (con.get_digital(E_CONTROLLER_DIGITAL_X)){
-		intake.move(-40);
+		tipper = !tipper;
 	}
+	goalTipper.set_value(tipper);
 
+	//doinker code below
 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)){
 		doinkerState = !doinkerState;
 	}
@@ -417,6 +453,8 @@ void initialize()
 
 	ladyBrown.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 
+	colorSensor.set_integration_time(3);
+
 	pros::Task detectColors(senseColor);
 }
 
@@ -486,6 +524,7 @@ void autonomous() {
 void opcontrol()
 {
 	lcd::clear();
+	con.clear();
 	con.clear_line(2);
 
 	while (true)
@@ -530,9 +569,6 @@ void opcontrol()
 			DPCleared = true;
 		}
 
-		if (blueRing == true){
-			con.rumble(".");
-		}
 
 		delay(10);
 		DCSeconds += 0.01;

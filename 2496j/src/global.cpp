@@ -24,6 +24,10 @@ namespace glb {
 
     ADIDigitalOut doinker(P_doinker, false);
 
+    ADIDigitalOut intakeLift(P_intakeLift, false);
+
+    ADIDigitalOut goalTipper(P_goalTipper, false);
+
     Imu inertial(P_inertial);
 
     Controller con(E_CONTROLLER_MASTER); // controller
