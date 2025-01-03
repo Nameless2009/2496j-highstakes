@@ -657,7 +657,7 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc=true)
 
 	double kP = 5;
 	double kI = 0.001; 
-	double kD = 25;
+	double kD = 30.5;
 	double maxI = 500;
 
 	int time = 0;
@@ -698,7 +698,7 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc=true)
 
 	if (powerFunc == true){
 	//   y =    a   +          bx            +           cx^2                  +                dx^3                +                fx^4
-		kD = 2.5706+(0.583313*abs(desiredValue))+(-0.00847392*pow(abs(desiredValue), 2))+(0.0000559881*pow(abs(desiredValue), 3))+(-0.000000129618*pow(abs(desiredValue), 4));
+		kD = 9.82234+(0.208006*abs(desiredValue))+(-0.00127772*pow(abs(desiredValue), 2))+(0.0000087524*pow(abs(desiredValue), 3))+(-0.0000000258161*pow(abs(desiredValue), 4));
 	}
 
 
@@ -1355,11 +1355,12 @@ void skillsAuto()
 void skipAutonomous()
 {
 	//skip auton
-	inertial.set_heading(45);
-	drivePID(-1100, 1500, 0, true);
+	drivePID(-1000, 1500, 0, true);
+	driveSPID(-200);
 	mogo.set_value(true);
-	turnPIDMogo(162);
+	delay(50);
+	turnPIDMogo(-165);
 	intake.move(127);
-	drivePIDMogo(1000);
-	turnPIDMogo(130);
+	drivePIDMogo(1200);
+	turnPIDMogo(-130);
 }
