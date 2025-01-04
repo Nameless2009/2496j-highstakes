@@ -18,7 +18,7 @@ namespace glb
     #define P_BL_chassis 3
     #define P_BR_chassis 10
 
-    #define P_intake 20
+    #define P_intake 4
 
     #define P_ladyBrown 12
 
@@ -28,7 +28,7 @@ namespace glb
 
     #define P_goalTipper 'D'
 
-    #define P_inertial 19
+    #define P_inertial 21
 
     #define P_rotation 16
 

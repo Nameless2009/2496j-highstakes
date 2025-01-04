@@ -175,7 +175,7 @@ void driverProfileAyush(){
 	}
 
 	if (timeLogged == true && (pros::millis() - detectedTime) >= 700){
-		interrupt = true;
+		//interrupt = true; //UNCOMMENT THIS LATER
 	}
 
 	if (interrupt == true){

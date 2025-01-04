@@ -110,7 +110,23 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 
 	double initialValue = inertial.get_heading();
 	if (initialValue > 180){
-		initialValue = initialValue - 360;
+		initialValue = ((360-initialValue) * -1);
+	}
+
+	if ((desiredValue < 0) && (initialValue > 0)){
+		if ((initialValue - desiredValue) >= 180){
+			desiredValue = desiredValue + 360;
+			initialValue = inertial.get_heading();
+		}
+		else {
+		}
+	}
+	else if ((desiredValue > 0) && (initialValue < 0)) {
+		if ((desiredValue - initialValue) >= 180){
+			initialValue = inertial.get_heading();
+		}
+		else {
+		}
 	}
 
 	if (chainSpeed == 0){
@@ -137,7 +153,7 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 
 		double currentIMUValue = inertial.get_heading();
 		if (currentIMUValue > 180){
-			currentIMUValue = currentIMUValue - 360;
+			currentIMUValue = ((360-currentIMUValue) * -1);
 		}
 
 		if ((initialValue < 0) && (currentIMUValue > 0)){
@@ -145,11 +161,15 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 				initialValue = initialValue + 360;
 				currentIMUValue = inertial.get_heading();
 			}
+			else {
+				
+			}
 		}
-
 		else if ((initialValue > 0) && (currentIMUValue < 0)) {
 			if ((initialValue - currentIMUValue) >= 180){
 				currentIMUValue = inertial.get_heading();
+			}
+			else {
 			}
 		}
 
@@ -256,7 +276,23 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 	double initialValue = inertial.get_heading();
 	if (initialValue > 180){
-		initialValue = initialValue - 360;
+		initialValue = ((360-initialValue) * -1);
+	}
+
+	if ((desiredValue < 0) && (initialValue > 0)){
+		if ((initialValue - desiredValue) >= 180){
+			desiredValue = desiredValue + 360;
+			initialValue = inertial.get_heading();
+		}
+		else {
+		}
+	}
+	else if ((desiredValue > 0) && (initialValue < 0)) {
+		if ((desiredValue - initialValue) >= 180){
+			initialValue = inertial.get_heading();
+		}
+		else {
+		}
 	}
 
 	if (chainSpeed == 0){
@@ -283,7 +319,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 		double currentIMUValue = inertial.get_heading();
 		if (currentIMUValue > 180){
-			currentIMUValue = currentIMUValue - 360;
+			currentIMUValue = ((360-currentIMUValue) * -1);
 		}
 
 		if ((initialValue < 0) && (currentIMUValue > 0)){
@@ -291,11 +327,16 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 				initialValue = initialValue + 360;
 				currentIMUValue = inertial.get_heading();
 			}
+			else {
+				
+			}
 		}
-
 		else if ((initialValue > 0) && (currentIMUValue < 0)) {
 			if ((initialValue - currentIMUValue) >= 180){
 				currentIMUValue = inertial.get_heading();
+			}
+			else {
+
 			}
 		}
 
@@ -401,7 +442,23 @@ void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
 
 	double initialValue = inertial.get_heading();
 	if (initialValue > 180){
-		initialValue = initialValue - 360;
+		initialValue = ((360-initialValue) * -1);
+	}
+
+	if ((desiredValue < 0) && (initialValue > 0)){
+		if ((initialValue - desiredValue) >= 180){
+			desiredValue = desiredValue + 360;
+			initialValue = inertial.get_heading();
+		}
+		else {
+		}
+	}
+	else if ((desiredValue > 0) && (initialValue < 0)) {
+		if ((desiredValue - initialValue) >= 180){
+			initialValue = inertial.get_heading();
+		}
+		else {
+		}
 	}
 
 	if (chainSpeed == 0){
@@ -428,7 +485,7 @@ void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
 
 		double currentIMUValue = inertial.get_heading();
 		if (currentIMUValue > 180){
-			currentIMUValue = currentIMUValue - 360;
+			currentIMUValue = ((360-currentIMUValue) * -1);
 		}
 
 		if ((initialValue < 0) && (currentIMUValue > 0)){
@@ -436,15 +493,19 @@ void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
 				initialValue = initialValue + 360;
 				currentIMUValue = inertial.get_heading();
 			}
+			else {
+				
+			}
 		}
-
 		else if ((initialValue > 0) && (currentIMUValue < 0)) {
 			if ((initialValue - currentIMUValue) >= 180){
 				currentIMUValue = inertial.get_heading();
 			}
+			else {
+			}
 		}
 		
-		double headingError = initialValue -currentIMUValue;
+		double headingError = initialValue - currentIMUValue;
 		double headingCorrection = calcPID(headingError);
 
 
@@ -645,8 +706,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 	chassis.move(0);
 }
 
-
-void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc=true)
+void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc = true)
 {
 	bool enableTurnPID = true;
 	int prevError = 0;
@@ -657,7 +717,7 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc=true)
 
 	double kP = 5;
 	double kI = 0.001; 
-	double kD = 30.5;
+	double kD = 22.5;
 	double maxI = 500;
 
 	int time = 0;
@@ -778,8 +838,6 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc=true)
 
 	chassis.move(0);
 }
-
-
 
 
 //arc turn below - motors and inertial was blowing up so i had to comment (sorryyy):
