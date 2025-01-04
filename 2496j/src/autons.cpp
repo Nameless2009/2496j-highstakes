@@ -90,7 +90,7 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 
 	double kP = 0.4;
 	double kI = 0.001; 
-	double kD = 2.8;
+	double kD = 0.2;
 	double maxI = 500;
 	
 	int integralThreshold = 150;
@@ -218,12 +218,12 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 
 		prevError = error;
 
-		if (error < 10)
+		if (error < 30)
 		{
 			count++;
 		}
 
-		if (count > 20)
+		if (count > 30)
 		{
 			enableDrivePID = false;
 		}
@@ -1413,12 +1413,17 @@ void skillsAuto()
 void skipAutonomous()
 {
 	//skip auton
-	drivePID(-1000, 1500, 0, true);
+	drivePID(-1000);
 	driveSPID(-200);
 	mogo.set_value(true);
-	delay(50);
-	turnPIDMogo(-165);
 	intake.move(127);
-	drivePIDMogo(1200);
-	turnPIDMogo(-130);
+	delay(100);
+	turnPIDMogo(-112);
+	drivePIDMogo(1000);
+	turnPIDMogo(-80);
+	drivePIDMogo(500);
+	drivePIDMogo(-1000);
+	turnPIDMogo(-50);
+	drivePIDMogo(1000);
+	turnPIDMogo(-20);
 }
