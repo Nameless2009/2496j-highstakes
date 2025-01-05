@@ -270,6 +270,8 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 	BR.tare_position();
 	BL.tare_position();
 
+	desiredValue = desiredValue * 2; 
+
 	double currentValue; 
 
 	// inertial.tare_heading();
@@ -1419,8 +1421,8 @@ void skipAutonomous()
 	drivePID(-1000);
 
 
-	// driveSPID(-200);
-	// mogo.set_value(true);
+	driveSPID(-200);
+	mogo.set_value(true);
 	// intake.move(127);
 	// delay(100);
 	// turnPIDMogo(-112);
