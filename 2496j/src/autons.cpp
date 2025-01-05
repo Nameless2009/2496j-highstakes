@@ -236,7 +236,7 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 			mogo.set_value(true);
 		}
 
-		delay(20);
+		delay(1);
 
 		time++; //add one to time every cycle
 		
@@ -403,7 +403,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 			mogo.set_value(true);
 		}
 
-		delay(20);
+		delay(1);
 
 		time++; //add one to time every cycle
 		

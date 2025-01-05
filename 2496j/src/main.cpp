@@ -488,24 +488,25 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	if (rush == true && alliance == true){
-		redRushSide();
-	}
-	else if (rush == true && alliance == false){
-		blueRushSide();
-	}
-	else if (ring == true && alliance == true){
-		redRingSide();
-	}
-	else if (ring == true && alliance == false){
-		blueRingSide();
-	}
-	else if (skills){
-		skillsAuto();
-	}
-	else { //if nothing was selected
-		skipAutonomous();
-	}
+	// if (rush == true && alliance == true){
+	// 	redRushSide();
+	// }
+	// else if (rush == true && alliance == false){
+	// 	blueRushSide();
+	// }
+	// else if (ring == true && alliance == true){
+	// 	redRingSide();
+	// }
+	// else if (ring == true && alliance == false){
+	// 	blueRingSide();
+	// }
+	// else if (skills){
+	// 	skillsAuto();
+	// }
+	// else { //if nothing was selected
+	// 	skipAutonomous();
+	// }
+	skipAutonomous();
 }
 
 /**
