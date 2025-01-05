@@ -181,7 +181,7 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 		// get avg of motors:
 		int currentValue = (FRpos + LMpos + BRpos + FLpos + BLpos + RMpos) / 6;
 
-		// proportional
+		// proportional	
 		double error = desiredValue - currentValue;
 
 		// derivative
@@ -236,7 +236,7 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 			mogo.set_value(true);
 		}
 
-		delay(1);
+		delay(20);
 
 		time++; //add one to time every cycle
 		
@@ -1414,16 +1414,18 @@ void skipAutonomous()
 {
 	//skip auton
 	drivePID(-1000);
-	driveSPID(-200);
-	mogo.set_value(true);
-	intake.move(127);
-	delay(100);
-	turnPIDMogo(-112);
-	drivePIDMogo(1000);
-	turnPIDMogo(-80);
-	drivePIDMogo(500);
-	drivePIDMogo(-1000);
-	turnPIDMogo(-50);
-	drivePIDMogo(1000);
-	turnPIDMogo(-20);
+
+	
+	// driveSPID(-200);
+	// mogo.set_value(true);
+	// intake.move(127);
+	// delay(100);
+	// turnPIDMogo(-112);
+	// drivePIDMogo(1000);
+	// turnPIDMogo(-80);
+	// drivePIDMogo(500);
+	// drivePIDMogo(-1000);
+	// turnPIDMogo(-50);
+	// drivePIDMogo(1000);
+	// turnPIDMogo(-20);
 }
