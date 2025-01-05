@@ -270,7 +270,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 	BR.tare_position();
 	BL.tare_position();
 
-	desiredValue = desiredValue * 2; 
+	// desiredValue = desiredValue * 2; 
 
 	double currentValue; 
 
@@ -279,25 +279,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 	//con.clear();
 
 	double initialValue = inertial.get_heading();
-	if (initialValue > 180){
-		initialValue = ((360-initialValue) * -1);
-	}
 
-	if ((desiredValue < 0) && (initialValue > 0)){
-		if ((initialValue - desiredValue) >= 180){
-			desiredValue = desiredValue + 360;
-			initialValue = inertial.get_heading();
-		}
-		else {
-		}
-	}
-	else if ((desiredValue > 0) && (initialValue < 0)) {
-		if ((desiredValue - initialValue) >= 180){
-			initialValue = inertial.get_heading();
-		}
-		else {
-		}
-	}
 
 	if (chainSpeed == 0){
 		chain = false;
