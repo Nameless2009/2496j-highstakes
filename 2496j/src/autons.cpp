@@ -270,6 +270,8 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 	BR.tare_position();
 	BL.tare_position();
 
+	double currentValue; 
+
 	// inertial.tare_heading();
 
 	//con.clear();
@@ -310,12 +312,12 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 		}
 
 		// get position of all motors:
-		int FRpos = FR.get_position();
-		int FLpos = FL.get_position();
-		int BRpos = BR.get_position();
-		int BLpos = BL.get_position();
-		int LMpos = LM.get_position();
-		int RMpos = RM.get_position();
+		// double FRpos = FR.get_position();
+		// double FLpos = FL.get_position();
+		// double BRpos = BR.get_position();
+		// double BLpos = BL.get_position();
+		// double LMpos = LM.get_position();
+		// double RMpos = RM.get_position();
 
 		double currentIMUValue = inertial.get_heading();
 		if (currentIMUValue > 180){
@@ -346,7 +348,7 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 
 		// get avg of motors:
-		int currentValue = (FRpos + LMpos + BRpos + FLpos + BLpos + RMpos) / 6;
+		currentValue = (FR.get_position() + RM.get_position() + BR.get_position() + FL.get_position() + LM.get_position() + BL.get_position()) / 6;
 
 		// proportional
 		double error = desiredValue - currentValue;
@@ -403,13 +405,13 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 			mogo.set_value(true);
 		}
 
-		delay(1);
+		delay(20);
 
 		time++; //add one to time every cycle
 		
 	}
 
-	chassis.move(0);
+	chassis.move(0);	
 }
 
 void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
@@ -1410,12 +1412,13 @@ void skillsAuto()
 	drivePID(1000);
 }
 
+
 void skipAutonomous()
 {
 	//skip auton
 	drivePID(-1000);
 
-	
+
 	// driveSPID(-200);
 	// mogo.set_value(true);
 	// intake.move(127);
