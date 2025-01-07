@@ -80,7 +80,7 @@ double ladyBrownPID(double error, double kP=5, double kI=0, double kD=0, double 
 	return speed;
 }
 
-void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autoclamp=false)
+void driveSPID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autoclamp=false)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -111,22 +111,6 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 	double initialValue = inertial.get_heading();
 	if (initialValue > 180){
 		initialValue = ((360-initialValue) * -1);
-	}
-
-	if ((desiredValue < 0) && (initialValue > 0)){
-		if ((initialValue - desiredValue) >= 180){
-			desiredValue = desiredValue + 360;
-			initialValue = inertial.get_heading();
-		}
-		else {
-		}
-	}
-	else if ((desiredValue > 0) && (initialValue < 0)) {
-		if ((desiredValue - initialValue) >= 180){
-			initialValue = inertial.get_heading();
-		}
-		else {
-		}
 	}
 
 	if (chainSpeed == 0){
@@ -160,18 +144,24 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 			if ((currentIMUValue - initialValue) >= 180){
 				initialValue = initialValue + 360;
 				currentIMUValue = inertial.get_heading();
+				// turnV = (initialValue - position); 
 			}
 			else {
-				
+				// turnV = (abs(position) + abs(initialValue));
 			}
 		}
 		else if ((initialValue > 0) && (currentIMUValue < 0)) {
 			if ((initialValue - currentIMUValue) >= 180){
 				currentIMUValue = inertial.get_heading();
+				// turnV = abs(abs(position) - abs(initialValue));
 			}
 			else {
+				// turnV = (abs(position) + initialValue); 
 			}
 		}
+		else {
+            // turnV = abs(abs(position) - abs(initialValue));
+        }
 
 		double headingError = initialValue -currentIMUValue;
 		double headingCorrection = calcPID(headingError);
@@ -238,7 +228,7 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 
 		delay(20);
 
-		time++; //add one to time every cycle
+		time+=20; //add one to time every cycle
 		
 	}
 
@@ -246,7 +236,7 @@ void driveSPID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocl
 }
 
 
-void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autoclamp=false)
+void drivePID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autoclamp=false)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -279,7 +269,9 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 	//con.clear();
 
 	double initialValue = inertial.get_heading();
-
+	if (initialValue > 180){
+		initialValue = ((360-initialValue) * -1);
+	}
 
 	if (chainSpeed == 0){
 		chain = false;
@@ -295,14 +287,6 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 			enableDrivePID = false;
 		}
 
-		// get position of all motors:
-		// double FRpos = FR.get_position();
-		// double FLpos = FL.get_position();
-		// double BRpos = BR.get_position();
-		// double BLpos = BL.get_position();
-		// double LMpos = LM.get_position();
-		// double RMpos = RM.get_position();
-
 		double currentIMUValue = inertial.get_heading();
 		if (currentIMUValue > 180){
 			currentIMUValue = ((360-currentIMUValue) * -1);
@@ -312,19 +296,24 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 			if ((currentIMUValue - initialValue) >= 180){
 				initialValue = initialValue + 360;
 				currentIMUValue = inertial.get_heading();
+				// turnV = (initialValue - position); 
 			}
 			else {
-				
+				// turnV = (abs(position) + abs(initialValue));
 			}
 		}
 		else if ((initialValue > 0) && (currentIMUValue < 0)) {
 			if ((initialValue - currentIMUValue) >= 180){
 				currentIMUValue = inertial.get_heading();
+				// turnV = abs(abs(position) - abs(initialValue));
 			}
 			else {
-
+				// turnV = (abs(position) + initialValue); 
 			}
 		}
+		else {
+            // turnV = abs(abs(position) - abs(initialValue));
+        }
 
 		double headingError = initialValue -currentIMUValue;
 		double headingCorrection = calcPID(headingError, 1.2, 0.05, 2.4);
@@ -391,14 +380,14 @@ void drivePID(int desiredValue, int timeout=1500, int chainSpeed=0, bool autocla
 
 		delay(20);
 
-		time++; //add one to time every cycle
+		time+=20; //add one to time every cycle
 		
 	}
 
 	chassis.move(0);	
 }
 
-void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
+void drivePIDMogo(int desiredValue, int timeout=15000, int chainSpeed=0)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -429,22 +418,6 @@ void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
 	double initialValue = inertial.get_heading();
 	if (initialValue > 180){
 		initialValue = ((360-initialValue) * -1);
-	}
-
-	if ((desiredValue < 0) && (initialValue > 0)){
-		if ((initialValue - desiredValue) >= 180){
-			desiredValue = desiredValue + 360;
-			initialValue = inertial.get_heading();
-		}
-		else {
-		}
-	}
-	else if ((desiredValue > 0) && (initialValue < 0)) {
-		if ((desiredValue - initialValue) >= 180){
-			initialValue = inertial.get_heading();
-		}
-		else {
-		}
 	}
 
 	if (chainSpeed == 0){
@@ -478,18 +451,24 @@ void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
 			if ((currentIMUValue - initialValue) >= 180){
 				initialValue = initialValue + 360;
 				currentIMUValue = inertial.get_heading();
+				// turnV = (initialValue - position); 
 			}
 			else {
-				
+				// turnV = (abs(position) + abs(initialValue));
 			}
 		}
 		else if ((initialValue > 0) && (currentIMUValue < 0)) {
 			if ((initialValue - currentIMUValue) >= 180){
 				currentIMUValue = inertial.get_heading();
+				// turnV = abs(abs(position) - abs(initialValue));
 			}
 			else {
+				// turnV = (abs(position) + initialValue); 
 			}
 		}
+		else {
+            // turnV = abs(abs(position) - abs(initialValue));
+        }
 		
 		double headingError = initialValue - currentIMUValue;
 		double headingCorrection = calcPID(headingError);
@@ -552,14 +531,14 @@ void drivePIDMogo(int desiredValue, int timeout=1500, int chainSpeed=0)
 
 		delay(20);
 
-		time++; //add one to time every cycle
+		time+=20; //add one to time every cycle
 		
 	}
 
 	chassis.move(0);
 }
 
-void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
+void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true)
 {
 	bool enableTurnPID = true;
 	int prevError = 0;
@@ -593,7 +572,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 		if ((position - desiredValue) >= 180){
 			desiredValue = desiredValue + 360;
 			position = inertial.get_heading();
-			turnV = (position + desiredValue);
+			turnV = (desiredValue - position); 
 		}
 		else {
 			turnV = (abs(position) + abs(desiredValue));
@@ -602,16 +581,19 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 	else if ((desiredValue > 0) && (position < 0)) {
 		if ((desiredValue - position) >= 180){
 			position = inertial.get_heading();
-			turnV = 360 - desiredValue - abs(position);
+			turnV = abs(abs(position) - abs(desiredValue));
 		}
 		else {
-			turnV = (position + desiredValue);
+			turnV = (abs(position) + desiredValue); 
 		}
+	}
+	else {
+		turnV = abs(abs(position) - abs(desiredValue));
 	}
 
 	if (powerFunc == true){
 	//   y =    a   +          bx            +           cx^2                  +                dx^3                +                fx^4
-		kD = 2.5706+(0.583313*abs(desiredValue))+(-0.00847392*pow(abs(desiredValue), 2))+(0.0000559881*pow(abs(desiredValue), 3))+(-0.000000129618*pow(abs(desiredValue), 4));
+		kD = 2.5706+(0.583313*abs(turnV))+(-0.00847392*pow(abs(turnV), 2))+(0.0000559881*pow(abs(turnV), 3))+(-0.000000129618*pow(abs(turnV), 4));
 	}
 
 
@@ -631,7 +613,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 			if ((position - desiredValue) >= 180){
 				desiredValue = desiredValue + 360;
 				position = inertial.get_heading();
-				turnV = (position + desiredValue);
+				turnV = (desiredValue - position); 
 			}
 			else {
 				turnV = (abs(position) + abs(desiredValue));
@@ -640,12 +622,15 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 		else if ((desiredValue > 0) && (position < 0)) {
 			if ((desiredValue - position) >= 180){
 				position = inertial.get_heading();
-				turnV = 360 - desiredValue - abs(position);
+				turnV = abs(abs(position) - abs(desiredValue));
 			}
 			else {
-				turnV = (position + desiredValue); //for different constants for pid
+				turnV = (abs(position) + desiredValue); 
 			}
 		}
+		else {
+            turnV = abs(abs(position) - abs(desiredValue));
+        }
 
 		// proportional
 		int error = desiredValue - position;
@@ -692,7 +677,7 @@ void turnPID(int desiredValue, int timeout=1500, bool powerFunc = true)
 	chassis.move(0);
 }
 
-void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc = true)
+void turnPIDMogo(int desiredValue, int timeout=15000, bool powerFunc = true)
 {
 	bool enableTurnPID = true;
 	int prevError = 0;
@@ -726,7 +711,7 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc = true)
 		if ((position - desiredValue) >= 180){
 			desiredValue = desiredValue + 360;
 			position = inertial.get_heading();
-			turnV = (position + desiredValue);
+			turnV = (desiredValue - position); 
 		}
 		else {
 			turnV = (abs(position) + abs(desiredValue));
@@ -735,16 +720,19 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc = true)
 	else if ((desiredValue > 0) && (position < 0)) {
 		if ((desiredValue - position) >= 180){
 			position = inertial.get_heading();
-			turnV = 360 - desiredValue - abs(position);
+			turnV = abs(abs(position) - abs(desiredValue));
 		}
 		else {
-			turnV = (position + desiredValue);
+			turnV = (abs(position) + desiredValue); 
 		}
+	}
+	else {
+		turnV = abs(abs(position) - abs(desiredValue));
 	}
 
 	if (powerFunc == true){
 	//   y =    a   +          bx            +           cx^2                  +                dx^3                +                fx^4
-		kD = 9.82234+(0.208006*abs(desiredValue))+(-0.00127772*pow(abs(desiredValue), 2))+(0.0000087524*pow(abs(desiredValue), 3))+(-0.0000000258161*pow(abs(desiredValue), 4));
+		kD = 9.82234+(0.208006*abs(turnV))+(-0.00127772*pow(abs(turnV), 2))+(0.0000087524*pow(abs(turnV), 3))+(-0.0000000258161*pow(abs(turnV), 4));
 	}
 
 
@@ -764,7 +752,7 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc = true)
 			if ((position - desiredValue) >= 180){
 				desiredValue = desiredValue + 360;
 				position = inertial.get_heading();
-				turnV = (position + desiredValue);
+				turnV = (desiredValue - position); 
 			}
 			else {
 				turnV = (abs(position) + abs(desiredValue));
@@ -773,12 +761,15 @@ void turnPIDMogo(int desiredValue, int timeout=1500, bool powerFunc = true)
 		else if ((desiredValue > 0) && (position < 0)) {
 			if ((desiredValue - position) >= 180){
 				position = inertial.get_heading();
-				turnV = 360 - desiredValue - abs(position);
+				turnV = abs(abs(position) - abs(desiredValue));
 			}
 			else {
-				turnV = (position + desiredValue); //for different constants for pid
+				turnV = (abs(position) + desiredValue); 
 			}
 		}
+		else {
+            turnV = abs(abs(position) - abs(desiredValue));
+        }
 
 		// proportional
 		int error = desiredValue - position;
@@ -904,7 +895,7 @@ float calculatePID2(float error){
 }
 
 
-void leftArc(double radius, double centralDegreeTheta, int timeout=1500, std::string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
+void leftArc(double radius, double centralDegreeTheta, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
 
 	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 550);
 	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
@@ -1030,7 +1021,7 @@ void leftArc(double radius, double centralDegreeTheta, int timeout=1500, std::st
 	chassis.move(0);
 }
 
-void rightArc(double radius, double centralDegreeTheta, int timeout=1500, std::string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
+void rightArc(double radius, double centralDegreeTheta, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
 
 
 	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
@@ -1401,18 +1392,19 @@ void skipAutonomous()
 {
 	//skip auton
 	drivePID(-1000);
-
-
-	driveSPID(-200);
+	driveSPID(-200, 1500, 0, true);
 	mogo.set_value(true);
-	// intake.move(127);
-	// delay(100);
-	// turnPIDMogo(-112);
-	// drivePIDMogo(1000);
-	// turnPIDMogo(-80);
-	// drivePIDMogo(500);
-	// drivePIDMogo(-1000);
-	// turnPIDMogo(-50);
-	// drivePIDMogo(1000);
-	// turnPIDMogo(-20);
+	intake.move(127);
+	delay(100);
+	turnPIDMogo(-115);
+	drivePIDMogo(1100);
+	delay(150);
+	turnPIDMogo(-75);
+	drivePIDMogo(500);
+	delay(100);
+	drivePIDMogo(-1000);
+	turnPIDMogo(-45);
+	drivePIDMogo(800);
+	turnPIDMogo(-2);
+	//drivePIDMogo(2400);
 }
