@@ -80,7 +80,7 @@ double ladyBrownPID(double error, double kP=5, double kI=0, double kD=0, double 
 	return speed;
 }
 
-void driveSPID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autoclamp=false)
+void driveSPID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclamp=false)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -113,7 +113,7 @@ void driveSPID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autoc
 		initialValue = ((360-initialValue) * -1);
 	}
 
-	if (chainSpeed == 0){
+	if (chainPos == 0){
 		chain = false;
 	}
 	else {
@@ -218,7 +218,7 @@ void driveSPID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autoc
 			enableDrivePID = false;
 		}
 
-		if (chain == true && abs(speed) <= chainSpeed){
+		if (chain == true && abs(error) <= chainPos){
 			enableDrivePID = false;
 		}
 
@@ -236,7 +236,7 @@ void driveSPID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autoc
 }
 
 
-void drivePID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autoclamp=false)
+void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclamp=false)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -273,7 +273,7 @@ void drivePID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autocl
 		initialValue = ((360-initialValue) * -1);
 	}
 
-	if (chainSpeed == 0){
+	if (chainPos == 0){
 		chain = false;
 	}
 	else {
@@ -370,7 +370,7 @@ void drivePID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autocl
 			enableDrivePID = false;
 		}
 
-		if (chain == true && abs(speed) <= chainSpeed){
+		if (chain == true && abs(error) <= chainPos){
 			enableDrivePID = false;
 		}
 
@@ -387,7 +387,7 @@ void drivePID(int desiredValue, int timeout=15000, int chainSpeed=0, bool autocl
 	chassis.move(0);	
 }
 
-void drivePIDMogo(int desiredValue, int timeout=15000, int chainSpeed=0)
+void drivePIDMogo(int desiredValue, int timeout=15000, int chainPos=0)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -420,7 +420,7 @@ void drivePIDMogo(int desiredValue, int timeout=15000, int chainSpeed=0)
 		initialValue = ((360-initialValue) * -1);
 	}
 
-	if (chainSpeed == 0){
+	if (chainPos == 0){
 		chain = false;
 	}
 	else {
@@ -525,7 +525,7 @@ void drivePIDMogo(int desiredValue, int timeout=15000, int chainSpeed=0)
 			enableDrivePID = false;
 		}
 
-		if (chain == true && abs(speed) <= chainSpeed){
+		if (chain == true && abs(error) <= chainPos){
 			enableDrivePID = false;
 		}
 
@@ -538,8 +538,21 @@ void drivePIDMogo(int desiredValue, int timeout=15000, int chainSpeed=0)
 	chassis.move(0);
 }
 
-void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true)
+void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true, int chainPos=0)
 {
+	bool chain;
+	
+	if (chainPos == 0){
+		chain = false;
+	}
+	else {
+		chain = true;
+		desiredValue = desiredValue + chainPos;
+		if (desiredValue > 180){
+			desiredValue = ((360-desiredValue) * -1);
+		}
+	}
+	
 	bool enableTurnPID = true;
 	int prevError = 0;
 	double totalError = 0;
@@ -670,6 +683,10 @@ void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true)
 			enableTurnPID = false;
 		}
 
+		if (chain == true && position >= desiredValue){
+			enableTurnPID = false;
+		}
+
 		delay(20);
 		time = time + 20;
 	}
@@ -677,8 +694,21 @@ void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true)
 	chassis.move(0);
 }
 
-void turnPIDMogo(int desiredValue, int timeout=15000, bool powerFunc = true)
+void turnPIDMogo(int desiredValue, int timeout=15000, bool powerFunc = true, int chainPos=0)
 {
+	bool chain;
+	
+	if (chainPos == 0){
+		chain = false;
+	}
+	else {
+		chain = true;
+		desiredValue = desiredValue + chainPos;
+		if (desiredValue > 180){
+			desiredValue = ((360-desiredValue) * -1);
+		}
+	}
+	
 	bool enableTurnPID = true;
 	int prevError = 0;
 	double totalError = 0;
@@ -809,6 +839,10 @@ void turnPIDMogo(int desiredValue, int timeout=15000, bool powerFunc = true)
 			enableTurnPID = false;
 		}
 
+		if (chain == true && position >= desiredValue){
+			enableTurnPID = false;
+		}
+
 		delay(20);
 		time = time + 20;
 	}
@@ -895,12 +929,18 @@ float calculatePID2(float error){
 }
 
 
-void leftArc(double radius, double centralDegreeTheta, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
+void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0){
+	bool chain;
 
-	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 550);
-	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
+	if (chainPos == 0){
+		chain = false;
+	}
+	else {
+		chain = true;
+	}
 
-	bool chain = true;
+	double rightArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius + 275);
+	double leftArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius - 275);
 
 	double speedProp = rightArc/leftArc;
 
@@ -918,7 +958,7 @@ void leftArc(double radius, double centralDegreeTheta, int timeout=15000, std::s
 		init_heading = init_heading - 360;
 	}
 
-	if (chainSpeed == 0){
+	if (chainPos == 0){
 		chain = false;
 	}
 	else {
@@ -969,7 +1009,7 @@ void leftArc(double radius, double centralDegreeTheta, int timeout=15000, std::s
 			break;
 		}
 
-		if (chain == true && abs(calculatePID(left_error)) <= chainSpeed && abs(calculatePID(right_error)) <= chainSpeed){ //might need to add calcpid2 back ON THE RIGHT SIDE
+		if (chain == true && heading >= centralDegreeTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
 			break;
 		}
 
@@ -1021,13 +1061,19 @@ void leftArc(double radius, double centralDegreeTheta, int timeout=15000, std::s
 	chassis.move(0);
 }
 
-void rightArc(double radius, double centralDegreeTheta, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0, int chainSpeed=0){
-
-
-	double rightArc = (centralDegreeTheta / 360)*2*M_PI*(radius);
-	double leftArc = (centralDegreeTheta / 360)*2*M_PI*(radius + 550);
+void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0){
 
 	bool chain;
+
+	if (chainPos == 0){
+		chain = false;
+	}
+	else {
+		chain = true;
+	}
+
+	double rightArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius - 275);
+	double leftArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius + 275);
 
 	//double speedProp = leftArc/rightArc;
 
@@ -1046,13 +1092,6 @@ void rightArc(double radius, double centralDegreeTheta, int timeout=15000, std::
 	bool taskEnded = false;
 	
 	// con.clear();
-
-	if (chainSpeed == 0){
-		chain = false;
-	}
-	else{
-		chain = true;
-	}
 
 	while(1){
 
@@ -1098,7 +1137,7 @@ void rightArc(double radius, double centralDegreeTheta, int timeout=15000, std::
 			break;
 		}
 
-		if (chain == true && abs(calculatePID(left_error)) <= chainSpeed && abs(calculatePID2(right_error)) <= chainSpeed){ //might need to add calcpid2 back ON THE RIGHT SIDE
+		if (chain == true && heading >= centralDegreeTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
 			break;
 		}
 
