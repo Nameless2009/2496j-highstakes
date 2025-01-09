@@ -2,11 +2,14 @@
 #include "global.h"
 #include "autons.h"
 
+#include "apix.h"
+#include "bluecover.h"
+#include "redcover.h"
+
 using namespace glb;
 using namespace pros;
 using namespace std;
 
-//larry was here
 
 bool rush = false;
 bool skills = false;
@@ -441,15 +444,16 @@ void on_right_button()
  */
 void initialize()
 {
-	pros::lcd::initialize();
-	pros::lcd::set_background_color(128, 0, 20);
+	// pros::lcd::initialize();
+	// pros::lcd::set_background_color(128, 0, 20);
 
-	pros::lcd::set_text_color(194, 187, 169);
-	pros::lcd::set_text(7, "...r/b...<----...---->...");
+	// pros::lcd::set_text_color(194, 187, 169);
+	// pros::lcd::set_text(7, "...r/b...<----...---->...");
 
-	pros::lcd::register_btn0_cb(on_left_button);
-	pros::lcd::register_btn1_cb(on_center_button);
-	pros::lcd::register_btn2_cb(on_right_button);
+	// pros::lcd::register_btn0_cb(on_left_button);
+	// pros::lcd::register_btn1_cb(on_center_button);
+	// pros::lcd::register_btn2_cb(on_right_button);
+
 
 	ladyBrown.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 
