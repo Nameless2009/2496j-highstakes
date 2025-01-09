@@ -1430,7 +1430,32 @@ void skillsAuto()
 void skipAutonomous()
 {
 	//skills goes here
-	
+	ladyBrown.move(127);
+	delay(500);
+	ladyBrown.move(0);
+	intake.move(127);
+	delay(1000);
+	ladyBrown.move(-127);
+	drivePID(600);
+	turnPID(-90);
+	drivePID(-700);
+	driveSPID(-300, 1500, 0, true);
+	mogo.set_value(true);
+	turnPIDMogo(0);
+	intake.move(127);
+	drivePIDMogo(1050);
+	turnPIDMogo(-45);
+	drivePIDMogo(1300);
+	intake.move(127);
+	turnPIDMogo(45);
+	delay(500);
+	drivePIDMogo(1500);
+	turnPIDMogo(90);
+	drivePIDMogo(1000);
+	intake.move(0);
+	turnPIDMogo(180);
+
+
 	
 	
 	

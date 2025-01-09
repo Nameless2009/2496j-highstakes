@@ -33,7 +33,7 @@ int interruptTime;
 int driverProfileSequence = 0;
 
 int ladyBrownSequence = 0;
-double ladyBrownCorrectPosition = 342.00;
+double ladyBrownCorrectPosition = 329.00;
 double ladyBrownCurrentPosition;
 
 bool mogoState = false;
@@ -120,17 +120,17 @@ void driverProfileAyush(){
 		}
 	}
 
-	if (ringLoadToggle == false){
-		ladyBrownCorrectPosition = 342.00;
-	}
-	else if (ringLoadToggle == true){
-		ladyBrownCorrectPosition = 330.00;
-	}
+	// if (ringLoadToggle == false){
+	// 	ladyBrownCorrectPosition = 342.00;
+	// }
+	// else if (ringLoadToggle == true){
+	// 	ladyBrownCorrectPosition = 330.00;
+	// }
 
 	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
 
 	if (lbPID == true){
-		ladyBrown.move(ladyBrownPID(lberror, -7, -0, -0));
+		ladyBrown.move(ladyBrownPID(lberror, -3, -0, -0));
 	}
 
 	//clamp and auto clamp code
@@ -237,7 +237,7 @@ void driverProfileManu(){
 		}
 	}
 	if (lbPID == true){
-		ladyBrown.move(ladyBrownPID(lberror, -7, -0, -0));
+		ladyBrown.move(ladyBrownPID(lberror, -3, -0, -0));
 	}
 
 	//clamp and auto clamp code
