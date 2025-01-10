@@ -1454,6 +1454,7 @@ void skipAutonomous()
 	drivePIDMogo(1000);
 	intake.move(0);
 	turnPIDMogo(180);
+	lbPID = true;
 
 
 	

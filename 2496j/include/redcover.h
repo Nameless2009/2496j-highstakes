@@ -5,6 +5,8 @@
 #include "main.h"
 #include "apix.h"
 
+LV_IMG_DECLARE(redcover);
+
 extern unsigned char redcoverdata[];
 
 #endif

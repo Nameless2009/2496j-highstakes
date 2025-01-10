@@ -5,6 +5,8 @@
 #include "main.h"
 #include "apix.h"
 
+LV_IMG_DECLARE(bluecover);
+
 extern unsigned char bluecoverdata[];
 
 #endif

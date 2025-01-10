@@ -23,8 +23,6 @@ bool doinkerState = false;
 bool alliance = false;
 int autoCycle = 0;
 
-bool lbPID = false;
-
 double DCSeconds = 0.00;
 bool DPCleared = false;
 
@@ -34,10 +32,6 @@ bool interrupt = false;
 int interruptTime;
 
 int driverProfileSequence = 0;
-
-int ladyBrownSequence = 0;
-double ladyBrownCorrectPosition = 329.00;
-double ladyBrownCurrentPosition;
 
 bool mogoState = false;
 
@@ -103,10 +97,10 @@ void driverProfileAyush(){
 	}
 
 	//lady brown code below
-	ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
+	// ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
 		lbPID = true;
-		ringLoadToggle = !ringLoadToggle;
+		// ringLoadToggle = !ringLoadToggle;
 	}
 	
 	else{
@@ -130,11 +124,11 @@ void driverProfileAyush(){
 	// 	ladyBrownCorrectPosition = 330.00;
 	// }
 
-	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
+	// double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
 
-	if (lbPID == true){
-		ladyBrown.move(ladyBrownPID(lberror, -3, -0, -0));
-	}
+	// if (lbPID == true){
+	// 	ladyBrown.move(ladyBrownPID(lberror, -3, -0, -0));
+	// }
 
 	//clamp and auto clamp code
 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
@@ -221,11 +215,12 @@ void driverProfileManu(){
 	}
 
 	//lady brown code below
-	ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
-	double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
+	// ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)){
 		lbPID = true;
+		// ringLoadToggle = !ringLoadToggle;
 	}
+	
 	else{
 		if (con.get_digital(E_CONTROLLER_DIGITAL_L1)){
 			ladyBrown.move(127);
@@ -239,9 +234,19 @@ void driverProfileManu(){
 			ladyBrown.move(0);
 		}
 	}
-	if (lbPID == true){
-		ladyBrown.move(ladyBrownPID(lberror, -3, -0, -0));
-	}
+
+	// if (ringLoadToggle == false){
+	// 	ladyBrownCorrectPosition = 342.00;
+	// }
+	// else if (ringLoadToggle == true){
+	// 	ladyBrownCorrectPosition = 330.00;
+	// }
+
+	// double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
+
+	// if (lbPID == true){
+	// 	ladyBrown.move(ladyBrownPID(lberror, -3, -0, -0));
+	// }
 
 	//clamp and auto clamp code
 	if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
@@ -454,12 +459,19 @@ void initialize()
 	// pros::lcd::register_btn1_cb(on_center_button);
 	// pros::lcd::register_btn2_cb(on_right_button);
 
+	//lvgl
+	lv_obj_t *red_cover = lv_img_create(lv_scr_act(), NULL);
+	lv_img_set_src(red_cover, &redcover);
+	lv_obj_align(red_cover, NULL, LV_ALIGN_CENTER, 0, 0);
+
 
 	ladyBrown.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 
 	colorSensor.set_integration_time(3);
 
 	pros::Task detectColors(senseColor);
+
+	pros::Task lbTask(ladyBrownTask);
 }
 
 /**

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "autons.h"
 
 
 namespace glb {
@@ -37,4 +38,20 @@ namespace glb {
     Distance clampDistance(P_distance);
 
     Optical colorSensor(P_color_sensor);
+}
+
+using namespace glb;
+
+bool lbPID = false;
+double ladyBrownCorrectPosition = 329.00;
+double ladyBrownCurrentPosition;
+
+void ladyBrownTask(){
+	while(1){
+		ladyBrownCurrentPosition = (lbrotation.get_angle())/100;
+		double lberror = (ladyBrownCorrectPosition - ladyBrownCurrentPosition);
+		if (lbPID == true){
+			ladyBrown.move(ladyBrownPID(lberror, -3, -0, -0));
+		}
+	}
 }

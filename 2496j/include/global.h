@@ -74,4 +74,11 @@ namespace glb
     extern Optical colorSensor;
 
 }
+
+extern bool lbPID;
+extern double ladyBrownCorrectPosition;
+extern double ladyBrownCurrentPosition;
+
+extern void ladyBrownTask();
+
 #endif
