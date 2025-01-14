@@ -80,162 +80,6 @@ double ladyBrownPID(double error, double kP=5, double kI=0, double kD=0, double 
 	return speed;
 }
 
-void driveSPID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclamp=false)
-{
-	bool enableDrivePID = true;
-	int prevError = 0;
-	double totalError = 0;
-	int count = 0;
-	bool chain;
-
-	double kP = 0.3;
-	double kI = 0.001; 
-	double kD = 0.2;
-	double maxI = 500;
-	
-	int integralThreshold = 150;
-
-	int time = 0;
-
-	FR.tare_position();
-	FL.tare_position();
-	RM.tare_position();
-	LM.tare_position();
-	BR.tare_position();
-	BL.tare_position();
-
-	// inertial.tare_heading();
-
-	//con.clear();
-
-	double initialValue = inertial.get_heading();
-	if (initialValue > 180){
-		initialValue = ((360-initialValue) * -1);
-	}
-
-	if (chainPos == 0){
-		chain = false;
-	}
-	else {
-		chain = true;
-	}
-
-	while (enableDrivePID)
-	{
-
-		if (time > timeout){
-			enableDrivePID = false;
-		}
-
-		// get position of all motors:
-		int FRpos = FR.get_position();
-		int FLpos = FL.get_position();
-		int BRpos = BR.get_position();
-		int BLpos = BL.get_position();
-		int LMpos = LM.get_position();
-		int RMpos = RM.get_position();
-
-		double currentIMUValue = inertial.get_heading();
-		if (currentIMUValue > 180){
-			currentIMUValue = ((360-currentIMUValue) * -1);
-		}
-
-		if ((initialValue < 0) && (currentIMUValue > 0)){
-			if ((currentIMUValue - initialValue) >= 180){
-				initialValue = initialValue + 360;
-				currentIMUValue = inertial.get_heading();
-				// turnV = (initialValue - position); 
-			}
-			else {
-				// turnV = (abs(position) + abs(initialValue));
-			}
-		}
-		else if ((initialValue > 0) && (currentIMUValue < 0)) {
-			if ((initialValue - currentIMUValue) >= 180){
-				currentIMUValue = inertial.get_heading();
-				// turnV = abs(abs(position) - abs(initialValue));
-			}
-			else {
-				// turnV = (abs(position) + initialValue); 
-			}
-		}
-		else {
-            // turnV = abs(abs(position) - abs(initialValue));
-        }
-
-		double headingError = initialValue -currentIMUValue;
-		double headingCorrection = calcPID(headingError);
-
-
-
-		// get avg of motors:
-		int currentValue = (FRpos + LMpos + BRpos + FLpos + BLpos + RMpos) / 6;
-
-		// proportional	
-		double error = desiredValue - currentValue;
-
-		// derivative
-		int derivative = error - prevError;
-
-		// integral
-		if (abs(error) < integralThreshold)
-		{
-			totalError += error;
-		}
-
-		if (error > 0){
-			totalError = std::min(totalError, maxI);
-		}
-		else{
-			totalError = std::max(totalError, -maxI);
-		}
-
-		double speed = (error * kP + derivative * kD + totalError * kI);
-
-
-		if (speed>127){
-			speed = 127;
-		}
-		else if (speed < -127){
-			speed = -127;
-		}
-
-		leftChassis.move(speed + headingCorrection);
-		rightChassis.move(speed - headingCorrection);
-
-		con.print(0,0, "error: %f", float(error));
-
-
-		prevError = error;
-
-		if (error < 30)
-		{
-			count++;
-		}
-
-		if (count > 30)
-		{
-			enableDrivePID = false;
-		}
-
-		if (chain == true && abs(error) <= chainPos){
-			enableDrivePID = false;
-		}
-
-		if (autoclamp==true && clampDistance.get() <= 190){
-			mogo.set_value(true);
-		}
-
-		delay(20);
-
-		time+=20; //add one to time every cycle
-		
-	}
-
-	chassis.move(0);
-}
-
-
 void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclamp=false, int speed_percent=100)
 {
 	bool enableDrivePID = true;
@@ -344,12 +188,11 @@ void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclam
 
 		double speed = (error * kP + derivative * kD + totalError * kI);
 
-
-		if (speed>127 * double(speed_percent)/100){
-			speed = 127 * double(speed_percent)/100;
+		if (speed>127 * double(speed_percent)/100.0){
+			speed = 127 * double(speed_percent)/100.0;
 		}
-		else if (speed < -127 * double(speed_percent)/100){
-			speed = -127 * double(speed_percent)/100;
+		else if (speed < -127 * double(speed_percent)/100.0){
+			speed = -127 * double(speed_percent)/100.0;
 		}
 
 		leftChassis.move(speed + headingCorrection);
@@ -1252,7 +1095,7 @@ void redRushSide()
 	intake.move(0);
 	turnPID(-90, 1500, false);
 	drivePID(-500);
-	driveSPID(-400, 1500, 0, true);
+	drivePID(-400, 1500, 0, true, 50);
 	mogo.set_value(true);
 	delay(50);
 	intake.move(127);
@@ -1278,7 +1121,7 @@ void blueRushSide(){
 	intake.move(0);
 	turnPID(90, 1500, false);
 	drivePID(-500);
-	driveSPID(-400, 1500, 0, true);
+	drivePID(-400, 1500, 0, true, 50);
 	mogo.set_value(true);
 	delay(50);
 	intake.move(127);
@@ -1336,7 +1179,7 @@ void skillsAuto()
 	drivePID(600);
 	turnPID(90);
 	drivePID(-500);
-	driveSPID(-300);
+	drivePID(-300, 1500, 0, true, 50);
 	mogo.set_value(true);
 	delay(700);
 	turnPIDMogo(-20, 1500, false);
@@ -1389,7 +1232,7 @@ void skillsAuto()
 	drivePID(600);
 	turnPID(90);
 	drivePID(-500);
-	driveSPID(-300);
+	drivePID(-300, 1500, 0, true, 50);
 	mogo.set_value(true);
 	delay(700);
 	turnPIDMogo(-20, 1500, false);
@@ -1439,8 +1282,8 @@ void skipAutonomous()
 	delay(500);
 	drivePID(665);
 	turnPID(-90);
-	drivePID(-600, 1500, 0, true);
-	driveSPID(-300, 1500, 0, true, 50);
+	drivePID(-600);
+	drivePID(-300, 1500, 0, true, 50);
 	//mogo.set_value(true);
 	turnPIDMogo(0);
 	intake.move(127);

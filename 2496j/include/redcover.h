@@ -1,12 +1,12 @@
-// #ifndef __REDCOVER__
-// #define __REDCOVER__
+#ifndef __REDCOVER__
+#define __REDCOVER__
 
-// #include "lvgl.h"
-// #include "main.h"
-// #include "apix.h"
+#include "display/lvgl.h"
+#include "main.h"
+#include "api.h"
 
-// LV_IMG_DECLARE(redcover);
+LV_IMG_DECLARE(redcover);
 
-// extern unsigned char redcoverdata[];
+extern unsigned char redcoverdata[];
 
-// #endif
+#endif
