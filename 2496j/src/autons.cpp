@@ -1280,14 +1280,25 @@ void skipAutonomous()
 	delay(1000);
 	ladyBrown.move(-127);
 	delay(500);
-	drivePID(665);
+	drivePID(650);
 	turnPID(-90);
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+	drivePID(-880, 3300, 0, true,50);
+	//driveSPID(-300, 1500, 0, true);
+	mogo.set_value(true);
+	drivePIDMogo(-100);
+=======
+>>>>>>> Stashed changes
 	drivePID(-600);
 	drivePID(-300, 1500, 0, true, 50);
 	//mogo.set_value(true);
+>>>>>>> e3aa0c15082cab1b666bb3604b71f89fd6d0eff6
 	turnPIDMogo(0);
 	intake.move(127);
 	drivePIDMogo(1080);
+	delay(200);
 	intake.move(-20);
 	turnPIDMogo(-45);
 	intake.move(0);
@@ -1295,6 +1306,7 @@ void skipAutonomous()
 	intake.move(127);
 	delay(500);
 	turnPIDMogo(45);
+	delay(260);
 	intake.move(0);
 	drivePIDMogo(1550);
 	intake.move(127);
@@ -1306,12 +1318,18 @@ void skipAutonomous()
 	drivePIDMogo(1000);
 	turnPIDMogo(90);
 	intake.move(127);
-	drivePIDMogo(1000);
+	drivePIDMogo(330);
 	intake.move(0);
 	lbPID = false;
 	ladyBrown.move(127);
 	delay(1000);
 	ladyBrown.move(-127);
+	drivePIDMogo(-430);
+	turnPIDMogo(0);
+	intake.move(127);
+	drivePIDMogo(2000);
+	drivePIDMogo(350);
+
 
 
 
