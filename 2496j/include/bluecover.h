@@ -7,6 +7,6 @@
 
 LV_IMG_DECLARE(bluecover);
 
-extern unsigned char bluecoverdata[];
+extern const uint16_t bluecoverdata[];
 
 #endif

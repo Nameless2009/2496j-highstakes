@@ -7,6 +7,6 @@
 
 LV_IMG_DECLARE(redcover);
 
-extern unsigned char redcoverdata[];
+extern uint16_t redcoverdata[];
 
 #endif
