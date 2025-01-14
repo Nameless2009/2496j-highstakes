@@ -32,7 +32,7 @@ namespace glb
 
     #define P_rotation 16
 
-    #define P_distance 14
+    #define P_distance 9
 
     #define P_color_sensor 13
 

@@ -88,7 +88,7 @@ void driveSPID(int desiredValue, int timeout=15000, int chainPos=0, bool autocla
 	int count = 0;
 	bool chain;
 
-	double kP = 0.4;
+	double kP = 0.3;
 	double kI = 0.001; 
 	double kD = 0.2;
 	double maxI = 500;
@@ -1437,29 +1437,38 @@ void skipAutonomous()
 	delay(1000);
 	ladyBrown.move(-127);
 	delay(500);
-	drivePID(700);
+	drivePID(665);
 	turnPID(-90);
-	drivePID(-700);
-	driveSPID(-330, 1500, 0, true);
-	mogo.set_value(true);
+	drivePID(-600, 1500, 0, true);
+	driveSPID(-300, 1500, 0, true);
+	//mogo.set_value(true);
 	turnPIDMogo(0);
 	intake.move(127);
 	drivePIDMogo(1080);
+	intake.move(-20);
 	turnPIDMogo(-45);
 	intake.move(0);
 	drivePIDMogo(1420);
 	intake.move(127);
+	delay(500);
 	turnPIDMogo(45);
-	delay(1000);
+	intake.move(0);
 	drivePIDMogo(1550);
+	intake.move(127);
 	turnPIDMogo(90);
 	drivePIDMogo(1000);
 	intake.move(0);
 	turnPIDMogo(179);
 	lbPID = true;
-	drivePIDMogo(940);
+	drivePIDMogo(1000);
 	turnPIDMogo(90);
-	drivePIDMogo(480);
+	intake.move(127);
+	drivePIDMogo(1000);
+	intake.move(0);
+	lbPID = false;
+	ladyBrown.move(127);
+	delay(1000);
+	ladyBrown.move(-127);
 
 
 
