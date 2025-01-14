@@ -236,7 +236,7 @@ void driveSPID(int desiredValue, int timeout=15000, int chainPos=0, bool autocla
 }
 
 
-void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclamp=false)
+void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclamp=false, int speed_percent=100)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -345,11 +345,11 @@ void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclam
 		double speed = (error * kP + derivative * kD + totalError * kI);
 
 
-		if (speed>127){
-			speed = 127;
+		if (speed>127 * double(speed_percent)/100){
+			speed = 127 * double(speed_percent)/100;
 		}
-		else if (speed < -127){
-			speed = -127;
+		else if (speed < -127 * double(speed_percent)/100){
+			speed = -127 * double(speed_percent)/100;
 		}
 
 		leftChassis.move(speed + headingCorrection);
@@ -1440,7 +1440,7 @@ void skipAutonomous()
 	drivePID(665);
 	turnPID(-90);
 	drivePID(-600, 1500, 0, true);
-	driveSPID(-300, 1500, 0, true);
+	driveSPID(-300, 1500, 0, true, 50);
 	//mogo.set_value(true);
 	turnPIDMogo(0);
 	intake.move(127);
