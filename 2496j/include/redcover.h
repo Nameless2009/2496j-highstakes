@@ -7,6 +7,6 @@
 
 LV_IMG_DECLARE(redcover);
 
-extern uint16_t redcoverdata[];
+extern const uint16_t redcoverdata[];
 
 #endif

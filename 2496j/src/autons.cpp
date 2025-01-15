@@ -363,7 +363,7 @@ void drivePIDMogo(int desiredValue, int timeout=15000, int chainPos=0)
 			count++;
 		}
 
-		if (count > 26)
+		if (count > 20)
 		{
 			enableDrivePID = false;
 		}
@@ -1274,54 +1274,64 @@ void skipAutonomous()
 {
 	//skills goes here
 	ladyBrown.move(127);
-	delay(500);
+	delay(200);
 	ladyBrown.move(0);
 	intake.move(127);
-	delay(1000);
+	delay(500);
 	ladyBrown.move(-127);
 	delay(500);
+	ladyBrown.move(0);
 	drivePID(650);
 	turnPID(-90);
 
 	drivePID(-880, 3300, 0, true,50);
-	//driveSPID(-300, 1500, 0, true);
 	mogo.set_value(true);
-	drivePIDMogo(-100);
-
-	drivePID(-600);
-	drivePID(-300, 1500, 0, true, 50);
-	//mogo.set_value(true);
+	drivePIDMogo(-200);
 
 	turnPIDMogo(0);
 	intake.move(127);
 	drivePIDMogo(1080);
-	delay(200);
+	delay(500);
 	intake.move(-20);
 	turnPIDMogo(-45);
 	intake.move(0);
-	drivePIDMogo(1420);
+	drivePIDMogo(1000, 15000, 50);
 	intake.move(127);
-	delay(500);
+	drivePIDMogo(480);
+	intake.move(127);
+	delay(600);
 	turnPIDMogo(45);
 	delay(260);
 	intake.move(0);
-	drivePIDMogo(1550);
+	drivePIDMogo(850, 15000, 50);
+	intake.move(127);
+	drivePIDMogo(750);
 	intake.move(127);
 	turnPIDMogo(90);
-	drivePIDMogo(1000);
+	drivePIDMogo(900);
 	intake.move(0);
 	turnPIDMogo(179);
 	lbPID = true;
 	drivePIDMogo(1000);
 	turnPIDMogo(90);
 	intake.move(127);
-	drivePIDMogo(430);
+	drivePIDMogo(700, 700);
+	delay(100);
 	intake.move(0);
 	lbPID = false;
 	ladyBrown.move(127);
 	delay(1000);
 	ladyBrown.move(-127);
-	drivePIDMogo(-430);
+	lbPID = true;
+	intake.move(127);
+	delay(1000);
+	intake.move(0);
+	lbPID = false;
+	ladyBrown.move(127);
+	delay(1000);
+	ladyBrown.move(-127);
+	drivePIDMogo(-700, 700);
+	ladyBrown.move(0);
 	turnPIDMogo(0);
 	intake.move(127);
 	drivePIDMogo(2000);
