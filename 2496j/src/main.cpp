@@ -56,18 +56,30 @@ bool redRing = false;
 bool blueRing = false;
 
 bool stallInterrupt = false;
+bool stallLog = false;
 double stallTime;
+double reverseTime;
 
 void stallProtection(){
-	if (intake.get_actual_velocity() < 60.00 && stallInterrupt == false){
+
+	if (intake.get_actual_velocity() < 40.00 && stallLog == false){
 		stallTime = pros::millis();
-		intake.move(-127);
+		stallLog = true;
+	}
+	if ((pros::millis() - stallTime) >= 500 && stallLog == true){
 		stallInterrupt = true;
 	}
-	if (stallInterrupt == true && (pros::millis() - stallTime) >= 500){
-		intake.move(127);
-		stallInterrupt = false;
+	if (stallInterrupt == true){
+		intake.move(-127);
+		reverseTime = pros::millis();
+		if ((pros::millis() - reverseTime) >= 500){
+			intake.move(127);
+			stallInterrupt = false;
+			stallLog = false;
+		}
 	}
+
+
 }
 
 void senseColor(){
