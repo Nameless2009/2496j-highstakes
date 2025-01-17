@@ -230,7 +230,8 @@ void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclam
 	chassis.move(0);	
 }
 
-void drivePIDMogo(int desiredValue, int timeout=15000, int chainPos=0)
+
+void drivePIDMogo(int desiredValue, int timeout=15000, int chainPos=0, int perc=100)
 {
 	bool enableDrivePID = true;
 	int prevError = 0;
@@ -343,11 +344,11 @@ void drivePIDMogo(int desiredValue, int timeout=15000, int chainPos=0)
 		double speed = (error * kP + derivative * kD + totalError * kI);
 
 
-		if (speed>127){
-			speed = 127;
-		}
-		else if (speed < -127){
-			speed = -127;
+		if (speed>127 * perc/100){
+			speed = 127 * perc/100;
+		} 
+		else if (speed < -127 * perc/100){
+			speed = -127 * perc/100;
 		}
 
 		leftChassis.move(speed + headingCorrection);
@@ -1282,7 +1283,7 @@ void skipAutonomous()
 	delay(500);
 	intake.move(-80);
 	ladyBrown.move(0);
-	drivePID(650);
+	drivePID(670);
 	turnPID(-90);
 
 	drivePID(-880, 3300, 0, true,50);
@@ -1291,21 +1292,35 @@ void skipAutonomous()
 
 	turnPIDMogo(0);
 	intake.move(127);
-	drivePIDMogo(1080);
+	drivePIDMogo(1060);
 	delay(100);
 	turnPIDMogo(90);
-	drivePIDMogo(900);
+	drivePIDMogo(800);
 	turnPIDMogo(0);
-	drivePIDMogo(1095);
+	drivePIDMogo(1000);
 	turnPIDMogo(90);
 	lbPID = true;
-	drivePIDMogo(775, 1500);
-	delay(400);
+	drivePIDMogo(830, 1500);
+	delay(600);
 	intake.move(0);
 	lbPID = false;
 	ladyBrown.move(127);
 	delay(1000);
 	ladyBrown.move(-127);
+	delay(1000);
+	ladyBrown.move(0);
+	drivePIDMogo(-130);
+	turnPIDMogo(0);
+	intake.move(127);
+	drivePIDMogo(1750,30000,0,50);
+	turnPIDMogo(-90);
+	drivePIDMogo(500,1000,0,50);
+	turnPIDMogo(0);
+	drivePIDMogo(500,1000,0,50);
+	turnPIDMogo(-135);
+	drivePIDMogo(-300,1000,0,50);
+	mogo.set_value(false);
+
 
 
 
