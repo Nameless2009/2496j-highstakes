@@ -55,6 +55,21 @@ bool redRing = false;
 
 bool blueRing = false;
 
+bool stallInterrupt = false;
+double stallTime;
+
+void stallProtection(){
+	if (intake.get_actual_velocity() < 60.00 && stallInterrupt == false){
+		stallTime = pros::millis();
+		intake.move(-127);
+		stallInterrupt = true;
+	}
+	if (stallInterrupt == true && (pros::millis() - stallTime) >= 500){
+		intake.move(127);
+		stallInterrupt = false;
+	}
+}
+
 void senseColor(){
 	colorSensor.set_led_pwm(100);
 	while (1){
@@ -449,20 +464,20 @@ void on_right_button()
  */
 void initialize()
 {
-	// pros::lcd::initialize();
-	// pros::lcd::set_background_color(128, 0, 20);
+	pros::lcd::initialize();
+	pros::lcd::set_background_color(128, 0, 20);
 
-	// pros::lcd::set_text_color(194, 187, 169);
-	// pros::lcd::set_text(7, "...r/b...<----...---->...");
+	pros::lcd::set_text_color(194, 187, 169);
+	pros::lcd::set_text(7, "...r/b...<----...---->...");
 
-	// pros::lcd::register_btn0_cb(on_left_button);
-	// pros::lcd::register_btn1_cb(on_center_button);
-	// pros::lcd::register_btn2_cb(on_right_button);
+	pros::lcd::register_btn0_cb(on_left_button);
+	pros::lcd::register_btn1_cb(on_center_button);
+	pros::lcd::register_btn2_cb(on_right_button);
 
 	//lvgl
-	lv_obj_t *red_cover = lv_img_create(lv_scr_act(), NULL);
-	lv_img_set_src(red_cover, &red_cover);
-	lv_obj_align(red_cover, NULL, LV_ALIGN_CENTER, 0, 0);
+	// lv_obj_t *red_cover = lv_img_create(lv_scr_act(), NULL);
+	// lv_img_set_src(red_cover, &red_cover);
+	// lv_obj_align(red_cover, NULL, LV_ALIGN_CENTER, 0, 0);
 
 
 	ladyBrown.set_brake_mode(E_MOTOR_BRAKE_HOLD);
@@ -472,6 +487,8 @@ void initialize()
 	pros::Task detectColors(senseColor);
 
 	pros::Task lbTask(ladyBrownTask);
+
+	pros::Task stallProtectionTask(stallProtection);
 }
 
 /**
