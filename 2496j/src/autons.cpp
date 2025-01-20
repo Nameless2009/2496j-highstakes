@@ -1299,7 +1299,7 @@ void skipAutonomous()
 	drivePIDMogo(880);
 	
 	turnPIDMogo(0);
-	drivePIDMogo(1080);
+	drivePIDMogo(1000);
 
 
 	turnPIDMogo(90);
@@ -1320,13 +1320,13 @@ void skipAutonomous()
 	drivePIDMogo(-500);
 	turnPIDMogo(0);
 	intake.move(127);	
-	drivePIDMogo(1000,30000,0,50);
-	turnPIDMogo(27);
-	drivePIDMogo(1000,1000,0,50);
-	turnPIDMogo(-80);
-	drivePIDMogo(500,1000,0,50);
-	turnPIDMogo(0);
-	drivePIDMogo(1000,1000,0,50);
+	drivePIDMogo(1300,30000,0,50);
+	turnPIDMogo(60);
+	drivePIDMogo(300,1000,0,50);
+	// turnPIDMogo(-60);
+	// drivePIDMogo(500,1000,0,50);
+	// turnPIDMogo(0);
+	// drivePIDMogo(700,1000,0,50);
 	
 	turnPIDMogo(-120);
 	intake.move(0);
