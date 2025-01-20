@@ -1282,44 +1282,132 @@ void skipAutonomous()
 	ladyBrown.move(-127);
 	delay(500);
 	intake.move(-80);
+	delay(100);
 	ladyBrown.move(0);
-	drivePID(670);
+	drivePID(600);
 	turnPID(-90);
 
-	drivePID(-880, 3300, 0, true,50);
+	drivePID(-920, 3300, 0, true,50);
 	mogo.set_value(true);
 	drivePIDMogo(-200);
 
 	turnPIDMogo(0);
 	intake.move(127);
-	drivePIDMogo(1060);
+	drivePIDMogo(1090, 2000, 0, 70);
 	delay(100);
 	turnPIDMogo(90);
-	drivePIDMogo(800);
+	drivePIDMogo(880);
+	
 	turnPIDMogo(0);
-	drivePIDMogo(1000);
+	drivePIDMogo(1080);
+
+
 	turnPIDMogo(90);
 	lbPID = true;
-	drivePIDMogo(830, 1500);
+	drivePIDMogo(880, 1500);
 	delay(600);
+	intake.move(-50);
+	delay(100);
 	intake.move(0);
+	delay(100);
 	lbPID = false;
+	intake.move(0);
 	ladyBrown.move(127);
-	delay(1000);
+	delay(5000);
 	ladyBrown.move(-127);
 	delay(1000);
 	ladyBrown.move(0);
-	drivePIDMogo(-130);
+	drivePIDMogo(-500);
 	turnPIDMogo(0);
-	intake.move(127);
-	drivePIDMogo(1750,30000,0,50);
-	turnPIDMogo(-90);
+	intake.move(127);	
+	drivePIDMogo(1000,30000,0,50);
+	turnPIDMogo(27);
+	drivePIDMogo(1000,1000,0,50);
+	turnPIDMogo(-80);
 	drivePIDMogo(500,1000,0,50);
 	turnPIDMogo(0);
-	drivePIDMogo(500,1000,0,50);
-	turnPIDMogo(-135);
-	drivePIDMogo(-300,1000,0,50);
+	drivePIDMogo(1000,1000,0,50);
+	
+	turnPIDMogo(-120);
+	intake.move(0);
+	
 	mogo.set_value(false);
+	drivePIDMogo(-500, 2000);
+	delay(200);
+	drivePID(100);
+	turnPID(-150);
+	
+	intake.move(127);
+	drivePID(2100);
+	intake.move(0);
+	delay(3000);
+
+	
+	turnPID(140);
+	delay(500);
+	
+	drivePID(-1800, 8000,0, false, 50);
+	
+	mogo.set_value(true);
+	drivePIDMogo(-180);
+	turnPIDMogo(0);
+	delay(5000);
+	drivePIDMogo(-500);
+	mogo.set_value(false);
+	delay(200);
+	drivePID(350);
+	turnPID(180);
+	drivePID(-700,1000);
+	drivePID(150);
+	ladyBrown.move(127);
+	delay(200);
+	ladyBrown.move(0);
+	intake.move(127);
+	delay(500);
+	ladyBrown.move(-127);
+	delay(500);
+	intake.move(-80);
+	ladyBrown.move(0);
+	drivePID(100);
+	turnPID(-90);
+	drivePID(-1700,5000, 0, false, 30);
+	mogo.set_value(true);
+	turnPID(-78);
+	drivePIDMogo(-6000,4000,0,false);
+	mogo.set_value(false);
+	drivePIDMogo(-100);
+	drivePID(500);
+
+
+
+//BACKYARD SKILLS STARTS HERE
+
+
+	// mogo.set_value(true);
+	// delay (500);
+	// turnPIDMogo(180);
+	// intake.move(127);
+	// drivePIDMogo(2300,6000,0, 30);
+	// delay(1500);
+	// intake.move(-127);
+	// delay(200);
+	// intake.move(0);
+	// turnPIDMogo(45); 
+	// mogo.set_value(false);
+	// drivePIDMogo(-600);
+	// turnPID(-45);
+	// drivePID(300);
+	// intake.move(127);
+	// delay(500);
+	// intake.move(0);
+	// delay(3000);
+	// turnPID(-100);
+	// drivePID(-1000, 3000, 0, 50);
+	// mogo.set_value(true);
+
+//Backyard skiills ends here
+
+
 
 
 
