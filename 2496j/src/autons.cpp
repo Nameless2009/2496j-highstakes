@@ -241,7 +241,7 @@ void drivePIDMogo(int desiredValue, int timeout=15000, int chainPos=0, int perc=
 
 	double kP = 0.7;
 	double kI = 0.001; 
-	double kD = 2.7;
+	double kD = 2.6;
 	double maxI = 500;
 	
 	int integralThreshold = 150;
@@ -1296,46 +1296,45 @@ void skipAutonomous()
 	drivePIDMogo(1090, 2000, 0, 70);
 	delay(100);
 	turnPIDMogo(90);
-	drivePIDMogo(880);
+	drivePIDMogo(850);
 	
 	turnPIDMogo(0);
-	drivePIDMogo(1000);
+	drivePIDMogo(960);
 
 
 	turnPIDMogo(90);
 	lbPID = true;
-	drivePIDMogo(880, 1500);
-	delay(600);
-	intake.move(-50);
-	delay(100);
-	intake.move(0);
-	delay(100);
+	intake.move(127);
+	drivePIDMogo(680, 600);
+	delay(1000);
 	lbPID = false;
 	intake.move(0);
 	ladyBrown.move(127);
-	delay(5000);
+	delay(1500);
 	ladyBrown.move(-127);
-	delay(1000);
-	ladyBrown.move(0);
 	drivePIDMogo(-500);
+	ladyBrown.move(0);
 	turnPIDMogo(0);
-	intake.move(127);	
-	drivePIDMogo(1300,30000,0,50);
-	turnPIDMogo(60);
-	drivePIDMogo(300,1000,0,50);
-	// turnPIDMogo(-60);
-	// drivePIDMogo(500,1000,0,50);
-	// turnPIDMogo(0);
-	// drivePIDMogo(700,1000,0,50);
+	intake.move(127);
+	drivePIDMogo(1200,30000,0,50);
+	turnPIDMogo(30);
+	drivePIDMogo(730,1000,0,50);
+	turnPIDMogo(-50);
+	drivePIDMogo(200,1000,0,50);
+	turnPIDMogo(-15);
+	drivePIDMogo(500,1000,0,50);
 	
-	turnPIDMogo(-120);
-	intake.move(0);
+	turnPIDMogo(-130);
+	intake.move(-80);
 	
 	mogo.set_value(false);
-	drivePIDMogo(-500, 2000);
-	delay(200);
-	drivePID(100);
-	turnPID(-150);
+	drivePIDMogo(-500, 1500);
+	delay(1000);
+	drivePID(300, 1500, 0, false, 40);
+	mogo.set_value(true);
+	drivePID(-200, 1500, 0, false, 70);
+	drivePID(200);
+	// turnPID(-150);
 	
 	intake.move(127);
 	drivePID(2100);
@@ -1364,19 +1363,19 @@ void skipAutonomous()
 	ladyBrown.move(0);
 	intake.move(127);
 	delay(500);
-	ladyBrown.move(-127);
-	delay(500);
-	intake.move(-80);
-	ladyBrown.move(0);
-	drivePID(100);
-	turnPID(-90);
-	drivePID(-1700,5000, 0, false, 30);
-	mogo.set_value(true);
-	turnPID(-78);
-	drivePIDMogo(-6000,4000,0,false);
-	mogo.set_value(false);
-	drivePIDMogo(-100);
-	drivePID(500);
+	// ladyBrown.move(-127);
+	// delay(500);
+	// intake.move(-80);
+	// ladyBrown.move(0);
+	// drivePID(100);
+	// turnPID(-90);
+	// drivePID(-1700,5000, 0, false, 30);
+	// mogo.set_value(true);
+	// turnPID(-78);
+	// drivePIDMogo(-6000,4000,0,false);
+	// mogo.set_value(false);
+	// drivePIDMogo(-100);
+	// drivePID(500);
 
 
 
