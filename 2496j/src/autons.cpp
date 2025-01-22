@@ -1299,7 +1299,7 @@ void skipAutonomous()
 	drivePIDMogo(850);
 	
 	turnPIDMogo(0);
-	drivePIDMogo(1030);
+	drivePIDMogo(1020);
 
 
 	turnPIDMogo(90);
@@ -1307,8 +1307,8 @@ void skipAutonomous()
 	intake.move(127);
 	drivePIDMogo(720, 600);
 	delay(1000);
-	lbPID = false;
 	intake.move(0);
+	lbPID = false;
 	ladyBrown.move(127);
 	delay(1500);
 	ladyBrown.move(-127);
@@ -1334,37 +1334,67 @@ void skipAutonomous()
 	delay(1000);
 	drivePID(300, 1500, 0, false, 40);
 	mogo.set_value(true);
-	drivePID(-200, 1500, 0, false, 70);
-	drivePID(200);
-	 turnPID(-150);
-	
+	drivePID(-250, 1500, 0, false, 70);
+
 	intake.move(127);
-	drivePID(2100);
+	leftArc(4600, 27);
+	delay(300);
 	intake.move(0);
-	delay(3000);
+	turnPID(135);
+	drivePID(-1000, 60);
+	mogo.set_value(true);
+	//center mogo pick up here (the mogo in front of the alliance stake)
+	//take this mogo and fill it, do wallstake halfway thru, drop it in corner, and then do alliance stake
+
+	//can we try not to chain things if possible
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// drivePID(200);
+	// turnPID(-150);
+	
+	// intake.move(127);
+	// drivePID(2100);
+	// intake.move(0);
+	// delay(3000);
 
 	
-	turnPID(140);
-	delay(500);
+	// turnPID(140);
+	// delay(500);
 	
-	drivePID(-1800, 8000,0, false, 50);
+	// drivePID(-1800, 8000,0, false, 50);
 	
-	mogo.set_value(true);
-	drivePIDMogo(-180);
-	turnPIDMogo(0);
-	delay(5000);
-	drivePIDMogo(-500);
-	mogo.set_value(false);
-	delay(200);
-	drivePID(350);
-	turnPID(180);
-	drivePID(-700,1000);
-	drivePID(150);
-	ladyBrown.move(127);
-	delay(200);
-	ladyBrown.move(0);
-	intake.move(127);
-	delay(500);
+	// mogo.set_value(true);
+	// drivePIDMogo(-180);
+	// turnPIDMogo(0);
+	// delay(5000);
+	// drivePIDMogo(-500);
+	// mogo.set_value(false);
+	// delay(200);
+	// drivePID(350);
+	// turnPID(180);
+	// drivePID(-700,1000);
+	// drivePID(150);
+	// ladyBrown.move(127);
+	// delay(200);
+	// ladyBrown.move(0);
+	// intake.move(127);
+	// delay(500);
+	
 	// ladyBrown.move(-127);
 	// delay(500);
 	// intake.move(-80);
