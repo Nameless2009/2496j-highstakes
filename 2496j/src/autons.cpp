@@ -1316,7 +1316,7 @@ void skipAutonomous()
 	drivePIDMogo(850);
 	
 	turnPIDMogo(0);
-	drivePIDMogo(1000);
+	drivePIDMogo(990);
 
 
 	turnPIDMogo(90);
@@ -1329,7 +1329,7 @@ void skipAutonomous()
 	ladyBrown.move(127);
 	delay(1500);
 	ladyBrown.move(-127);
-	drivePIDMogo(-500);
+	drivePIDMogo(-550);
 	ladyBrown.move(0);
 	turnPIDMogo(0);
 	intake.move(-127);
