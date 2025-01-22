@@ -87,6 +87,8 @@ void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclam
 	double totalError = 0;
 	int count = 0;
 	bool chain;
+	double prevSpeed=0;
+	double speed = 0;
 
 	double kP = 0.7;
 	double kI = 0.001; 
@@ -185,14 +187,29 @@ void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclam
 		else{
 			totalError = std::max(totalError, -maxI);
 		}
-
-		double speed = (error * kP + derivative * kD + totalError * kI);
+		prevSpeed = speed;
+		speed = (error * kP + derivative * kD + totalError * kI);
 
 		if (speed>127 * double(speed_percent)/100.0){
 			speed = 127 * double(speed_percent)/100.0;
 		}
 		else if (speed < -127 * double(speed_percent)/100.0){
 			speed = -127 * double(speed_percent)/100.0;
+		}
+
+		if(abs(currentValue)<50){
+			if(abs(speed-prevSpeed)>4.5)
+			{
+				if(speed>prevSpeed)
+				{
+					speed=prevSpeed+4.5;
+				}
+				else if(speed<prevSpeed)
+				{
+					speed=prevSpeed-4.5;
+				}
+			}
+
 		}
 
 		leftChassis.move(speed + headingCorrection);
@@ -1299,7 +1316,7 @@ void skipAutonomous()
 	drivePIDMogo(850);
 	
 	turnPIDMogo(0);
-	drivePIDMogo(1020);
+	drivePIDMogo(1000);
 
 
 	turnPIDMogo(90);
@@ -1337,12 +1354,19 @@ void skipAutonomous()
 	drivePID(-250, 1500, 0, false, 70);
 
 	intake.move(127);
+	mogo.set_value(false);
 	leftArc(4600, 27);
 	delay(300);
 	intake.move(0);
-	turnPID(135);
-	drivePID(-1000, 60);
+	turnPID(145);
+	drivePID(-1550, 800,0, 40);
 	mogo.set_value(true);
+	intake.move(127);
+	turnPIDMogo(-135);
+	drivePIDMogo(1600);
+	turnPIDMogo(-90);
+	drivePIDMogo(1000);
+
 	//center mogo pick up here (the mogo in front of the alliance stake)
 	//take this mogo and fill it, do wallstake halfway thru, drop it in corner, and then do alliance stake
 
