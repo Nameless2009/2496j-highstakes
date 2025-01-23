@@ -863,7 +863,7 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 		leftChassis.move(calculatePID(left_error) - fix);
 		rightChassis.move(calculatePID2(right_error) + fix); //might need to add calcpid2
 
-		if ((abs(leftArc - currentLeftPosition) <= 20) && (abs(rightArc - currentRightPosition) <= 20)){ 
+		if ((abs(left_error) <= 50) && (abs(right_error) <= 50)){ 
 			count++;
 		}
 		if (count >= 2 || time > timeout){
@@ -991,7 +991,7 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
 
 		//con.print(0,0, "rc: %f", float(rightArc));
 
-		if ((abs(leftArc - currentLeftPosition) <= 20) && (abs(rightArc - currentRightPosition) <= 20)){ 
+		if ((abs(left_error) <= 50) && (abs(right_error) <= 50)){ 
 			count++;
 		}
 		if (count >= 2 || time > timeout){
@@ -1316,7 +1316,7 @@ void skipAutonomous()
 	drivePIDMogo(850);
 	
 	turnPIDMogo(0);
-	drivePIDMogo(990);
+	drivePIDMogo(970);
 
 
 	turnPIDMogo(90);
@@ -1336,12 +1336,13 @@ void skipAutonomous()
 	delay(300);
 	intake.move(127);
 	drivePIDMogo(1200,30000,0,50);
-	turnPIDMogo(30);
+	turnPIDMogo(35);
 	drivePIDMogo(730,1000,0,50);
-	turnPIDMogo(-50);
+	turnPIDMogo(-53);
 	drivePIDMogo(200,1000,0,50);
 	turnPIDMogo(-15);
-	drivePIDMogo(500,1000,0,50);
+	drivePIDMogo(500, 15000, 20);
+	drivePIDMogo(-200);
 	
 	turnPIDMogo(-130);
 	intake.move(-80);
@@ -1355,30 +1356,44 @@ void skipAutonomous()
 
 	intake.move(127);
 	mogo.set_value(false);
-	leftArc(4600, 27);
-	delay(300);
+	leftArc(4600, 27, 0, 15000);
 	intake.move(0);
 	turnPID(145);
-	drivePID(-1550, 800,0, 40);
+	drivePID(-1550, 15000, 0, false, 40);
 	mogo.set_value(true);
 	intake.move(127);
 	turnPIDMogo(-135);
-	drivePIDMogo(1600);
+	drivePIDMogo(1400);
 	turnPIDMogo(-90);
-	drivePIDMogo(1000);
+	drivePIDMogo(1100);
+	turnPIDMogo(180);
+	drivePIDMogo(2000, 15000, 50);
+	drivePIDMogo(2000, 15000, 0, 40);
+
+	turnPIDMogo(45);
+	drivePIDMogo(-500);
+	mogo.set_value(false);
+	intake.move(-80);
+	delay(300);
+	drivePIDMogo(500);
+
+	// turnPID(0);
+	// drivePID(5000);
+	// turnPID(-90);
+	// drivePID(-750);
+	// turnPID(180);
+	// drivePID(-350, 40);
+	// intake.move(127);
+	// delay(1000);
+	// leftArc(500, 90);
+
+	
+
 
 	//center mogo pick up here (the mogo in front of the alliance stake)
 	//take this mogo and fill it, do wallstake halfway thru, drop it in corner, and then do alliance stake
 
 	//can we try not to chain things if possible
-
-
-
-
-
-
-
-
 
 
 
