@@ -111,16 +111,23 @@ void driverProfileAyush(){
 	leftChassis.move(leftstick);
 
 	//intake below
-	if (con.get_digital(E_CONTROLLER_DIGITAL_R1) && interrupt == false){
+	if (con.get_digital(E_CONTROLLER_DIGITAL_R1) && stallInterrupt == false){
 		intake.move(127);
 	}
 
-	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2) && interrupt == false){
+	else if(con.get_digital(E_CONTROLLER_DIGITAL_R2) && stallInterrupt == false){
 		intake.move(-127);
 	}
 
 	else{
 		intake.move(0);
+	}
+
+	if (stallInterrupt == true){
+		pros::lcd::set_text(2, "interrupt");
+	}
+	else{
+		pros::lcd::clear_line(2);
 	}
 
 	//lady brown code below
@@ -193,24 +200,24 @@ void driverProfileAyush(){
 	doinker.set_value(doinkerState);
 
 	//color sort:
-	if (blueRing == true && timeLogged == false){
-		detectedTime = pros::millis();
-		timeLogged = true;
-	}
+	// if (blueRing == true && timeLogged == false){
+	// 	detectedTime = pros::millis();
+	// 	timeLogged = true;
+	// }
 
-	if (timeLogged == true && (pros::millis() - detectedTime) >= 700){
-		//interrupt = true; //UNCOMMENT THIS LATER
-	}
+	// if (timeLogged == true && (pros::millis() - detectedTime) >= 700){
+	// 	//interrupt = true; //UNCOMMENT THIS LATER
+	// }
 
-	if (interrupt == true){
-		intake.move(0);
-		interruptTime = pros::millis();
-		if ((pros::millis() - interruptTime) >= 500){
-			interrupt = false;
-			timeLogged = false;
-			con.rumble(".");
-		}
-	}
+	// if (interrupt == true){
+	// 	intake.move(0);
+	// 	interruptTime = pros::millis();
+	// 	if ((pros::millis() - interruptTime) >= 500){
+	// 		interrupt = false;
+	// 		timeLogged = false;
+	// 		con.rumble(".");
+	// 	}
+	// }
 
 }
 

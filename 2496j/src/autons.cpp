@@ -1368,12 +1368,12 @@ void skipAutonomous()
 	mogo.set_value(true);
 	intake.move(127);
 	turnPIDMogo(-135);
-	drivePIDMogo(1400);
+	drivePIDMogo(1500);
 	turnPIDMogo(-90);
 	drivePIDMogo(1180);
 	turnPIDMogo(180);
 	drivePIDMogo(2000, 15000, 50);
-	drivePIDMogo(1900, 15000, 0, 40);
+	drivePIDMogo(1800, 15000, 0, 30);
 
 	turnPIDMogo(45);
 	drivePIDMogo(-500);
