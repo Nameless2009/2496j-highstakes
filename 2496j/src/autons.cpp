@@ -1316,7 +1316,7 @@ void skipAutonomous()
 	drivePIDMogo(850);
 	
 	turnPIDMogo(0);
-	drivePIDMogo(970);
+	drivePIDMogo(950);
 
 
 	turnPIDMogo(90);
@@ -1329,7 +1329,7 @@ void skipAutonomous()
 	ladyBrown.move(127);
 	delay(1500);
 	ladyBrown.move(-127);
-	drivePIDMogo(-550);
+	drivePIDMogo(-500);
 	ladyBrown.move(0);
 	turnPIDMogo(0);
 	intake.move(-127);
@@ -1343,8 +1343,13 @@ void skipAutonomous()
 	turnPIDMogo(-15);
 	drivePIDMogo(500, 15000, 20);
 	drivePIDMogo(-200);
+	turnPIDMogo(60);
+	doinker.set_value(true);
+
 	
 	turnPIDMogo(-130);
+	doinker.set_value(false);
+
 	intake.move(-80);
 	
 	mogo.set_value(false);
@@ -1365,17 +1370,44 @@ void skipAutonomous()
 	turnPIDMogo(-135);
 	drivePIDMogo(1400);
 	turnPIDMogo(-90);
-	drivePIDMogo(1100);
+	drivePIDMogo(1180);
 	turnPIDMogo(180);
 	drivePIDMogo(2000, 15000, 50);
-	drivePIDMogo(2000, 15000, 0, 40);
+	drivePIDMogo(1900, 15000, 0, 40);
 
 	turnPIDMogo(45);
 	drivePIDMogo(-500);
 	mogo.set_value(false);
 	intake.move(-80);
 	delay(300);
-	drivePIDMogo(500);
+	drivePID(500);
+	intake.move(0);
+	turnPID(0);
+	drivePID(2400);
+	turnPID(45);
+	drivePID(3800);
+	turnPID(92);
+	drivePID(-1500,1500,0,false,40);
+	mogo.set_value(true);
+	turnPIDMogo(95);
+	mogo.set_value(false);
+	drivePID(-1400);
+	
+	rightArc(500,120,0,1500);
+	drivePID(1500);
+	intake.move(127);
+	delay(300);
+	turnPID(180);
+	drivePID(1900);
+	intake.move(127);
+	delay(300);
+	turnPID(-90);
+	drivePID(1200,1500,0,false,40);
+	mogo.set_value(true);
+	turnPIDMogo(0);
+
+
+
 
 	// turnPID(0);
 	// drivePID(5000);
