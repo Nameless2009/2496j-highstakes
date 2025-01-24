@@ -81,4 +81,15 @@ extern double ladyBrownCurrentPosition;
 
 extern void ladyBrownTask();
 
+
+extern bool stallInterrupt;
+extern bool stallLog;
+extern double stallTime;
+extern double reverseTime;
+
+extern void stallProtection();
+
+extern void intakeMove(int speed);
+
+
 #endif

@@ -55,3 +55,36 @@ void ladyBrownTask(){
 		}
 	}
 }
+
+
+bool stallInterrupt = false;
+bool stallLog = false;
+double stallTime;
+double reverseTime;
+
+void stallProtection(){
+	while (1){
+		if (intake.get_actual_velocity() < 40.00 && stallLog == false){
+			stallTime = pros::millis();
+			stallLog = true;
+		}
+		if ((pros::millis() - stallTime) >= 500 && stallLog == true){
+			stallInterrupt = true;
+		}
+		if (stallInterrupt == true){
+			intake.move(-127);
+			reverseTime = pros::millis();
+			if ((pros::millis() - reverseTime) >= 500){
+				intake.move(127);
+				stallInterrupt = false;
+				stallLog = false;
+			}
+		}
+	}
+}
+
+void intakeMove(int speed){
+    if (stallInterrupt == false){
+        intake.move(speed);
+    }
+}
