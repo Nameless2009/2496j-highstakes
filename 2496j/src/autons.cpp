@@ -1345,7 +1345,7 @@ void skipAutonomous()
 	drivePIDMogo(-200);
 	turnPIDMogo(60);
 	doinker.set_value(true);
-
+	delay(200);
 	
 	turnPIDMogo(-130);
 	doinker.set_value(false);
@@ -1394,13 +1394,16 @@ void skipAutonomous()
 	drivePID(-1400);
 	
 	rightArc(500,120,0,1500);
+	turnPID(-135);
 	drivePID(1500);
 	intake.move(127);
 	delay(300);
+	intake.move(0);
 	turnPID(180);
 	drivePID(1900);
 	intake.move(127);
 	delay(300);
+	intake.move(0);
 	turnPID(-90);
 	drivePID(1200,1500,0,false,40);
 	mogo.set_value(true);
