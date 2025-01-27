@@ -1291,184 +1291,185 @@ void skillsAuto()
 void skipAutonomous()
 {
 	//skills goes here
-	// ladyBrown.move(127);
-	// delay(200);
-	// ladyBrown.move(0);
-	// intake.move(127);
-	// delay(500);
-	// ladyBrown.move(-127);
-	// delay(500);
-	// intake.move(-80);
-	// delay(100);
-	// ladyBrown.move(0);
-	// drivePID(600);
-	// turnPID(-90);
-
-	// drivePID(-920, 3300, 0, true,50);
-	// mogo.set_value(true);
-	// drivePIDMogo(-200);
-
-	// turnPIDMogo(0);
-	// intake.move(127);
-	// drivePIDMogo(1090, 2000, 0, 70);
-	// delay(100);
-	// turnPIDMogo(90);
-	// drivePIDMogo(850);
 	
-	// turnPIDMogo(0);
-	// drivePIDMogo(950);
+	ladyBrown.move(127);
+	delay(200);
+	ladyBrown.move(0);
+	intake.move(127);
+	delay(500);
+	ladyBrown.move(-127);
+	delay(500);
+	intake.move(-80);
+	delay(100);
+	ladyBrown.move(0);
+	drivePID(600);
+	turnPID(-90);
+
+	drivePID(-920, 3300, 0, true,50);
+	mogo.set_value(true);
+	drivePIDMogo(-200);
+
+	turnPIDMogo(0);
+	intake.move(127);
+	drivePIDMogo(1090, 2000, 0, 70);
+	delay(100);
+	turnPIDMogo(90);
+	drivePIDMogo(850);
+	
+	turnPIDMogo(0);
+	drivePIDMogo(950);
 
 
 //<<<<<<< Updated upstream
-	// turnPIDMogo(90);
-	// lbPID = true;
-	// intake.move(127);
-	// drivePIDMogo(720, 600);
-	// delay(1000);
-	// intake.move(0);
-	// lbPID = false;
-	// ladyBrown.move(127);
-	// delay(1500);
-	// ladyBrown.move(-127);
-	// drivePIDMogo(-500);
-	// ladyBrown.move(0);
-	// turnPIDMogo(0);
-	// intake.move(-127);
-	// delay(300);
-	// intake.move(127);
-	// drivePIDMogo(1200,30000,0,50);
-	// turnPIDMogo(35);
-	// drivePIDMogo(730,1000,0,50);
-	// turnPIDMogo(-53);
-	// drivePIDMogo(200,1000,0,50);
-	// turnPIDMogo(-15);
-	// drivePIDMogo(500, 15000, 20);
-	// drivePIDMogo(-200);
-	// turnPIDMogo(60);
-	// doinker.set_value(true);
-	// delay(200);
+	turnPIDMogo(90);
+	lbPID = true;
+	intake.move(127);
+	drivePIDMogo(720, 600);
+	delay(1000);
+	intake.move(0);
+	lbPID = false;
+	ladyBrown.move(127);
+	delay(1500);
+	ladyBrown.move(-127);
+	drivePIDMogo(-500);
+	ladyBrown.move(0);
+	turnPIDMogo(0);
+	intake.move(-127);
+	delay(300);
+	intake.move(127);
+	drivePIDMogo(1200,30000,0,50);
+	turnPIDMogo(35);
+	drivePIDMogo(730,1000,0,50);
+	turnPIDMogo(-53);
+	drivePIDMogo(200,1000,0,50);
+	turnPIDMogo(-15);
+	drivePIDMogo(500, 15000, 20);
+	drivePIDMogo(-200);
+	doinker.set_value(true);
+	turnPIDMogo(60);
+	delay(200);
 	
-	// turnPIDMogo(-130);
-	// doinker.set_value(false);
+	turnPIDMogo(-130);
+	doinker.set_value(false);
 
-	// intake.move(-80);
+	intake.move(-80);
 	
-	// mogo.set_value(false);
-	// drivePIDMogo(-500, 1500);
-	// delay(1000);
-	// drivePID(300, 1500, 0, false, 40);
-	// mogo.set_value(true);
-	// drivePID(-250, 1500, 0, false, 70);
+	mogo.set_value(false);
+	drivePIDMogo(-500, 1500);
+	delay(1000);
+	drivePID(300, 1500, 0, false, 40);
+	mogo.set_value(true);
+	drivePID(-250, 1500, 0, false, 70);
 
-	// intake.move(127);
-	// mogo.set_value(false);
-	// leftArc(4600, 27, 0, 15000);
-	// intake.move(0);
-	// turnPID(145);
-	// drivePID(-1550, 15000, 0, false, 40);
-	// mogo.set_value(true);
-	// intake.move(127);
-	// turnPIDMogo(-135);
-	// drivePIDMogo(1500);
-	// turnPIDMogo(-90);
-	// drivePIDMogo(1180);
-	// turnPIDMogo(180);
-	// drivePIDMogo(2000, 15000, 50);
-	// drivePIDMogo(1800, 15000, 0, 30);
+	intake.move(127);
+	mogo.set_value(false);
+	leftArc(4600, 27, 0, 15000);
+	intake.move(0);
+	turnPID(140);
+	drivePID(-1550, 15000, 0, false, 40);
+	mogo.set_value(true);
+	intake.move(127);
+	turnPIDMogo(-135);
+	drivePIDMogo(1500);
+	turnPIDMogo(-90);
+	drivePIDMogo(1180);
+	turnPIDMogo(180);
+	drivePIDMogo(2000, 15000, 50);
+	drivePIDMogo(1800, 15000, 0, 30);
 
-	// turnPIDMogo(45);
-	// drivePIDMogo(-500);
-	// mogo.set_value(false);
-	// intake.move(-80);
-	// delay(300);
-	// drivePID(500);
-	// intake.move(0);
-	// turnPID(0);
-	// drivePID(2400);
-	// turnPID(45);
-	// drivePID(3800);
-	// turnPID(92);
-	// drivePID(-1500,1500,0,false,40);
-	// mogo.set_value(true);
-	// turnPIDMogo(95);
-	// mogo.set_value(false);
-	// drivePID(-1400);
+	turnPIDMogo(45);
+	drivePIDMogo(-500);
+	mogo.set_value(false);
+	intake.move(-80);
+	delay(300);
+	drivePID(500);
+	intake.move(0);
+	turnPID(0);
+	drivePID(2400);
+	turnPID(45);
+	drivePID(3800);
+	turnPID(92);
+	drivePID(-1500,1500,0,false,40);
+	mogo.set_value(true);
+	turnPIDMogo(95);
+	mogo.set_value(false);
+	drivePID(-1400);
 	
-	// rightArc(500,120,0,1500);
-	// turnPID(-135);
-	// drivePID(1500);
-	// intake.move(127);
-	// delay(300);
-	// intake.move(0);
-	// turnPID(180);
-	// drivePID(1900);
-	// intake.move(127);
-	// delay(300);
-	// intake.move(0);
-	// turnPID(-90);
-	// drivePID(1200,1500,0,false,40);
-	// mogo.set_value(true);
-	// turnPIDMogo(0);
+	rightArc(500,120,0,1500);
+	turnPID(-135);
+	drivePID(1500);
+	intake.move(127);
+	delay(300);
+	intake.move(0);
+	turnPID(180);
+	drivePID(1900);
+	intake.move(127);
+	delay(300);
+	intake.move(0);
+	turnPID(-90);
+	drivePID(1200,1500,0,false,40);
+	mogo.set_value(true);
+	turnPIDMogo(0);
 
 
 
 
-	// turnPID(0);
-	// drivePID(5000);
-	// turnPID(-90);
-	// drivePID(-750);
-	// turnPID(180);
-	// drivePID(-350, 40);
-	// intake.move(127);
-	// delay(1000);
-	// leftArc(500, 90);
+	turnPID(0);
+	drivePID(5000);
+	turnPID(-90);
+	drivePID(-750);
+	turnPID(180);
+	drivePID(-350, 40);
+	intake.move(127);
+	delay(1000);
+	leftArc(500, 90);
 
 
 
-	// drivePID(200);
-	// turnPID(-150);
+	drivePID(200);
+	turnPID(-150);
 	
-	// intake.move(127);
-	// drivePID(2100);
-	// intake.move(0);
-	// delay(3000);
+	intake.move(127);
+	drivePID(2100);
+	intake.move(0);
+	delay(3000);
 
 	
-	// turnPID(140);
-	// delay(500);
+	turnPID(140);
+	delay(500);
 	
-	// drivePID(-1800, 8000,0, false, 50);
+	drivePID(-1800, 8000,0, false, 50);
 	
-	// mogo.set_value(true);
-	// drivePIDMogo(-180);
-	// turnPIDMogo(0);
-	// delay(5000);
-	// drivePIDMogo(-500);
-	// mogo.set_value(false);
-	// delay(200);
-	// drivePID(350);
-	// turnPID(180);
-	// drivePID(-700,1000);
-	// drivePID(150);
-	// ladyBrown.move(127);
-	// delay(200);
-	// ladyBrown.move(0);
-	// intake.move(127);
-	// delay(500);
+	mogo.set_value(true);
+	drivePIDMogo(-180);
+	turnPIDMogo(0);
+	delay(5000);
+	drivePIDMogo(-500);
+	mogo.set_value(false);
+	delay(200);
+	drivePID(350);
+	turnPID(180);
+	drivePID(-700,1000);
+	drivePID(150);
+	ladyBrown.move(127);
+	delay(200);
+	ladyBrown.move(0);
+	intake.move(127);
+	delay(500);
 	
-	// ladyBrown.move(-127);
-	// delay(500);
-	// intake.move(-80);
-	// ladyBrown.move(0);
-	// drivePID(100);
-	// turnPID(-90);
-	// drivePID(-1700,5000, 0, false, 30);
-	// mogo.set_value(true);
-	// turnPID(-78);
-	// drivePIDMogo(-6000,4000,0,false);
-	// mogo.set_value(false);
-	// drivePIDMogo(-100);
-	// drivePID(500);
+	ladyBrown.move(-127);
+	delay(500);
+	intake.move(-80);
+	ladyBrown.move(0);
+	drivePID(100);
+	turnPID(-90);
+	drivePID(-1700,5000, 0, false, 30);
+	mogo.set_value(true);
+	turnPID(-78);
+	drivePIDMogo(-6000,4000,0,false);
+	mogo.set_value(false);
+	drivePIDMogo(-100);
+	drivePID(500);
 
 
 
@@ -1583,16 +1584,16 @@ void skipAutonomous()
 
 
 	//sawp
-	ladyBrown.move(127);
-	delay(500);
-	ladyBrown.move(-127);
-	delay(500);
-	ladyBrown.move(0);
-	turnPID(-20);
-	drivePID(-1800,2000,0,0,50);
-	mogo.set_value(true);
-	intake.move(127);
-	turnPIDMogo(180);
-	rightArc(2000,40);
+	// ladyBrown.move(127);
+	// delay(500);
+	// ladyBrown.move(-127);
+	// delay(500);
+	// ladyBrown.move(0);
+	// turnPID(-20);
+	// drivePID(-1800,2000,0,0,50);
+	// mogo.set_value(true);
+	// intake.move(127);
+	// turnPIDMogo(180);
+	// rightArc(2000,40);
 
 }
