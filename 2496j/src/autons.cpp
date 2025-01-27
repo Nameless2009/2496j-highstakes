@@ -1319,6 +1319,7 @@ void skipAutonomous()
 	// drivePIDMogo(950);
 
 
+//<<<<<<< Updated upstream
 	// turnPIDMogo(90);
 	// lbPID = true;
 	// intake.move(127);
@@ -1585,5 +1586,13 @@ void skipAutonomous()
 	ladyBrown.move(127);
 	delay(500);
 	ladyBrown.move(-127);
-	rightArc(8000, -5);
+	delay(500);
+	ladyBrown.move(0);
+	turnPID(-20);
+	drivePID(-1800,2000,0,0,50);
+	mogo.set_value(true);
+	intake.move(127);
+	turnPIDMogo(180);
+	rightArc(2000,40);
+
 }
