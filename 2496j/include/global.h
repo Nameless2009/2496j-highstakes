@@ -28,7 +28,7 @@ namespace glb
 
     #define P_goalTipper 'D'
 
-    #define P_inertial 21
+    #define P_inertial 7
 
     #define P_rotation 16
 
