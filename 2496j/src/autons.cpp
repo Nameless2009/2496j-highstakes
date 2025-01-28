@@ -1396,80 +1396,80 @@ void skipAutonomous()
 	drivePID(-1400);
 	
 	rightArc(500,120,0,1500);
-	turnPID(-135);
-	drivePID(1500);
-	intake.move(127);
-	delay(300);
-	intake.move(0);
-	turnPID(180);
-	drivePID(1900);
-	intake.move(127);
-	delay(300);
-	intake.move(0);
-	turnPID(-90);
-	drivePID(1200,1500,0,false,40);
-	mogo.set_value(true);
-	turnPIDMogo(0);
-
-
-
-
-	turnPID(0);
-	drivePID(5000);
-	turnPID(-90);
-	drivePID(-750);
-	turnPID(180);
-	drivePID(-350, 40);
-	intake.move(127);
-	delay(1000);
-	leftArc(500, 90);
-
-
-
-	drivePID(200);
 	turnPID(-150);
-	
+	drivePID(2000);
 	intake.move(127);
-	drivePID(2100);
+	delay(300);
 	intake.move(0);
-	delay(3000);
+	turnPID(180);
+	drivePID(2000);
+	intake.move(127);
+	delay(300);
+	intake.move(0);
+	turnPID(-90);
+	drivePID(-1200,1500,0,false,40);
+	mogo.set_value(true);
+	turnPIDMogo(0);
+
+
+
 
 	
-	turnPID(140);
-	delay(500);
+	// drivePID(5000);
+	// turnPID(-90);
+	// drivePID(-750);
+	// turnPID(180);
+	// drivePID(-350, 40);
+	// intake.move(127);
+	// delay(1000);
+	// leftArc(500, 90);
+
+
+
+	// drivePID(200);
+	// turnPID(-150);
 	
-	drivePID(-1800, 8000,0, false, 50);
+	// intake.move(127);
+	// drivePID(2100);
+	// intake.move(0);
+	// delay(3000);
+
 	
-	mogo.set_value(true);
-	drivePIDMogo(-180);
-	turnPIDMogo(0);
-	delay(5000);
-	drivePIDMogo(-500);
-	mogo.set_value(false);
-	delay(200);
-	drivePID(350);
-	turnPID(180);
-	drivePID(-700,1000);
-	drivePID(150);
-	ladyBrown.move(127);
-	delay(200);
-	ladyBrown.move(0);
-	intake.move(127);
-	delay(500);
+	// turnPID(140);
+	// delay(500);
 	
-	ladyBrown.move(-127);
-	delay(500);
-	intake.move(-80);
-	ladyBrown.move(0);
-	drivePID(100);
-	turnPID(-90);
-	drivePID(-1700,5000, 0, false, 30);
-	mogo.set_value(true);
-	turnPID(-78);
-	drivePIDMogo(-6000,4000,0,false);
-	mogo.set_value(false);
-	drivePIDMogo(-100);
-	drivePID(500);
+	// drivePID(-1800, 8000,0, false, 50);
+	
+	// mogo.set_value(true);
+	// drivePIDMogo(-180);
+	// turnPIDMogo(0);
+	// delay(5000);
+	// drivePIDMogo(-500);
+	// mogo.set_value(false);
+	// delay(200);
+	// drivePID(350);
+	// turnPID(180);
+	// drivePID(-700,1000);
+	// drivePID(150);
+	// ladyBrown.move(127);
+	// delay(200);
+	// ladyBrown.move(0);
+	// intake.move(127);
+	// delay(500);
+	
+	// ladyBrown.move(-127);
+	// delay(500);
+	// intake.move(-80);
+	// ladyBrown.move(0);
+	// drivePID(100);
+	// turnPID(-90);
+	// drivePID(-1700,5000, 0, false, 30);
+	// mogo.set_value(true);
+	// turnPID(-78);
+	// drivePIDMogo(-6000,4000,0,false);
+	// mogo.set_value(false);
+	// drivePIDMogo(-100);
+	// drivePID(500);
 
 
 
