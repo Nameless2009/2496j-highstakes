@@ -162,7 +162,7 @@ void drivePID(int desiredValue, int timeout=15000, int chainPos=0, bool autoclam
         }
 
 		double headingError = initialValue -currentIMUValue;
-		double headingCorrection = calcPID(headingError, 1.2, 0.05, 2.4);
+		double headingCorrection = calcPID(headingError, 4);
 
 
 
@@ -332,7 +332,7 @@ void drivePIDMogo(int desiredValue, int timeout=15000, int chainPos=0, int perc=
         }
 		
 		double headingError = initialValue - currentIMUValue;
-		double headingCorrection = calcPID(headingError);
+		double headingCorrection = calcPID(headingError, 4);
 
 
 
@@ -399,7 +399,7 @@ void drivePIDMogo(int desiredValue, int timeout=15000, int chainPos=0, int perc=
 	chassis.move(0);
 }
 
-void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true, int chainPos=0)
+void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true, int chainPos=0, double trueTheta=0)
 {
 	bool chain;
 	
@@ -408,6 +408,7 @@ void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true, int cha
 	}
 	else {
 		chain = true;
+		trueTheta = desiredValue;
 		desiredValue = desiredValue + chainPos;
 		if (desiredValue > 180){
 			desiredValue = ((360-desiredValue) * -1);
@@ -544,7 +545,7 @@ void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true, int cha
 			enableTurnPID = false;
 		}
 
-		if (chain == true && position >= desiredValue){
+		if (chain == true && position >= trueTheta){
 			enableTurnPID = false;
 		}
 
@@ -555,7 +556,7 @@ void turnPID(int desiredValue, int timeout=15000, bool powerFunc = true, int cha
 	chassis.move(0);
 }
 
-void turnPIDMogo(int desiredValue, int timeout=15000, bool powerFunc = true, int chainPos=0)
+void turnPIDMogo(int desiredValue, int timeout=15000, bool powerFunc = true, int chainPos=0, double trueTheta=0)
 {
 	bool chain;
 	
@@ -564,6 +565,7 @@ void turnPIDMogo(int desiredValue, int timeout=15000, bool powerFunc = true, int
 	}
 	else {
 		chain = true;
+		trueTheta = desiredValue;
 		desiredValue = desiredValue + chainPos;
 		if (desiredValue > 180){
 			desiredValue = ((360-desiredValue) * -1);
@@ -700,7 +702,7 @@ void turnPIDMogo(int desiredValue, int timeout=15000, bool powerFunc = true, int
 			enableTurnPID = false;
 		}
 
-		if (chain == true && position >= desiredValue){
+		if (chain == true && position >= trueTheta){
 			enableTurnPID = false;
 		}
 
@@ -790,7 +792,7 @@ float calculatePID2(float error){
 }
 
 
-void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0){
+void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0, double trueTheta=0){
 	bool chain;
 
 	if (chainPos == 0){
@@ -824,6 +826,8 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 	}
 	else {
 		chain = true;
+		trueTheta = centralDegreeTheta;
+		centralDegreeTheta = centralDegreeTheta + chainPos;
 	}
 
 	while(1){
@@ -870,7 +874,7 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 			break;
 		}
 
-		if (chain == true && heading >= centralDegreeTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
+		if (chain == true && heading >= trueTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
 			break;
 		}
 
@@ -922,7 +926,7 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 	chassis.move(0);
 }
 
-void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0){
+void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0, double trueTheta=0){
 
 	bool chain;
 
@@ -931,6 +935,8 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
 	}
 	else {
 		chain = true;
+		trueTheta = centralDegreeTheta;
+		centralDegreeTheta = centralDegreeTheta + chainPos;
 	}
 
 	double rightArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius - 275);
@@ -998,7 +1004,7 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
 			break;
 		}
 
-		if (chain == true && heading >= centralDegreeTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
+		if (chain == true && heading >= trueTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
 			break;
 		}
 
@@ -1305,7 +1311,7 @@ void skipAutonomous()
 	drivePID(600);
 	turnPID(-90);
 
-	drivePID(-920, 3300, 0, true,40);
+	drivePID(-920, 3300, 0, true,60);
 	mogo.set_value(true);
 	drivePIDMogo(-200);
 
@@ -1329,7 +1335,7 @@ void skipAutonomous()
 	intake.move(0);
 	lbPID = false;
 	ladyBrown.move(127);
-	delay(500);
+	delay(550);
 	ladyBrown.move(-127);
 	drivePIDMogo(-500);
 	ladyBrown.move(0);
@@ -1366,7 +1372,7 @@ void skipAutonomous()
 	leftArc(4600, 27, 0, 15000);
 	intake.move(0);
 	turnPID(140);
-	drivePID(-1600, 15000, 0, false, 40);
+	drivePID(-1600, 15000, 0, false, 60);
 	mogo.set_value(true);
 	intake.move(127);
 	turnPIDMogo(-135);
@@ -1374,8 +1380,8 @@ void skipAutonomous()
 	turnPIDMogo(-90);
 	drivePIDMogo(1180);
 	turnPIDMogo(180);
-	drivePIDMogo(2000, 15000, 50);
-	drivePIDMogo(1500, 15000, 0, 30);
+	drivePIDMogo(2000, 15000, 70);
+	drivePIDMogo(1500, 15000, 0, 60);
 
 	turnPIDMogo(45);
 	drivePIDMogo(-500);
@@ -1385,13 +1391,15 @@ void skipAutonomous()
 	drivePID(750);
 	intake.move(0);
 	turnPID(0);
-	rightArc(6000,60);
+	drivePID(2400, 15000, 50);
+	turnPID(45);
+	drivePID(3800);
 	turnPID(92);
-	drivePID(-1500,1500,0,false,40);
+	drivePID(-1500,1500,0,false,70);
 	mogo.set_value(true);
 	turnPIDMogo(100);
 	mogo.set_value(false);
-	drivePID(-800);
+	drivePID(-1000);
 	
 	rightArc(500,120,0,1500);
 	turnPID(-150);
@@ -1407,7 +1415,16 @@ void skipAutonomous()
 	turnPID(-90);
 	drivePID(-1200,1500,0,false,40);
 	mogo.set_value(true);
-	turnPIDMogo(0);
+	turnPIDMogo(90);
+	drivePIDMogo(3000);
+	leftArc(600, -135);
+	mogo.set_value(false);
+	ladyBrown.move(127);
+	drivePID(1500, 15000, 100);
+	turnPID(135, 15000, true, 10);
+	drivePID(-3000);
+
+	
 
 
 
