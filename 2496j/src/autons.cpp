@@ -795,13 +795,6 @@ float calculatePID2(float error){
 void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeout=15000, std::string createTask="off", int taskStart=0, int taskEnd=0, double trueTheta=0){
 	bool chain;
 
-	if (chainPos == 0){
-		chain = false;
-	}
-	else {
-		chain = true;
-	}
-
 	double rightArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius + 275);
 	double leftArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius - 275);
 
@@ -817,9 +810,6 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 	bool taskEnded = false;
 
 	double init_heading = inertial.get_heading(); 
-	if (init_heading > 180){
-		init_heading = init_heading - 360;
-	}
 
 	if (chainPos == 0){
 		chain = false;
@@ -836,6 +826,10 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 			break;
 		}
 
+		if(init_heading > 180){
+            init_heading = init_heading - 360;
+        }
+
 		int FRpos = FR.get_position();
 		int FLpos = FL.get_position();
 		int BRpos = BR.get_position();
@@ -851,16 +845,21 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 
 		double leftcorrect = (currentLeftPosition * 360) / (2*M_PI*(radius)); 
 
-		double heading = inertial.get_heading() - init_heading; 
-		if(centralDegreeTheta > 0){ 
-			if(heading > 30){
-				heading = heading - 360; 
-			}
-		} else {
-			if( heading > 300){ 
-   				heading = heading - 360; 
-			}
-		}
+		double heading = inertial.get_heading(); 
+		if (heading > 180){
+            heading = heading - 360;
+        }
+
+		if(((init_heading + leftcorrect)< 0) && (heading > 0)){
+            if((heading - (init_heading + leftcorrect)) >= 180){
+                leftcorrect = leftcorrect + 360;
+                heading = inertial.get_heading();
+            } 
+        } else if (((init_heading + leftcorrect) > 0) && (heading < 0)){
+            if(((init_heading + leftcorrect) - heading) >= 180){
+            	heading = inertial.get_heading();
+            }
+        }
 
 		int fix = int(heading + leftcorrect);
 		fix = fix*5;
@@ -874,7 +873,7 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 			break;
 		}
 
-		if (chain == true && heading >= trueTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
+		if (chain == true && abs((init_heading - heading)) >= trueTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
 			break;
 		}
 
@@ -930,15 +929,6 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
 
 	bool chain;
 
-	if (chainPos == 0){
-		chain = false;
-	}
-	else {
-		chain = true;
-		trueTheta = centralDegreeTheta;
-		centralDegreeTheta = centralDegreeTheta + chainPos;
-	}
-
 	double rightArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius - 275);
 	double leftArc = ((centralDegreeTheta+chainPos) / 360)*2*M_PI*(radius + 275);
 
@@ -951,16 +941,26 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
 	int time =0;
 
 	
-	double init_heading = inertial.get_heading(); 
-	if (init_heading > 180){
-		init_heading = init_heading - 360;
-	}
 	bool taskStarted = false;
 	bool taskEnded = false;
 	
 	// con.clear();
 
+	double init_heading = inertial.get_heading();
+	if (chainPos == 0){
+		chain = false;
+	}
+	else {
+		chain = true;
+		trueTheta = centralDegreeTheta;
+		centralDegreeTheta = centralDegreeTheta + chainPos;
+	}
+
 	while(1){
+
+		if(init_heading > 180){
+            init_heading = init_heading - 360;
+        }
 
 		int FRpos = FR.get_position();
 		int FLpos = FL.get_position();
@@ -978,16 +978,21 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
 
 		//con.print(0,0, "imu: %f", float(inertial.get_heading()));
 
-		double heading = inertial.get_heading() - init_heading; 
-		if(centralDegreeTheta > 0){ 
-			if(heading > 300){
-				heading = heading - 360; 
-			}
-		} else {
-			if( heading > 30){ 
-   				heading = heading - 360; 
-			}
-		}
+		double heading = inertial.get_heading(); 
+		if (heading > 180){
+            heading = heading - 360;
+        }
+
+        if(((init_heading + rightcorrect) < 0) && (heading > 0)){
+            if((heading - (init_heading + rightcorrect)) >= 180){
+                init_heading = init_heading + 360;
+                heading = inertial.get_heading();
+            } 
+        } else if (((init_heading + rightcorrect)> 0) && (heading < 0)){
+            if(((init_heading + rightcorrect) - heading) >= 180){
+            heading = inertial.get_heading();
+            }
+        } 
 
 		int fix = int(heading - rightcorrect);
 		fix = fix*5;
@@ -1004,7 +1009,7 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
 			break;
 		}
 
-		if (chain == true && heading >= trueTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
+		if (chain == true && abs((init_heading - heading)) > trueTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
 			break;
 		}
 
@@ -1298,273 +1303,124 @@ void skipAutonomous()
 {
 	//skills goes here
 	
-	ladyBrown.move(127);
-	delay(200);
-	ladyBrown.move(0);
-	intake.move(127);
-	delay(500);
-	ladyBrown.move(-127);
-	delay(500);
-	intake.move(-80);
-	delay(100);
-	ladyBrown.move(0);
-	drivePID(600);
-	turnPID(-90);
+// 	ladyBrown.move(127);
+// 	delay(200);
+// 	ladyBrown.move(0);
+// 	intake.move(127);
+// 	delay(500);
+// 	ladyBrown.move(-127);
+// 	delay(500);
+// 	intake.move(-80);
+// 	delay(100);
+// 	ladyBrown.move(0);
+// 	drivePID(600);
+// 	turnPID(-90);
 
-	drivePID(-820, 3300, 0, true,40);
-	mogo.set_value(true);
-	drivePIDMogo(-200);
+// 	drivePID(-820, 3300, 0, true,40);
+// 	mogo.set_value(true);
+// 	drivePIDMogo(-200);
 
-	turnPIDMogo(0);
-	intake.move(127);
-	drivePIDMogo(1090, 2000, 0, 70);
-	delay(100);
-	turnPIDMogo(90);
-	drivePIDMogo(950);
+// 	turnPIDMogo(0);
+// 	intake.move(127);
+// 	drivePIDMogo(1090, 2000, 0, 70);
+// 	delay(100);
+// 	turnPIDMogo(90);
+// 	drivePIDMogo(950);
 	
-	turnPIDMogo(0);
-	drivePIDMogo(950);
+// 	turnPIDMogo(0);
+// 	drivePIDMogo(950);
 
 
-//<<<<<<< Updated upstream
-	turnPIDMogo(90);
-	lbPID = true;
-	intake.move(127);
-	drivePIDMogo(720, 600);
-	delay(1000);
-	intake.move(0);
-	lbPID = false;
-	ladyBrown.move(127);
-	delay(550);
-	ladyBrown.move(-127);
-	drivePIDMogo(-500);
-	ladyBrown.move(0);
-	turnPIDMogo(0);
-	intake.move(-127);
-	delay(300);
-	intake.move(127);
-	drivePIDMogo(1200);
-	turnPIDMogo(35);
-	drivePIDMogo(730,3000,0,50);
-	turnPIDMogo(-53);
-	drivePIDMogo(200);
-	turnPIDMogo(-15);
-	drivePIDMogo(500);
-	//sdrivePIDMogo(-200);
-	// doinker.set_value(true);
-	// turnPIDMogo(60);
-	// delay(200);
+// //<<<<<<< Updated upstream
+// 	turnPIDMogo(90);
+// 	lbPID = true;
+// 	intake.move(127);
+// 	drivePIDMogo(720, 600);
+// 	delay(1000);
+// 	intake.move(0);
+// 	lbPID = false;
+// 	ladyBrown.move(127);
+// 	delay(550);
+// 	ladyBrown.move(-127);
+// 	drivePIDMogo(-500);
+// 	ladyBrown.move(0);
+// 	turnPIDMogo(0);
+// 	intake.move(-127);
+// 	delay(300);
+// 	intake.move(127);
+// 	drivePIDMogo(1200);
+// 	turnPIDMogo(35);
+// 	drivePIDMogo(730,3000,0,50);
+// 	turnPIDMogo(-53);
+// 	drivePIDMogo(200);
+// 	turnPIDMogo(-15);
+// 	drivePIDMogo(500);
+// 	//sdrivePIDMogo(-200);
+// 	// doinker.set_value(true);
+// 	// turnPIDMogo(60);
+// 	// delay(200);
 	
-	turnPIDMogo(-130);
-	// doinker.set_value(false);
+// 	turnPIDMogo(-130);
+// 	// doinker.set_value(false);
 
-	intake.move(-80);
+// 	intake.move(-80);
 	
-	mogo.set_value(false);
-	drivePIDMogo(-500, 1500);
-	delay(1000);
-	drivePID(300, 1500, 0, false, 40);
-	mogo.set_value(true);
-	drivePID(-250, 1500, 0, false, 70);
+// 	mogo.set_value(false);
+// 	drivePIDMogo(-500, 1500);
+// 	delay(1000);
+// 	drivePID(300, 1500, 0, false, 40);
+// 	mogo.set_value(true);
+// 	drivePID(-250, 1500, 0, false, 70);
 
-	intake.move(127);
-	mogo.set_value(false);
-	leftArc(2500, 50, 0, 15000);
-	intake.move(0);
-	turnPID(140);
-	drivePID(-1600, 15000, 0, false, 50);
-	mogo.set_value(true);
-	intake.move(127);
-	turnPIDMogo(-135);
-	drivePIDMogo(1500);
-	turnPIDMogo(-90);
-	drivePIDMogo(1180);
-	turnPIDMogo(180);
-	drivePIDMogo(2000, 15000, 70);
-	drivePIDMogo(1500, 15000, 0, 60);
+// 	intake.move(127);
+// 	mogo.set_value(false);
+// 	leftArc(2500, 50, 0, 15000);
+// 	intake.move(0);
+// 	turnPID(140);
+// 	drivePID(-1600, 15000, 0, false, 50);
+// 	mogo.set_value(true);
+// 	intake.move(127);
+// 	turnPIDMogo(-135);
+// 	drivePIDMogo(1500);
+// 	turnPIDMogo(-90);
+// 	drivePIDMogo(1180);
+// 	turnPIDMogo(180);
+// 	drivePIDMogo(2000, 15000, 70);
+// 	drivePIDMogo(1500, 15000, 0, 60);
 
-	turnPIDMogo(45);
-	drivePIDMogo(-500);
-	mogo.set_value(false);
-	intake.move(-80);
-	delay(300);
-	drivePID(750);
-	intake.move(0);
-	turnPID(0);
-	drivePID(2400, 15000, 50);
-	turnPID(45);
-	drivePID(3500);
-	turnPID(92);
-	drivePID(-1400,1500,0,false,50);
-	mogo.set_value(true);
-	turnPIDMogo(110);
-	mogo.set_value(false);
-	drivePID(-1000);
+// 	turnPIDMogo(45);
+// 	drivePIDMogo(-500);
+// 	mogo.set_value(false);
+// 	intake.move(-80);
+// 	delay(300);
+// 	drivePID(750);
+// 	intake.move(0);
+// 	turnPID(0);
+// 	drivePID(2400, 15000, 50);
+// 	turnPID(45);
+// 	drivePID(3500);
+// 	turnPID(92);
+// 	drivePID(-1400,1500,0,false,50);
+// 	mogo.set_value(true);
+// 	turnPIDMogo(110);
+// 	mogo.set_value(false);
+// 	drivePID(-1000);
 	
-	rightArc(500,140,0,1500);
-	turnPID(180);
-	drivePID(4500);
-	intake.move(127);
-	turnPID(-90);
-	drivePID(-1200,1500,0,false,40);
-	mogo.set_value(true);
-	turnPIDMogo(90);
-	drivePIDMogo(3000);
-	leftArc(600, -135);
-	mogo.set_value(false);
-	ladyBrown.move(127);
-	drivePID(1500, 15000, 100);
-	turnPID(135, 15000, true, 10);
-	drivePID(-3000);
-
-	
-
-
-
-
-	
-	// drivePID(5000);
-	// turnPID(-90);
-	// drivePID(-750);
-	// turnPID(180);
-	// drivePID(-350, 40);
-	// intake.move(127);
-	// delay(1000);
-	// leftArc(500, 90);
-
-
-
-	// drivePID(200);
-	// turnPID(-150);
-	
-	// intake.move(127);
-	// drivePID(2100);
-	// intake.move(0);
-	// delay(3000);
-
-	
-	// turnPID(140);
-	// delay(500);
-	
-	// drivePID(-1800, 8000,0, false, 50);
-	
-	// mogo.set_value(true);
-	// drivePIDMogo(-180);
-	// turnPIDMogo(0);
-	// delay(5000);
-	// drivePIDMogo(-500);
-	// mogo.set_value(false);
-	// delay(200);
-	// drivePID(350);
-	// turnPID(180);
-	// drivePID(-700,1000);
-	// drivePID(150);
-	// ladyBrown.move(127);
-	// delay(200);
-	// ladyBrown.move(0);
-	// intake.move(127);
-	// delay(500);
-	
-	// ladyBrown.move(-127);
-	// delay(500);
-	// intake.move(-80);
-	// ladyBrown.move(0);
-	// drivePID(100);
-	// turnPID(-90);
-	// drivePID(-1700,5000, 0, false, 30);
-	// mogo.set_value(true);
-	// turnPID(-78);
-	// drivePIDMogo(-6000,4000,0,false);
-	// mogo.set_value(false);
-	// drivePIDMogo(-100);
-	// drivePID(500);
-
-
-
-//BACKYARD SKILLS STARTS HERE
-
-
-	// mogo.set_value(true);
-	// delay (500);
-	// turnPIDMogo(180);
-	// intake.move(127);
-	// drivePIDMogo(2300,6000,0, 30);
-	// delay(1500);
-	// intake.move(-127);
-	// delay(200);
-	// intake.move(0);
-	// turnPIDMogo(45); 
-	// mogo.set_value(false);
-	// drivePIDMogo(-600);
-	// turnPID(-45);
-	// drivePID(300);
-	// intake.move(127);
-	// delay(500);
-	// intake.move(0);
-	// delay(3000);
-	// turnPID(-100);
-	// drivePID(-1000, 3000, 0, 50);
-	// mogo.set_value(true);
-
-//Backyard skiills ends here
-
-
-
-
-
-
-
-	// intake.move(100);
-	// turnPIDMogo(-45);
-	// drivePIDMogo(1000, 15000, 50);
-	// intake.move(127);
-	// drivePIDMogo(500);
-	// intake.move(127);
-	// delay(600);
-	// turnPIDMogo(45);
-	// delay(260);
-	// intake.move(100);
-	// drivePIDMogo(850, 15000, 50);
-	// intake.move(127);
-	// drivePIDMogo(750);
-	// intake.move(127);
-	// turnPIDMogo(90);
-	// drivePIDMogo(900);
-	// intake.move(0);
-	// turnPIDMogo(179);
-	// lbPID = true;
-	// drivePIDMogo(975);
-	// turnPIDMogo(90);
-	// intake.move(127);
-	// drivePIDMogo(740, 600);
-	// delay(100);
-	// intake.move(0);
-	// lbPID = false;
-	// ladyBrown.move(127);
-	// delay(1000);
-	// ladyBrown.move(-127);
-	// lbPID = true;
-	// intake.move(127);
-	// delay(2000);
-	// intake.move(0);
-	// lbPID = false;
-	// ladyBrown.move(127);
-	// delay(1000);
-	// ladyBrown.move(-127);
-	// drivePIDMogo(-740, 700);
-	// ladyBrown.move(0);
-	// turnPIDMogo(0);
-	// intake.move(127);
-	// drivePIDMogo(2000);
-	// drivePIDMogo(400);
-
-
-
-
-
-
-	
-	
+// 	rightArc(500,140,0,1500);
+// 	turnPID(180);
+// 	drivePID(4500);
+// 	intake.move(127);
+// 	turnPID(-90);
+// 	drivePID(-1200,1500,0,false,40);
+// 	mogo.set_value(true);
+// 	turnPIDMogo(90);
+// 	drivePIDMogo(3000);
+// 	leftArc(600, -135);
+// 	mogo.set_value(false);
+// 	ladyBrown.move(127);
+// 	drivePID(1500, 15000, 100);
+// 	turnPID(135, 15000, true, 10);
+// 	drivePID(-3000);
 	
 	
 	
@@ -1592,16 +1448,32 @@ void skipAutonomous()
 
 
 	//sawp
-	// ladyBrown.move(127);
-	// delay(500);
-	// ladyBrown.move(-127);
-	// delay(500);
-	// ladyBrown.move(0);
-	// turnPID(-20);
-	// drivePID(-1800,2000,0,0,50);
-	// mogo.set_value(true);
-	// intake.move(127);
-	// turnPIDMogo(180);
-	// rightArc(2000,40);
+	ladyBrown.move(127);
+	delay(500);
+	ladyBrown.move(-127);
+	delay(500);
+	ladyBrown.move(0);
+	turnPID(20);
+	drivePID(-1800,2000,0,0,50);
+	mogo.set_value(true);
+	intake.move(127);
+	turnPIDMogo(180);
+	leftArc(950,47);
+	turnPIDMogo(135);
+	drivePIDMogo(500, 15000, 10);
+	drivePIDMogo(-500);
+	turnPIDMogo(100);
+	leftArc(1000, 61);
+	drivePIDMogo(1700);
+	delay(500);
+	drivePIDMogo(-500);
+	turnPIDMogo(-45);
+	drivePIDMogo(1000, 15000, 50);
+	intakeLift.set_value(true);
+	drivePIDMogo(500, 15000, 0, 70);
+	delay(1000);
+	drivePIDMogo(-500);
+
+
 
 }
