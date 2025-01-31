@@ -1471,6 +1471,7 @@ void skipAutonomous()
 	turnPIDMogo(-60);
 	intakeLift.set_value(true);
 	drivePIDMogo(2300);
+	intakeLift.set_value(false);
 	drivePIDMogo(100);
  	turnPIDMogo(-150);
 	drivePIDMogo(1000);
