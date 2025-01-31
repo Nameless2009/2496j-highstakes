@@ -865,8 +865,8 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 
 		int fix = int(heading + leftcorrect);
 		fix = fix*5;
-		leftChassis.move(calculatePID(left_error) - fix);
-		rightChassis.move(calculatePID2(right_error) + fix); //might need to add calcpid2
+		leftChassis.move(calculatePID(left_error) + fix);
+		rightChassis.move(calculatePID2(right_error) - fix); //might need to add calcpid2
 
 		if ((abs(left_error) <= 50) && (abs(right_error) <= 50)){ 
 			count++;
