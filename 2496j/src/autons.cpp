@@ -8,6 +8,8 @@
 using namespace pros;
 using namespace glb;
 
+//get rid of equals in chaining arcs if it dont work
+
 // void timerTask(){
 // 	auto startTime = std::chrono::steady_clock::now();
 
@@ -1009,7 +1011,7 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
 			break;
 		}
 
-		if (chain == true && abs((init_heading - heading)) > trueTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
+		if (chain == true && abs((init_heading - heading)) >= trueTheta){ //might need to add calcpid2 back ON THE RIGHT SIDE
 			break;
 		}
 
@@ -1489,7 +1491,6 @@ void skipAutonomous()
 	delay(200);
 	intake.move(127);
 	leftArc(700, 40);
-
 
 
 }
