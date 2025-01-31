@@ -845,7 +845,7 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
 		int right_error = rightArc - currentRightPosition;
 		int left_error = leftArc - currentLeftPosition;
 
-		double leftcorrect = (currentLeftPosition * 360) / (2*M_PI*(radius)); 
+		double leftcorrect = -(currentLeftPosition * 360) / (2*M_PI*(radius)); 
 
 		double heading = inertial.get_heading(); 
 		if (heading > 180){
