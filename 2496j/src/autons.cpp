@@ -1515,13 +1515,45 @@ void skipAutonomous()
 
 	// //Blue rush
 	
-	drivePID(1450);
+	// drivePID(1450);
+	
+	// doinker.set_value(true);
+
+	// drivePID(-650);
+	// doinker.set_value(false);
+	// delay(100);
+	
+	// turnPID(160);
+	// drivePID(-900, 15000, 0, true, 50);
+	// mogo.set_value(true);
+	// delay(200);
+	// intake.move(127);
+	// delay(1000);
+	// mogo.set_value(false);
+	// drivePID(500);
+	// turnPID(-108);
+	// drivePID(-1200, 15000, 0, true, 30);
+	// mogo.set_value(true);
+	// turnPIDMogo(105);
+	// intakeLift.set_value(true);
+	// drivePIDMogo(1100);
+	// drivePIDMogo(100,10000,0,20);
+	// intakeLift.set_value(false);
+	// delay(200);
+	// drivePIDMogo(-1100);
+	// turnPIDMogo(0);
+	// drivePIDMogo(200);
+	// ladyBrown.move(127);
+	// delay(600);
+	// ladyBrown.move(0);
+
+	drivePID(1650);
 	
 	doinker.set_value(true);
-
+	delay(100);
 	drivePID(-650);
 	doinker.set_value(false);
-	delay(100);
+	delay(300);
 	
 	turnPID(160);
 	drivePID(-900, 15000, 0, true, 50);
@@ -1531,10 +1563,10 @@ void skipAutonomous()
 	delay(1000);
 	mogo.set_value(false);
 	drivePID(500);
-	turnPID(-108);
+	turnPID(95);
 	drivePID(-1200, 15000, 0, true, 30);
 	mogo.set_value(true);
-	turnPIDMogo(105);
+	turnPIDMogo(-120);
 	intakeLift.set_value(true);
 	drivePIDMogo(1100);
 	drivePIDMogo(100,10000,0,20);
