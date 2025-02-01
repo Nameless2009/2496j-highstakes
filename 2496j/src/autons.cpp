@@ -1512,4 +1512,57 @@ void skipAutonomous()
 	// ladyBrown.move(0);
 
 
+
+	// //Blue rush
+	
+	drivePID(1500);
+	intake.move(100);
+	
+	doinker.set_value(true);
+	intake.move(60);
+	drivePID(200);
+	intake.move(0);
+	drivePID(-650);
+	doinker.set_value(false);
+	delay(200);
+	turnPID(160);
+	drivePID(-800, 15000, 0, true, 30);
+	mogo.set_value(true);
+	delay(200);
+	intake.move(127);
+	delay(1000);
+	mogo.set_value(false);
+	drivePID(800);
+	turnPID(-110);
+	drivePID(-1000, 15000, 0, true, 30);
+	mogo.set_value(true);
+	turnPIDMogo(115);
+	intakeLift.set_value(true);
+	drivePIDMogo(1000);
+	drivePIDMogo(100,10000,0,20);
+	drivePIDMogo(-1100);
+	turnPIDMogo(-45);
+	drivePIDMogo(400);
+	ladyBrown.move(127);
+	delay(600);
+	ladyBrown.move(0);
+
+	// delay(1000);
+	// mogo.set_value(false);
+	// delay(200);
+	// turnPIDMogo(-90);
+	// drivePID(-1000,5000,0,true, 40);
+	// mogo.set_value(true);
+	// turnPIDMogo(132);
+	// intakeLift.set_value(true);
+	// drivePIDMogo(1000);
+	// drivePIDMogo(100,10000,0,20);
+	// drivePIDMogo(-1100);
+	// turnPIDMogo(45);
+	// drivePIDMogo(400);
+	// ladyBrown.move(127);
+	// delay(600);
+	// ladyBrown.move(0);
+
+
 }
