@@ -863,7 +863,7 @@ void leftArc(double radius, double centralDegreeTheta, int chainPos=0, int timeo
             }
         }
 
-		int fix = int(heading + leftcorrect);
+		int fix = int(init_heading + leftcorrect-heading);
 		fix = fix*5;
 		leftChassis.move(calculatePID(left_error) + fix);
 		rightChassis.move(calculatePID2(right_error) - fix); //might need to add calcpid2
@@ -996,7 +996,7 @@ void rightArc(double radius, double centralDegreeTheta, int chainPos=0, int time
             }
         } 
 
-		int fix = int(heading - rightcorrect);
+		int fix = int(init_heading + rightcorrect - heading);
 		fix = fix*5;
 		leftChassis.move(calculatePID(left_error) - fix);
 		rightChassis.move(calculatePID2(right_error) + fix); //might need to add calcpid2
