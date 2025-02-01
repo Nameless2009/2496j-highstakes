@@ -1515,34 +1515,34 @@ void skipAutonomous()
 
 	// //Blue rush
 	
-	drivePID(1500);
-	intake.move(100);
+	drivePID(1450);
 	
 	doinker.set_value(true);
-	intake.move(60);
-	drivePID(200);
-	intake.move(0);
+
 	drivePID(-650);
 	doinker.set_value(false);
-	delay(200);
+	delay(100);
+	
 	turnPID(160);
-	drivePID(-800, 15000, 0, true, 30);
+	drivePID(-900, 15000, 0, true, 50);
 	mogo.set_value(true);
 	delay(200);
 	intake.move(127);
 	delay(1000);
 	mogo.set_value(false);
-	drivePID(800);
-	turnPID(-110);
-	drivePID(-1000, 15000, 0, true, 30);
+	drivePID(500);
+	turnPID(-108);
+	drivePID(-1200, 15000, 0, true, 30);
 	mogo.set_value(true);
-	turnPIDMogo(115);
+	turnPIDMogo(105);
 	intakeLift.set_value(true);
-	drivePIDMogo(1000);
+	drivePIDMogo(1100);
 	drivePIDMogo(100,10000,0,20);
+	intakeLift.set_value(false);
+	delay(200);
 	drivePIDMogo(-1100);
-	turnPIDMogo(-45);
-	drivePIDMogo(400);
+	turnPIDMogo(0);
+	drivePIDMogo(200);
 	ladyBrown.move(127);
 	delay(600);
 	ladyBrown.move(0);
