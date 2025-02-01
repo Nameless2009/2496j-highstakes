@@ -1450,32 +1450,32 @@ void skipAutonomous()
 
 
 
-	// red sawp
-	ladyBrown.move(127);
-	delay(500);
-	ladyBrown.move(-127);
-	delay(500);
-	ladyBrown.move(0);
-	turnPID(20);
-	drivePID(-1800,2000,0,0,60);
-	mogo.set_value(true);
-	intake.move(127);
-	turnPIDMogo(165);
-	drivePIDMogo(800);
-	turnPIDMogo(142);
-	drivePIDMogo(400, 15000, 10);
-	turnPIDMogo(30);
-	drivePIDMogo(300);
-	turnPIDMogo(-20);
-	intakeLift.set_value(true);
-	drivePIDMogo(1800);
-	drivePIDMogo(400, 15000, 0, 20);
-	intakeLift.set_value(false);
-	delay(300);
-	drivePIDMogo(-200);
- 	turnPIDMogo(-150);
-	drivePIDMogo(700);
-	ladyBrown.move(127);
+	// red ring
+	// ladyBrown.move(127);
+	// delay(500);
+	// ladyBrown.move(-127);
+	// delay(500);
+	// ladyBrown.move(0);
+	// turnPID(20);
+	// drivePID(-1800,2000,0,0,60);
+	// mogo.set_value(true);
+	// intake.move(127);
+	// turnPIDMogo(165);
+	// drivePIDMogo(800);
+	// turnPIDMogo(142);
+	// drivePIDMogo(400, 15000, 10);
+	// turnPIDMogo(30);
+	// drivePIDMogo(300);
+	// turnPIDMogo(-20);
+	// intakeLift.set_value(true);
+	// drivePIDMogo(1800);
+	// drivePIDMogo(400, 15000, 0, 20);
+	// intakeLift.set_value(false);
+	// delay(300);
+	// drivePIDMogo(-200);
+ 	// turnPIDMogo(-150);
+	// drivePIDMogo(700);
+	// ladyBrown.move(127);
 
 
 
