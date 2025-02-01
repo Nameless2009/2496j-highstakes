@@ -1406,7 +1406,7 @@ void skipAutonomous()
 //     mogo.set_value(false);
 //     drivePID(-1100);
     
-//     //rightArc(500,120,0,1500);
+//    
 //     drivePID(200);
 //     turnPID(180);
 //     drivePID(5000);
@@ -1416,7 +1416,8 @@ void skipAutonomous()
 //     drivePID(-1200,1500,0,false,60);
 //     mogo.set_value(true);
 //     turnPIDMogo(90);
-//     drivePIDMogo(5000,2000,0,60);
+//     drivePIDMogo(4000);
+//	   drivePIDMogo(1000,2000,0,60)
 //     //leftArc(600, -135);
 //     turnPID(-30);
     
