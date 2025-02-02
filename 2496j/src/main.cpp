@@ -501,7 +501,8 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -533,7 +534,7 @@ void autonomous() {
 	// else { //if nothing was selected
 	// 	skipAutonomous();
 	// }
-	skipAutonomous();
+	redRushSide();
 }
 
 /**
@@ -554,6 +555,8 @@ void opcontrol()
 	lcd::clear();
 	con.clear();
 	con.clear_line(2);
+
+	intakeLift.set_value(false);
 
 	while (true)
 	{
