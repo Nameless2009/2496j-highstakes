@@ -9,8 +9,8 @@ namespace glb {
     Motor FL(P_FL_chassis, E_MOTOR_GEARSET_18, true);
     Motor BR(P_BR_chassis, E_MOTOR_GEARSET_18, false);
     Motor BL(P_BL_chassis, E_MOTOR_GEARSET_18, true);
-    Motor RM(P_MR_chassis, E_MOTOR_GEAR_600, false);
-    Motor LM(P_ML_chassis, E_MOTOR_GEAR_600, true);
+    Motor RM(P_MR_chassis, E_MOTOR_GEAR_600, true);
+    Motor LM(P_ML_chassis, E_MOTOR_GEAR_600, false);
 
 
     Motor_Group rightChassis({P_FR_chassis, P_BR_chassis, P_MR_chassis});

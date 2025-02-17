@@ -11,16 +11,16 @@ using namespace pros;
 namespace glb
 {
     // defining ports
-    #define P_FL_chassis 18
-    #define P_FR_chassis 2
-    #define P_ML_chassis 11
-    #define P_MR_chassis 1
-    #define P_BL_chassis 3
-    #define P_BR_chassis 10
+    // #define P_FL_chassis 18
+    // #define P_FR_chassis 2
+    // #define P_ML_chassis 11
+    // #define P_MR_chassis 1
+    // #define P_BL_chassis 3
+    // #define P_BR_chassis 10
 
-    #define P_intake 4
+    // #define P_intake 4
 
-    #define P_ladyBrown 12
+    // #define P_ladyBrown 12
 
     #define P_mogo 'B'
 
@@ -37,6 +37,26 @@ namespace glb
     #define P_color_sensor 13
 
     #define P_doinker 'H'
+    #define P_FR_chassis 15
+    #define P_FL_chassis 11
+    #define P_MR_chassis 17
+    #define P_ML_chassis 4
+    #define P_BR_chassis 10
+    #define P_BL_chassis 8
+
+    #define P_intake 9
+    #define P_ladyBrown 5
+
+    #define P_MOGO 'A'
+    #define P_INTAKE_LIFT 'B'
+    #define P_DOINKER 'C'
+
+    #define P_IMU 21
+    #define P_LDB_ROTATION 20
+    #define P_AUTOCLAMP 19
+    #define P_COLORSORT 18
+    #define P_X_POD 16
+    #define P_Y_POD 14
 
 
     // objects
